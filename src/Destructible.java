@@ -4,6 +4,7 @@
 public abstract class Destructible extends Obstacles{
 
     //Variables
+    private final int BULLET_DAMAGE = 200;
     private static final int INITIAL_HEALTH = 600; //600 wil be changed
     private int health;
 
@@ -16,6 +17,10 @@ public abstract class Destructible extends Obstacles{
     //Setters and Getters
     public int getHealth() {
         return health;
+    }
+
+    public void getDamaged(){
+        health = health - BULLET_DAMAGE;
     }
 
     public void setHealth(int health) {

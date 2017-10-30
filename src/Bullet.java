@@ -7,6 +7,7 @@ public class Bullet extends GameObject {
     //direction of the bullet
     private int dir;
     private int id;
+    private boolean isCrushed;
 
     //Constructor
     public Bullet( int id, int xLoc, int yLoc, int dir) {
@@ -14,6 +15,7 @@ public class Bullet extends GameObject {
         super.setyLoc(yLoc);
         this.id = id;
         this.dir = dir;
+        isCrushed = false;
     }
 
     //methods
@@ -29,10 +31,12 @@ public class Bullet extends GameObject {
     //This method moves the bullet through the map
     //in given direction
     public void move() {
-        if (dir == 1) {
-            super.setxLoc(super.getxLoc() + 1);
-        } else {
-            super.setyLoc(super.getyLoc() + 1);
+        if (!isCrushed()) {
+            if (dir == 1) {
+                super.setxLoc(super.getxLoc() + 1);
+            } else {
+                super.setyLoc(super.getyLoc() + 1);
+            }
         }
     }
 
@@ -51,5 +55,12 @@ public class Bullet extends GameObject {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isCrushed() {
+        return isCrushed;
+    }
+    public void setCrushed(boolean crushed) {
+        isCrushed = crushed;
     }
 }

@@ -4,7 +4,6 @@
 public abstract class Tank extends GameObject {
 
     //Variables
-
     private int type;
     private int id;
     private int health;
@@ -30,6 +29,10 @@ public abstract class Tank extends GameObject {
         }else
             super.setyLoc( super.getyLoc() +1 );
         return true;
+    }
+
+    public void getDamaged(){
+        health = health - BULLET_DAMAGE;
     }
 
     //Setters and Getters

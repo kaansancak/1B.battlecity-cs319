@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public abstract class GameObject {
 
     //Variables
-
+    private final int BULLET_DAMAGE = 200;
     //Location variables
     private int xLoc;
     private int yLoc;
