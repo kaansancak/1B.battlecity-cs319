@@ -1,4 +1,7 @@
-public class GameManager{
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class GameManager extends Application{
 
     private final int GAME_START_LEVEL = 1;
     private final int GAME_FINAL_LEVEL = 2;
@@ -16,6 +19,11 @@ public class GameManager{
     private int gameCompletedLevels;
 
     GameManager(){}
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+    }
 
     GameManager(int player_count){
         players = new Player[player_count];
@@ -39,7 +47,7 @@ public class GameManager{
     private boolean isGameRunning(){
         return gameRunning;
     }
-    private boolean isGamePaused(){
+    public boolean isGamePaused(){
         return gamePaused;
     }
     private void pauseGame(){

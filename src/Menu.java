@@ -20,10 +20,12 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private Stage menuWindow;
     private Scene menuScene;
     private VBox mBBox;
+    private ViewFrame creditsFrame;
+    private ViewFrame howToPlayFrame;
     private int playerCount;
     private int menuTypeId;
     private JFXPanel menuLayout;
-    Button[] menuButtons;
+    private Button[] menuButtons;
 
     public static void main( String[] args){
         launch(args);
@@ -78,11 +80,27 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         }else if( event.getSource() == menuButtons[2]){
 
         }else if( event.getSource() == menuButtons[3]){
-
+            menuWindow.close();
+            showHowToPlay();
         }else if( event.getSource() == menuButtons[4]){
-
+            menuWindow.close();
+            showCredits();
         }else if( event.getSource() == menuButtons[5]){
             exitBattleCity();
+        }
+    }
+
+    private void showHowToPlay() {
+        howToPlayFrame = new ViewFrame( "HOW TO PLAY", "Some message");
+        if ( howToPlayFrame.isReturnCall()){
+            menuWindow.show();
+        }
+    }
+
+    private void showCredits() {
+        creditsFrame = new ViewFrame( "CREDITS", "Some message\nKaan Sancak");
+        if(creditsFrame.isReturnCall()){
+            menuWindow.show();
         }
     }
 
@@ -111,13 +129,6 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         menuButtons[4].setText("Credits");
         menuButtons[5].setText("Exit");
     }
-    /*
-    private settingsFrame settingLayout;
-    private ViewFrame creditsLayout;
-    private ViewFrame howToPlayLayout;
-    private GameManager gameManager;
-    private FileManager menuFileManager;
-     */
 
     public int getPlayerCount() {
         return playerCount;
