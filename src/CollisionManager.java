@@ -24,7 +24,7 @@ public class CollisionManager {
         }
         return false;
     }
-
+    // do we need another method such as TankPassable which return also false for water ?
     public boolean isPassable( GameObject gameObject){
         if( gameObject instanceof Brick || gameObject instanceof IronWall)
             return false;
