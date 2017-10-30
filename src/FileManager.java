@@ -14,11 +14,11 @@ public class FileManager /* probably extends serializable*/ {
 
     public FileManager(){}
 
-    public int[][] getMapLevelData(int level){}
-    public void saveHighestScore(int highestScore){}
-    public int getHighestScore(){}
-    public String getHowToPlayDoc(){}
-    public String getCreditsDoc(){}
-    public String[] getSettingsDoc(){}
-    public void setSettings( int id, String setting[]){}
+   // public int[][] getMapLevelData(int level){}
+    //public void saveHighestScore(int highestScore){}
+    //public int getHighestScore(){}
+    //public String getHowToPlayDoc(){}
+    //public String getCreditsDoc(){}
+    //public String[] getSettingsDoc(){}
+    //public void setSettings( int id, String setting[]){}
 }

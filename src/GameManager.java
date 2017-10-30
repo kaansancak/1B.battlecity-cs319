@@ -1,6 +1,7 @@
 public class GameManager{
 
     private final int GAME_START_LEVEL = 1;
+    private final int GAME_FINAL_LEVEL = 2;
     private MapManager mapManager;
     private ScreenManager screenManager;
     private FileManager gameManagerFileManager;
@@ -16,18 +17,43 @@ public class GameManager{
 
     GameManager(){}
 
-    GameManager(int player_count){}
-    private boolean isGameOver(){}
+    GameManager(int player_count){
+        players = new Player[player_count];
+        currentScores = new int[player_count];
+        mapManager = new MapManager();
+        gameManagerFileManager = new FileManager();
+        //screenManager = new ScreenManager();
+        gameRunning = true;
+        gamePaused = false;
+        currentGameLevel = GAME_START_LEVEL;
+        gameFinished = false;
+        gameCompletedLevels = 0;
+    }
+    private boolean isGameOver(){
+        return gameCompletedLevels == GAME_FINAL_LEVEL;
+    }
     private void updateCurrentScore(int player_id){}
     private void updateHighestScore(int highestScore){}
     private void startGame(){}
     private void finishGame(){}
-    private boolean isGameRunning(){}
-    private boolean isGamePaused(){}
-    private void pauseGame(){}
-    private void continueGame(){}
+    private boolean isGameRunning(){
+        return gameRunning;
+    }
+    private boolean isGamePaused(){
+        return gamePaused;
+    }
+    private void pauseGame(){
+        gamePaused = true;
+        gameRunning = false;
+    }
+    private void continueGame(){
+        gamePaused = false;
+        gameRunning = true;
+    }
+
+
     private void quitGame(){}
-    private SoundManager getSetting(){}
+    //private SoundManager getSetting(){}
     private void saveHighestScore(int scoregame){ if(scoregame>highestScore)
                                                     { highestScore = scoregame; }}
     private int getHighestScore(){ return highestScore; }

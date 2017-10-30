@@ -11,14 +11,14 @@ public class MapManager {
     MapManager(int level, int [][]obstaclesMap){}
 
 private void readObstaclesMap(int level){}
-        private Objects[] manageObjects(CollisionManager collisionManager, Map map){}
-        private void updateMapObjects(Map map){}
-        private void updateMap(){}
+    //private GameObject[] manageObjects(CollisionManager collisionManager, Map map){}
+    private void updateMapObjects(Map map){}
+    private void updateMap(){}
     private void startsLevel(int level, int[][] obstaclesMap){}
     private void stopGameLoop(){}
     private void gameLoop(){}
-    private boolean isMapFinished(){}
-private void finishLevel(){}
+   // private boolean isMapFinished(){}
+    private void finishLevel(){}
 
 
 }

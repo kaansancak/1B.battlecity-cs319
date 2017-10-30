@@ -11,6 +11,6 @@ public class ScreenManager {
 
 
 public void changeBufferCapabilities( BufferCapabilities capabilities){}
-    public Graphics2D getGraphics(){}
+    //public Graphics2D getGraphics(){}
     public void iterateBuffer(){}
 }

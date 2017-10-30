@@ -1,13 +1,13 @@
 import sun.security.krb5.internal.crypto.Des;
 
-public class CollusionManager {
+public class CollisionManager {
 
     GameObject[][] map;
 
-    public CollusionManager( GameObject[][] map){
+    public CollisionManager(GameObject[][] map){
         this.map = map;
     }
-    
+
     public void checkCollision(Bullet bulletObject){
         while ( !bulletObject.isCrushed()){
             isCollided(bulletObject);

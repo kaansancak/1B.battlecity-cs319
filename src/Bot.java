@@ -19,7 +19,6 @@ public class Bot extends Tank {
     in the design report.
      */
     public boolean isMonotone(){
-
         return  true;
     }
 

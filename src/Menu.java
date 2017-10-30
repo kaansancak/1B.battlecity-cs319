@@ -70,9 +70,11 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == menuButtons[0]){
-
+            setPlayerCount(1);
+            startGame();
         }else if( event.getSource() == menuButtons[1]){
-
+            setPlayerCount(2);
+            startGame();
         }else if( event.getSource() == menuButtons[2]){
 
         }else if( event.getSource() == menuButtons[3]){
@@ -82,6 +84,11 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         }else if( event.getSource() == menuButtons[5]){
             exitBattleCity();
         }
+    }
+
+    private void startGame() {
+        menuWindow.close();
+        GameManager gameManager = new GameManager(playerCount);
     }
 
     private void exitBattleCity() {
@@ -111,5 +118,13 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private GameManager gameManager;
     private FileManager menuFileManager;
      */
+
+    public int getPlayerCount() {
+        return playerCount;
+    }
+
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
+    }
 }
  

@@ -4,6 +4,7 @@
 public abstract class Tank extends GameObject {
 
     //Variables
+    private int BULLET_DAMAGE = 200;
     private int type;
     private int id;
     private int health;
