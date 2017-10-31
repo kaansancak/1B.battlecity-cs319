@@ -99,7 +99,7 @@ public class FileManager /* probably extends serializable*/ {
     // images from file
     public ArrayList<Image> getScannedImages() throws FileNotFoundException {
         for(int i = 0; i < NUMBER_IMAGES; i++){ // assumed png
-            scannedImages.add(new Image(new File(this.getClass().getResource("."+"/MediaFiles/image" + i + ".png").toString()).toURI().toString()));
+            scannedImages.add(new Image("."+"/MediaFiles/image" + i + ".png"));
         }
         return scannedImages;
     }
@@ -113,7 +113,7 @@ public class FileManager /* probably extends serializable*/ {
         String audio = "";
         for(int i = 0; i < NUMBER_AUDIOS; i++){
 
-            scannedAudios.add(new AudioClip("."+"/MediaFiles/audio" + i + ".mp3")); // audioooo
+            scannedAudios.add(new AudioClip("."+"/MediaFiles/audio"+i+".mp3")); // audioooo
         }
         return scannedAudios;
     }
