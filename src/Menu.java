@@ -6,9 +6,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
+import java.applet.AudioClip;
+import java.io.FileNotFoundException;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -26,6 +31,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private int menuTypeId;
     private JFXPanel menuLayout;
     private Button[] menuButtons;
+    private FileManager f;
 
     public static void main( String[] args){
         launch(args);
@@ -34,6 +40,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Set the title of the stage
+        f = new FileManager();
         menuWindow = primaryStage;
         menuWindow.setTitle( "Battle City");
         menuWindow.setOnCloseRequest(e-> {
@@ -91,14 +98,29 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     }
 
     private void showHowToPlay() {
-        howToPlayFrame = new ViewFrame( "HOW TO PLAY", "Some message");
+        String message = "";
+        try {
+            message = f.getHowToPlayDoc();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        howToPlayFrame = new ViewFrame( "HOW TO PLAY", message);
         if ( howToPlayFrame.isReturnCall()){
             menuWindow.show();
         }
     }
 
     private void showCredits() {
-        creditsFrame = new ViewFrame( "CREDITS", "Some message\nKaan Sancak");
+        String s = null;
+        try {
+            s = f.getCreditsDoc();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //f.getScannedAudios().get(0).play(); burada müzik deniyorum :D
+        creditsFrame = new ViewFrame( "CREDITS", s);
         if(creditsFrame.isReturnCall()){
             menuWindow.show();
         }
