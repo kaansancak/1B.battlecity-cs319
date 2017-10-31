@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
@@ -119,7 +120,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             e.printStackTrace();
         }
 
-        //f.getScannedAudios().get(0).play(); burada müzik deniyorum :D
+        new MediaPlayer(f.getScannedAudios().get(0)).play(); //burada müzik deniyorum :D
         creditsFrame = new ViewFrame( "CREDITS", s);
         if(creditsFrame.isReturnCall()){
             menuWindow.show();

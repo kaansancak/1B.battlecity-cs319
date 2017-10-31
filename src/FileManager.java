@@ -1,7 +1,8 @@
-import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
@@ -14,7 +15,7 @@ public class FileManager /* probably extends serializable*/ {
     private File curFil; // addition: File
     private ArrayList<Image> scannedImages;
     private ArrayList<String> scannedTexts;
-    private ArrayList<AudioClip> scannedAudios;
+    private ArrayList<Media> scannedAudios;
     private Scanner scan;
     private int[][] scannedMap;
     private final int NUMBER_IMAGES = 1;
@@ -109,11 +110,11 @@ public class FileManager /* probably extends serializable*/ {
         return scannedTexts;
     }
 
-    public ArrayList<AudioClip> getScannedAudios() {
+    public ArrayList<Media> getScannedAudios() {
         String audio = "";
         for(int i = 0; i < NUMBER_AUDIOS; i++){
 
-            scannedAudios.add(new AudioClip("."+"/MediaFiles/audio"+i+".mp3")); // audioooo
+            scannedAudios.add(new Media(Paths.get("MediaFiles/audio" + i + ".wav").toUri().toString())); // audioooo
         }
         return scannedAudios;
     }
