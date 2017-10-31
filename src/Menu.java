@@ -72,8 +72,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == menuButtons[0]){
-            setPlayerCount(1);
-            startGame();
+             Map gameMap = new Map();
         }else if( event.getSource() == menuButtons[1]){
             setPlayerCount(2);
             startGame();
@@ -89,6 +88,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             exitBattleCity();
         }
     }
+
+
 
     private void showHowToPlay() {
         howToPlayFrame = new ViewFrame( "HOW TO PLAY", "Some message");
