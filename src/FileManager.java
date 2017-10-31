@@ -1,11 +1,12 @@
+import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.File;
-import javafx.scene.image.Image;
+import java.util.Scanner;
 // probably import java.io.Serializable
 
 
