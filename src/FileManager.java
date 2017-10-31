@@ -33,7 +33,7 @@ public class FileManager /* probably extends serializable*/ {
 
     // level names will be "level" + levelCount + ".txt" -> level3.txt e.g
     public int[][] getMapLevelData(int level) throws FileNotFoundException{
-        curFil = new File(this.getClass().getResource("/MediaFiles/level"+level+".txt").toString());
+        curFil = new File("."+"/MediaFiles/level"+level+".txt");
         scan = new Scanner(curFil);
         for(int i = 0; i < TILES && scan.hasNextLine(); i++){
             for(int j = 0; j < TILES && scan.hasNext(); j++){
@@ -45,7 +45,7 @@ public class FileManager /* probably extends serializable*/ {
     }
     // highest score will be in file highS.txt
     public void saveHighestScore(int highestScore) throws java.io.IOException{
-        curFil = new File(this.getClass().getResource("/MediaFiles/highS.txt").toString());
+        curFil = new File("."+"/MediaFiles/highS.txt");
         scan = new Scanner(curFil);
         if(highestScore > scan.nextInt()) {
             FileWriter fWriter = new FileWriter(curFil);
@@ -55,13 +55,13 @@ public class FileManager /* probably extends serializable*/ {
 
     }
     public int getHighestScore() throws FileNotFoundException{
-        curFil = new File(this.getClass().getResource("/MediaFiles/highS.txt").toString());
+        curFil = new File("."+"/MediaFiles/highS.txt");
         scan = new Scanner(curFil);
         return scan.nextInt();
     }
     // howToPlay.txt
     public String getHowToPlayDoc() throws FileNotFoundException{
-        curFil = new File(this.getClass().getResource("/MediaFiles/howToPlay.txt").getFile());
+        curFil = new File("."+"/MediaFiles/howToPlay.txt");
         scan = new Scanner(curFil);
         String s = "";
         while(scan.hasNext()){
@@ -71,8 +71,7 @@ public class FileManager /* probably extends serializable*/ {
     }
     // credits.txt
     public String getCreditsDoc() throws FileNotFoundException{
-        curFil = new File(this.getClass().getResource("/MediaFiles/credits.txt").getFile());
-        System.out.println(curFil.toString());
+        curFil = new File("."+"/MediaFiles/credits.txt");
         scan = new Scanner(curFil);
         String s = "";
         while(scan.hasNext()){
@@ -82,7 +81,7 @@ public class FileManager /* probably extends serializable*/ {
     }
     // settings.txt each line will be new array element e.g WASD(space) would be first line
     public ArrayList<String> getSettingsDoc() throws FileNotFoundException{
-        curFil = new File(this.getClass().getResource("/MediaFiles/settings.txt").getFile());
+        curFil = new File(this.getClass().getResource("."+"/MediaFiles/settings.txt").getFile());
         scan = new Scanner(curFil);
         ArrayList<String> setting = new ArrayList<>();
         while(scan.hasNext()){
@@ -100,7 +99,7 @@ public class FileManager /* probably extends serializable*/ {
     // images from file
     public ArrayList<Image> getScannedImages() throws FileNotFoundException {
         for(int i = 0; i < NUMBER_IMAGES; i++){ // assumed png
-            scannedImages.add(new Image(new File(this.getClass().getResource("/MediaFiles/image" + i + ".png").toString()).toURI().toString()));
+            scannedImages.add(new Image(new File(this.getClass().getResource("."+"/MediaFiles/image" + i + ".png").toString()).toURI().toString()));
         }
         return scannedImages;
     }
@@ -113,8 +112,8 @@ public class FileManager /* probably extends serializable*/ {
     public ArrayList<AudioClip> getScannedAudios() {
         String audio = "";
         for(int i = 0; i < NUMBER_AUDIOS; i++){
-            audio = this.getClass().getResource("/MediaFiles/audio" + i + ".mp3").toString();
-            scannedAudios.add(new AudioClip(audio)); // audioooo
+
+            scannedAudios.add(new AudioClip("."+"/MediaFiles/audio" + i + ".mp3")); // audioooo
         }
         return scannedAudios;
     }
