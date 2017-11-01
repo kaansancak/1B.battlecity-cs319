@@ -228,14 +228,12 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         // menu should open
     }
 
-    private void initLabels()
-    {
+    private void initLabels() {
         // player 1
         player1_textfields = new TextField[5];
         player1_boxes = new HBox[5];
 
-        for( int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             player1_textfields[i] = new TextField();
             player1_boxes[i] = new HBox();
         }
@@ -250,8 +248,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player2_textfields = new TextField[5];
         player2_boxes = new HBox[5];
 
-        for( int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             player2_textfields[i] = new TextField();
             player2_boxes[i] = new HBox();
         }
@@ -262,8 +259,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player2_boxes[3].getChildren().addAll(player2_right, player2_textfields[3]);
         player2_boxes[4].getChildren().addAll(player2_fire, player2_textfields[4]);
 
-        for( int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             player1_boxes[i].setSpacing(10);
             player2_boxes[i].setSpacing(10);
         }
