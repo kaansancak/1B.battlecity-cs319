@@ -9,18 +9,18 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
+//import javax.print.attribute.standard.Media;
 import javax.swing.*;
 
 import java.lang.reflect.Array;
@@ -42,13 +42,20 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     8. two comboboxes with 2 options in it for each
     9. add height and width later.
      */
+    /*
+      I need 2 VBoxes for sound management (top) and input management (bottom)
+      add labels into the input management and sound management vboxes (later)
+     */
 
     private static final int SETTINGS_WINDOW_WIDTH = 600;
     private static final int SETTINGS_WINDOWS_HEIGHT = 600;
+
     private Stage settingsWindow;
     private Scene settingsScene;
+
     //private JFXPanel settingsLayout;
     Menu menu;
+    FileManager file;
 
     // Player 1 default controls
     Label player1;
@@ -82,12 +89,41 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     Button submit;
     Button backToMenu;
 
+
+    // sound manager part
+    private int volume;
+    private int latestVolume; // volume before unmute
+
+    private CheckBox mute;
+    private CheckBox unmute;
+
+    private Slider volumeBar;
+
+    private ComboBox<javafx.scene.media.Media> musicBox;
+    private ArrayList<javafx.scene.media.Media> media;
+    MediaPlayer player;
+
+
     public static void main( String[] args) { launch(args); }
 
     public void start(Stage primaryStage) throws Exception {
 
+        file = new FileManager();
+        media = file.getScannedAudios();
+
         player1_keyList = new ArrayList<String>(0);
+        player1_keyList.add( "LEFT");
+        player1_keyList.add( "UP");
+        player1_keyList.add( "RIGHT");
+        player1_keyList.add( "DOWN");
+        player1_keyList.add( "SPACEBAR");
+
         player2_keyList = new ArrayList<String>(0);
+        player1_keyList.add( "A");
+        player1_keyList.add( "W");
+        player1_keyList.add( "D");
+        player1_keyList.add( "D");
+        player1_keyList.add( "Z");
 
         settingsWindow = primaryStage;
         settingsWindow.setTitle( "Options");
@@ -145,11 +181,63 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
             }
         });
 
+        // buttons
         submit = new Button("Submit");
         backToMenu = new Button("Back");
 
         submit.setOnAction(this);
         backToMenu.setOnAction(this);
+
+        // initialize the default volume
+        volume = 100;
+        latestVolume = 100;
+
+        // checkboxes
+        initCheckBoxes( mute, unmute);
+
+        // setting listener for the checkboxes
+        mute.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean old_val, Boolean new_val) {
+                System.out.println(mute.isSelected());
+                mute();
+            }
+        });
+        unmute.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean old_val, Boolean new_val) {
+                System.out.println(unmute.isSelected());
+                unmute();
+            }
+        });
+
+        // slider
+        initSlider( volumeBar);
+        volumeBar.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                int new_value = new_val.intValue();
+                changeVolume( new_value);
+            }
+        });
+
+        /// musicbox combobox
+        musicBox = new ComboBox<javafx.scene.media.Media>();
+        musicBox.getItems().addAll(
+             /*   for( int i = 0; i < media.size(); i++)
+                    media.get(i);*/
+             media.get(0),
+             media.get(1)
+        );
+
+        // add listener
+        musicBox.valueProperty().addListener(new ChangeListener<Media>() {
+            @Override
+            public void changed(ObservableValue<? extends Media> observable, Media oldValue, Media newValue) {
+                selectBackGroundMusic( newValue);
+            }
+        });
+
 
         settingsScene = new Scene( settingsLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
         settingsWindow.setScene( settingsScene);
@@ -157,6 +245,50 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
 
     }
 
+    private void selectBackGroundMusic( Media song) {
+        player = new MediaPlayer( song);
+        player.play();
+    }
+
+    private void initCheckBoxes( CheckBox mute, CheckBox unmute) {
+        mute = new CheckBox( "Mute");
+        unmute = new CheckBox( "Unmute");
+
+        mute.setSelected( true);
+        unmute.setSelected( true);
+    }
+
+    private void initSlider( Slider volumeBar) {
+        volumeBar = new Slider();
+        volumeBar.setMin(0);
+        volumeBar.setMax(100);
+        volumeBar.setValue(volume);
+
+        volumeBar.setShowTickLabels( true);
+        volumeBar.setShowTickMarks( true);
+        volumeBar.setMajorTickUnit( 50);
+        volumeBar.setBlockIncrement( 10);
+    }
+
+    private void mute() {
+        latestVolume = volume;
+        volume = 0;
+        changeVolume( volume); // will change the slider too
+    }
+
+    private void unmute() {
+        volume = latestVolume;
+        changeVolume( volume);
+    }
+
+    private void changeVolume( int volume) {
+        this.volume = volume;
+        volumeBar.setValue( volume);
+    }
+
+    private int getVolume() {
+        return volume;
+    }
     private void changeKeyList( String newKeyList){
 
         int player_id;
