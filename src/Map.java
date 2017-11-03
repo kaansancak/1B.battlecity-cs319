@@ -12,7 +12,7 @@ public class Map {
     private GameObject[][] gameObjects;
     private double elapsedTime;
 
-    public Map(){
+    public Map( ){
 
 
 
@@ -23,7 +23,7 @@ public class Map {
     * */
     public Map(int level){
         this.level = level;
-        botCount = 10 + 2*level; // WOW lol
+        botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -38,7 +38,7 @@ public class Map {
     }
 
     public boolean isDestructed(GameObject gameObject){
-
+        return true;
     }
 
     public void deleteObject(GameObject gameObject){
@@ -52,16 +52,13 @@ public class Map {
 
     }
 
-    public boolean isPassable(int x, int y, int dir){
-
-
+    public boolean isPassableTile(int x, int y){
+    if( gameObjects[x][y].isPassable())
     }
 
     public void drawMap(int height, int width){
 
     }
-
-
 
     // getters and setters
     public int getLevel() {

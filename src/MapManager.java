@@ -26,7 +26,7 @@ public class MapManager {
 
     }
     MapManager(int level){
-        map = new Map(mapLevel);
+        map = new Map(level);
         tilePane = new TilePane();
         obstaclesMap = new int[TILES][TILES];
         gameObjects = new GameObject[TILES][TILES];

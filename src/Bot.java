@@ -11,9 +11,7 @@ public class Bot extends Tank {
     }
 
     public boolean isStuck(){
-        if( super.move())
-            return false;
-        return  true;
+        return !super.move();
     }
 
     /*

@@ -90,7 +90,6 @@ public class Settings implements EventHandler<ActionEvent> {
     private int latestVolume; // volume before unmute
 
     private CheckBox mute;
-    private CheckBox unmute;
 
     private Slider volumeBar;
 
@@ -202,13 +201,6 @@ public class Settings implements EventHandler<ActionEvent> {
                 mute();
             }
         });
-        unmute.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov,
-                                Boolean old_val, Boolean new_val) {
-                System.out.println(unmute.isSelected());
-                unmute();
-            }
-        });
 
         // slider
         volumeBar.valueProperty().addListener(new ChangeListener<Number>() {
@@ -244,7 +236,7 @@ public class Settings implements EventHandler<ActionEvent> {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(3.0);
         vBox.setFillWidth(true);
-        vBox.getChildren().addAll( volumeBar, mute, unmute, musicBox, player1Label, player2Label, submit, backToMenu);
+        vBox.getChildren().addAll( volumeBar, mute, musicBox, player1Label, player2Label, submit, backToMenu);
     }
 
     public void showSettings(){
@@ -262,10 +254,9 @@ public class Settings implements EventHandler<ActionEvent> {
 
     private void initCheckBoxes() {
         mute = new CheckBox( "Mute");
-        unmute = new CheckBox( "Unmute");
 
-        mute.setSelected( true);
-        unmute.setSelected( true);
+        mute.setSelected( false);
+
     }
 
     private void initSlider() {
@@ -284,11 +275,6 @@ public class Settings implements EventHandler<ActionEvent> {
         latestVolume = volume;
         volume = 0;
         changeVolume( volume); // will change the slider too
-    }
-
-    private void unmute() {
-        volume = latestVolume;
-        changeVolume( volume);
     }
 
     private void changeVolume( int volume) {
