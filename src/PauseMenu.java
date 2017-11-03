@@ -100,7 +100,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     public void showPauseMenu() {
         pauseMenuWindow.showAndWait();
     }
-
     public void closeSettings(){
         pauseMenuWindow.close();
     }
