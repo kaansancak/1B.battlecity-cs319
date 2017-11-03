@@ -9,6 +9,9 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Insets;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -89,7 +92,6 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     Button submit;
     Button backToMenu;
 
-
     // sound manager part
     private int volume;
     private int latestVolume; // volume before unmute
@@ -102,6 +104,12 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     private ComboBox<javafx.scene.media.Media> musicBox;
     private ArrayList<javafx.scene.media.Media> media;
     MediaPlayer player;
+
+    // general gui
+    private VBox soundBox;
+    private VBox inputBox;
+    BorderPane border;
+
 
 
     public static void main( String[] args) { launch(args); }
@@ -238,13 +246,11 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-
         settingsScene = new Scene( settingsLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
         settingsWindow.setScene( settingsScene);
         settingsWindow.show();
 
     }
-
     private void selectBackGroundMusic( Media song) {
         player = new MediaPlayer( song);
         player.play();

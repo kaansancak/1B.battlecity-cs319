@@ -1,3 +1,5 @@
+import javafx.stage.Stage;
+
 /**
  * Created by kaan on 10/28/2017.
  */
@@ -16,6 +18,10 @@ public class Bullet extends GameObject {
         this.id = id;
         this.dir = dir;
         isCrushed = false;
+    }
+
+    public void start(Stage primaryStage) {
+
     }
 
     //methods
