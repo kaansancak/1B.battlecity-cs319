@@ -82,7 +82,6 @@ public class MapManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
     private void manageObjects(){
         for(int i = 0; i < TILES ; i++){
