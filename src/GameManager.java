@@ -1,6 +1,8 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.util.Set;
+
 public class GameManager extends Application{
 
     private final int GAME_START_LEVEL = 1;
@@ -8,7 +10,7 @@ public class GameManager extends Application{
     private MapManager mapManager;
     private ScreenManager screenManager;
     private FileManager gameManagerFileManager;
-    private InputController inputController;
+    private Settings inputController;
     private int highestScore;
     private Player[] players;
     private int[] currentScores;
