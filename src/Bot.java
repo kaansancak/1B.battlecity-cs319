@@ -10,7 +10,7 @@ public class Bot extends Tank {
     }
 
     public boolean isStuck(){
-        return !super.move();
+        return false;
     }
     /*
     This method must be modified according to description

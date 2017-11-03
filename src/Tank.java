@@ -24,12 +24,19 @@ public abstract class Tank extends GameObject {
     might be unpassable, so return type must be
     boolean but not void
      */
-    public boolean move(){
-        if( dir == 0){
-            super.setxLoc( super.getxLoc() + 1);
-        }else
-            super.setyLoc( super.getyLoc() +1 );
-        return true;
+
+    public int requestMove(){
+        return dir;
+    }
+    public void move( int dir){
+            if( dir == 0)
+                super.setxLoc(super.getxLoc() + 1);
+            else if( dir == 1)
+                super.setxLoc( super.getxLoc() + 1);
+            else if ( dir == 2)
+                super.setyLoc( super.getyLoc() + 1);
+            else if( dir == 3)
+                super.setyLoc( super.getyLoc() - 1);
     }
 
     public void getDamaged(){

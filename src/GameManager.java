@@ -22,7 +22,6 @@ public class GameManager{
         currentScores = new int[player_count];
         mapManager = new MapManager();
         gameManagerFileManager = new FileManager();
-        //screenManager = new ScreenManager();
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
@@ -43,7 +42,6 @@ public class GameManager{
         return gamePaused;
     }
     private void pauseGame(){
-        while()
         gamePaused = true;
         gameRunning = false;
     }
@@ -54,7 +52,6 @@ public class GameManager{
 
 
     private void quitGame(){}
-    //private SoundManager getSetting(){}
     private void saveHighestScore(int scoregame){ if(scoregame>highestScore)
                                                     { highestScore = scoregame; }}
     private int getHighestScore(){ return highestScore; }
