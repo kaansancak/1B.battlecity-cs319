@@ -1,3 +1,4 @@
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -108,10 +109,6 @@ public class Map {
         return gameObjects[x][y].isMovableTile();
     }
 
-    public void drawMap(int height, int width){
-
-    }
-
     // getters and setters
 
     public ArrayList<Image> getImages() {
@@ -179,4 +176,11 @@ public class Map {
         this.elapsedTime = elapsedTime;
     }
 
+    public TilePane getTilePane() {
+        return tilePane;
+    }
+
+    public void setTilePane(TilePane tilePane) {
+        this.tilePane = tilePane;
+    }
 }
