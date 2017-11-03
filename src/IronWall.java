@@ -5,10 +5,6 @@ import javafx.stage.Stage;
  */
 public class IronWall extends Undestructible{
 
-    public void start(Stage primaryStage) {
-
-    }
-
     //Constructor
     public IronWall( int xLoc, int yLoc){
         super.setxLoc( xLoc);
@@ -19,3 +15,4 @@ public class IronWall extends Undestructible{
         return false;
     }
 }
+//
