@@ -26,9 +26,9 @@ public class MapManager {
 
     }
     MapManager(int level){
-        map = new Map(level);
         tilePane = new TilePane();
         obstaclesMap = new int[TILES][TILES];
+        map = new Map(level, obstaclesMap);
         gameObjects = new GameObject[TILES][TILES];
         gameStatus = true;
         mapFinished = false;
@@ -109,10 +109,7 @@ public class MapManager {
         map.addObjects(gameObjects);
     }
     private boolean stopGameLoop(){
-        if(isMapFinished()){ // user input to stop loop for pause screen
-            return true;
-        }
-        return false;
+        return isMapFinished();
     }
     private void gameLoop(){
         if(!stopGameLoop()){
