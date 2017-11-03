@@ -25,4 +25,4 @@ public class Bot extends Tank {
     }
 
 
-}//
+}

@@ -19,7 +19,7 @@ public abstract class GameObject {
     private Image image;
     private int width;
     private int height;
-//
+
 
     //methods
     public void updateLocation(){

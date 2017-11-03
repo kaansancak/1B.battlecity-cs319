@@ -40,7 +40,7 @@ public class Bullet extends GameObject {
                 super.setyLoc(super.getyLoc() + 1);
             }
         }
-    }//
+    }
 
     //Setters and Getters
     public int getDir() {

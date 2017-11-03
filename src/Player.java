@@ -14,7 +14,7 @@ public class Player extends Tank {
     private int controllerId;
     private ArrayList<String> controller;
 
-    public Player( int id, int controllerId){
+    public Player(int id, int controllerId) {
         super.setId(id);
         this.controllerId = controllerId;
     }
@@ -27,9 +27,8 @@ public class Player extends Tank {
         return controller;
     }
 
-    private void setController( ArrayList<String> controller) {
+    private void setController(ArrayList<String> controller) {
         this.controller = controller;
     }
 
 }
-//

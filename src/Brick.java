@@ -28,4 +28,4 @@ public class Brick extends Destructible {
             super.setImage(damagedImage);
         }
     }
-}//
+}
