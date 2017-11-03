@@ -1,5 +1,4 @@
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -27,5 +26,9 @@ public class Brick extends Destructible {
         if( super.getHealth() < 600){
             super.setImage(damagedImage);
         }
+    }
+
+    public boolean isMovableTile(){
+        return false;
     }
 }

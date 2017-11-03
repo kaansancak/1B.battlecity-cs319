@@ -1,9 +1,4 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-import java.util.Set;
-
-public class GameManager extends Application{
+public class GameManager{
 
     private final int GAME_START_LEVEL = 1;
     private final int GAME_FINAL_LEVEL = 2;
@@ -21,11 +16,6 @@ public class GameManager extends Application{
     private int gameCompletedLevels;
 
     GameManager(){}
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-    }
 
     GameManager(int player_count){
         players = new Player[player_count];
@@ -53,6 +43,7 @@ public class GameManager extends Application{
         return gamePaused;
     }
     private void pauseGame(){
+        while()
         gamePaused = true;
         gameRunning = false;
     }

@@ -1,5 +1,3 @@
-import javafx.stage.Stage;
-
 /**
  * Created by kaan on 10/28/2017.
  */
@@ -64,5 +62,10 @@ public class Bullet extends GameObject {
     }
     public void setCrushed(boolean crushed) {
         isCrushed = crushed;
+    }
+
+
+    public boolean isMovableTile(){
+        return true;
     }
 }

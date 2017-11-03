@@ -26,11 +26,10 @@ public class Map {
 
     public Map( ){
 
-
-
     }
     /* GameObject File Decode
-    * 0 = null , 1 = Brick 2 = Bush 3 = IronWall 4 = Water
+    * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
+    * 4 = Player, 5 = Bot
     * */
     public Map(int level, int[][] obstaclesMap){
         this.level = level;
@@ -89,21 +88,23 @@ public class Map {
     }
 
     public void deleteObject(GameObject gameObject){
-
+        if( gameObject instanceof Tank)
+            if( !((Tank) gameObject).isAlive())
+                gameObject = null;
+        else if( gameObject instanceof Destructible)
+            if( ((Destructible) gameObject).isDestructed())
+                gameObject = null;
     }
 
     public boolean isBotsDead(){
-
+        return botCount == 0;
     }
     public void finishMap(){
 
     }
 
     public boolean isPassableTile(int x, int y){
-      if( gameObjects[x][y].isPassable()){
-
-      }
-      return false;
+        return gameObjects[x][y].isMovableTile();
     }
 
     public void drawMap(int height, int width){
@@ -133,6 +134,7 @@ public class Map {
     }
 
     public void setHeight(int height) {
+
         this.height = height;
     }
 
