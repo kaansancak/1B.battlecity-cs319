@@ -28,9 +28,6 @@ public class FileManager /* probably extends serializable*/ {
         scannedTexts = new ArrayList<>();
         scannedAudios = new ArrayList<>();
         scannedMap = new int[TILES][TILES];
-        // maybe we need a string to hold directory
-        // which will initialized here and changed in
-        // methods
     }
 
     // level names will be "level" + levelCount + ".txt" -> level3.txt e.g

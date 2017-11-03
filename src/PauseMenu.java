@@ -71,7 +71,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
             // should return to the game screen
         }
     }
-
+//
     private void initSlider() {
         volumeBar = new Slider();
         volumeBar.setMin(0);
@@ -95,7 +95,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     public void showPauseMenu() {
         pauseMenuWindow.showAndWait();
     }
-
     public void closeSettings(){
         pauseMenuWindow.close();
     }

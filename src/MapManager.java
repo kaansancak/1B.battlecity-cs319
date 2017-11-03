@@ -1,7 +1,4 @@
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.TilePane;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -15,29 +12,17 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
-    private GameObject[][] gameObjects;
-    private TilePane tilePane;
-    private ImageView temp;
-
-    private ArrayList<Image> images;
-
 
     MapManager(){
 
     }
     MapManager(int level){
-        tilePane = new TilePane();
         obstaclesMap = new int[TILES][TILES];
+        readObstaclesMap();
         map = new Map(level, obstaclesMap);
-        gameObjects = new GameObject[TILES][TILES];
         gameStatus = true;
         mapFinished = false;
         mapLevel = level;
-        tileX = (int) tilePane.getTileWidth();
-        tileY = (int) tilePane.getTileHeight();
-        map.setWidth((int)tilePane.getWidth());
-        map.setHeight((int)tilePane.getHeight());
-        images = new ArrayList<>();
         getImages();
         startsLevel();
         gameLoop();
@@ -46,75 +31,48 @@ public class MapManager {
     /* NEW METHOD TO CREATE OBJECTS
        // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
     */
-    private void intToObject(){
-        for(int i = 0; i < TILES; i++){
-            for(int j = 0; j < TILES; j++) {
-                if(obstaclesMap[i][j] == 0){
-                    gameObjects[i][j] = null;// ground
-                }
-                else {
-                    if (obstaclesMap[i][j] == 1) {
-                        gameObjects[i][j] = new Brick(i * tileX, j * tileY);
-                        gameObjects[i][j].setImage(images.get(1));
-                    } else if (obstaclesMap[i][j] == 2) {
-                        gameObjects[i][j] = new Bush(i * tileX, j * tileY);
-                        gameObjects[i][j].setImage(images.get(2));
-                    } else if (obstaclesMap[i][j] == 3) {
-                        gameObjects[i][j] = new IronWall(i * tileX, j * tileY);
-                        gameObjects[i][j].setImage(images.get(3));
-                    } else if (obstaclesMap[i][j] == 4) {
-                        gameObjects[i][j] = new Water(i * tileX, j * tileY);
-                        gameObjects[i][j].setImage(images.get(4));
-                    }
 
-                    temp = new ImageView(gameObjects[i][j].getImage());
-                    temp.relocate(i * tileY, j * tileY);
-                    tilePane.getChildren().addAll(temp);
-                }
-            }
-        }
-
-    }
-
-    private void readObstaclesMap(){
+    private int[][] readObstaclesMap(){
         try {
             obstaclesMap = mapManagerFileManager.getMapLevelData(mapLevel);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        return obstaclesMap;
     }
     private void manageObjects(){
         for(int i = 0; i < TILES ; i++){
             for(int j = 0; j < TILES; j++) {
-                if (gameObjects[i][j] instanceof Bullet){
-                    collisionManager.checkCollision((Bullet)gameObjects[i][j]);
+                if (map.getGameObjects()[i][j] instanceof Bullet){
+                    collisionManager.checkCollision((Bullet)map.getGameObjects()[i][j]);
                 }
             }
         }
     }
 
-    private void updateMapObjects(Map map){
-        map.addObjects(gameObjects);
+    private void updateMapObjects(){
+
     }
 
     private void updateMap(){
-        map = new Map(mapLevel);
+        map = new Map(mapLevel, obstaclesMap);
         startsLevel();
     }
     private void startsLevel(){
         readObstaclesMap();
-        intToObject();
-        collisionManager = new CollisionManager(gameObjects);
-        map.addObjects(gameObjects);
+        collisionManager = new CollisionManager(map.getGameObjects());
+        map.addObjects(map.getGameObjects());
     }
     private boolean stopGameLoop(){
-        return isMapFinished();
+        if(isMapFinished()){ // user input to stop loop for pause screen
+            return true;
+        }
+        return false;
     }
     private void gameLoop(){
         if(!stopGameLoop()){
             manageObjects();
-            updateMapObjects(map);
+            updateMapObjects();
             gameLoop();
         }
         else{
@@ -127,13 +85,11 @@ public class MapManager {
     }
     private void getImages(){
         try {
-            images = mapManagerFileManager.getScannedImages();
+            map.setImages(mapManagerFileManager.getScannedImages());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
-
 
     // getter and setters
     public boolean isGameStatus() {
