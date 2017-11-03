@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.TilePane;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,7 +16,8 @@ public class MapManager {
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
     private GameObject[][] gameObjects;
-    private StackPane stackPane;
+    private TilePane tilePane;
+    private ImageView temp;
 
     private ArrayList<Image> images;
 
@@ -25,23 +27,19 @@ public class MapManager {
     }
     MapManager(int level){
         map = new Map(mapLevel);
-        stackPane = new StackPane();
-        tileX = (int)stackPane.getWidth()/TILES;
-        tileY = (int)stackPane.getHeight()/TILES;
+        tilePane = new TilePane();
         obstaclesMap = new int[TILES][TILES];
         gameObjects = new GameObject[TILES][TILES];
         gameStatus = true;
         mapFinished = false;
         mapLevel = level;
+        tileX = (int) tilePane.getTileWidth();
+        tileY = (int) tilePane.getTileHeight();
         readObstaclesMap();
         intToObject();
         collisionManager = new CollisionManager(gameObjects);
         images = new ArrayList<>();
-        try {
-            images = mapManagerFileManager.getScannedImages();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        getImages();
     }
 
     /* NEW METHOD TO CREATE OBJECTS
@@ -53,17 +51,23 @@ public class MapManager {
                 if(obstaclesMap[i][j] == 0){
                     gameObjects[i][j] = null;// ground
                 }
-                else if(obstaclesMap[i][j] == 1){
-                    gameObjects[i][j] = new Brick(i*tileX, j*tileY);
-                }
-                else if(obstaclesMap[i][j] == 2){
-                    gameObjects[i][j] = new Bush(i*tileX, j*tileY);
-                }
-                else if(obstaclesMap[i][j] == 3){
-                    gameObjects[i][j] = new IronWall(i*tileX, j*tileY);
-                }
-                else if(obstaclesMap[i][j] == 4){
-                    gameObjects[i][j] = new Water(i*tileX, j*tileY);
+                else {
+                    if (obstaclesMap[i][j] == 1) {
+                        gameObjects[i][j] = new Brick(i * tileX, j * tileY);
+                        gameObjects[i][j].setImage(images.get(1));
+                    } else if (obstaclesMap[i][j] == 2) {
+                        gameObjects[i][j] = new Bush(i * tileX, j * tileY);
+                        gameObjects[i][j].setImage(images.get(2));
+                    } else if (obstaclesMap[i][j] == 3) {
+                        gameObjects[i][j] = new IronWall(i * tileX, j * tileY);
+                        gameObjects[i][j].setImage(images.get(3));
+                    } else if (obstaclesMap[i][j] == 4) {
+                        gameObjects[i][j] = new Water(i * tileX, j * tileY);
+                        gameObjects[i][j].setImage(images.get(4));
+                    }
+                    temp = new ImageView(gameObjects[i][j].getImage());
+                    temp.relocate(i * tileY, j * tileY);
+                    tilePane.getChildren().addAll(temp);
                 }
             }
         }
@@ -84,8 +88,14 @@ public class MapManager {
     private void startsLevel(int level){}
     private void stopGameLoop(){}
     private void gameLoop(){}
-   // private boolean isMapFinished(){}
     private void finishLevel(){}
+    private void getImages(){
+        try {
+            images = mapManagerFileManager.getScannedImages();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
