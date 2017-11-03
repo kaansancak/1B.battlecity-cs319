@@ -55,7 +55,8 @@ public class MapManager {
     }
 
     private void updateMap(){
-        map = new Map(mapLevel, obstaclesMap);
+        mapLevel++;
+        map = new Map(mapLevel, readObstaclesMap());
         startsLevel();
     }
     private void startsLevel(){
