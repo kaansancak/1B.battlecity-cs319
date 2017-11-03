@@ -1,4 +1,7 @@
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.TilePane;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -27,6 +30,10 @@ public class MapManager {
         startsLevel();
         gameLoop();
     }
+
+public TilePane getMapTilePane(){
+        return map.getTilePane();
+}
 
     /* NEW METHOD TO CREATE OBJECTS
        // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
