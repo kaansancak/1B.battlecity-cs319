@@ -26,7 +26,7 @@ public class MapManager {
 
     }
     MapManager(int level){
-        map = new Map(mapLevel);
+        map = new Map(level);
         tilePane = new TilePane();
         obstaclesMap = new int[TILES][TILES];
         gameObjects = new GameObject[TILES][TILES];
@@ -35,11 +35,12 @@ public class MapManager {
         mapLevel = level;
         tileX = (int) tilePane.getTileWidth();
         tileY = (int) tilePane.getTileHeight();
-        readObstaclesMap();
-        intToObject();
-        collisionManager = new CollisionManager(gameObjects);
+        map.setWidth((int)tilePane.getWidth());
+        map.setHeight((int)tilePane.getHeight());
         images = new ArrayList<>();
         getImages();
+        startsLevel();
+        gameLoop();
     }
 
     /* NEW METHOD TO CREATE OBJECTS
@@ -65,6 +66,7 @@ public class MapManager {
                         gameObjects[i][j] = new Water(i * tileX, j * tileY);
                         gameObjects[i][j].setImage(images.get(4));
                     }
+
                     temp = new ImageView(gameObjects[i][j].getImage());
                     temp.relocate(i * tileY, j * tileY);
                     tilePane.getChildren().addAll(temp);
@@ -82,13 +84,50 @@ public class MapManager {
         }
 
     }
-    //private GameObject[] manageObjects(CollisionManager collisionManager, Map map){}
-    private void updateMapObjects(Map map){}
-    private void updateMap(){}
-    private void startsLevel(int level){}
-    private void stopGameLoop(){}
-    private void gameLoop(){}
-    private void finishLevel(){}
+    private void manageObjects(){
+        for(int i = 0; i < TILES ; i++){
+            for(int j = 0; j < TILES; j++) {
+                if (gameObjects[i][j] instanceof Bullet){
+                    collisionManager.checkCollision((Bullet)gameObjects[i][j]);
+                }
+            }
+        }
+    }
+
+    private void updateMapObjects(Map map){
+        map.addObjects(gameObjects);
+    }
+
+    private void updateMap(){
+        map = new Map(mapLevel);
+        startsLevel();
+    }
+    private void startsLevel(){
+        readObstaclesMap();
+        intToObject();
+        collisionManager = new CollisionManager(gameObjects);
+        map.addObjects(gameObjects);
+    }
+    private boolean stopGameLoop(){
+        if(isMapFinished()){ // user input to stop loop for pause screen
+            return true;
+        }
+        return false;
+    }
+    private void gameLoop(){
+        if(!stopGameLoop()){
+            manageObjects();
+            updateMapObjects(map);
+            gameLoop();
+        }
+        else{
+            finishLevel();
+        }
+
+    }
+    private void finishLevel(){
+        map.finishMap();
+    }
     private void getImages(){
         try {
             images = mapManagerFileManager.getScannedImages();
