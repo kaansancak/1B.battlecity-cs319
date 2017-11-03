@@ -1,7 +1,12 @@
+import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class MapManager {
     private final int TILES = 20;
+    private int tileX, tileY;
     private boolean gameStatus;
     private int mapLevel;
     private Map map;
@@ -10,20 +15,58 @@ public class MapManager {
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
     private GameObject[][] gameObjects;
+    private StackPane stackPane;
+
+    private ArrayList<Image> images;
+
 
     MapManager(){
 
     }
     MapManager(int level){
         map = new Map(mapLevel);
-
+        stackPane = new StackPane();
+        tileX = (int)stackPane.getWidth()/TILES;
+        tileY = (int)stackPane.getHeight()/TILES;
         obstaclesMap = new int[TILES][TILES];
         gameObjects = new GameObject[TILES][TILES];
         gameStatus = true;
         mapFinished = false;
         mapLevel = level;
         readObstaclesMap();
+        intToObject();
         collisionManager = new CollisionManager(gameObjects);
+        images = new ArrayList<>();
+        try {
+            images = mapManagerFileManager.getScannedImages();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* NEW METHOD TO CREATE OBJECTS
+       // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
+    */
+    private void intToObject(){
+        for(int i = 0; i < TILES; i++){
+            for(int j = 0; j < TILES; j++) {
+                if(obstaclesMap[i][j] == 0){
+                    gameObjects[i][j] = null;// ground
+                }
+                else if(obstaclesMap[i][j] == 1){
+                    gameObjects[i][j] = new Brick(i*tileX, j*tileY);
+                }
+                else if(obstaclesMap[i][j] == 2){
+                    gameObjects[i][j] = new Bush(i*tileX, j*tileY);
+                }
+                else if(obstaclesMap[i][j] == 3){
+                    gameObjects[i][j] = new IronWall(i*tileX, j*tileY);
+                }
+                else if(obstaclesMap[i][j] == 4){
+                    gameObjects[i][j] = new Water(i*tileX, j*tileY);
+                }
+            }
+        }
 
     }
 
@@ -44,12 +87,13 @@ public class MapManager {
    // private boolean isMapFinished(){}
     private void finishLevel(){}
 
+
+
+    // getter and setters
     public boolean isGameStatus() {
         return gameStatus;
     }
 
-
-    // getter and setters
     public void setGameStatus(boolean gameStatus) {
         this.gameStatus = gameStatus;
     }
