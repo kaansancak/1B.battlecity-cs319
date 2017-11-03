@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * Created by kaan on 10/28/2017.
  */
 public class Player extends Tank {
+
+    // variables
     private int score;
     private int controllerId;
     private ArrayList<String> controller;
@@ -17,16 +19,17 @@ public class Player extends Tank {
         this.controllerId = controllerId;
     }
 
-    public void setController( int controllerId){
-        //This method must be modofied after writing input controller
-        //change the return type to ArrayList<String>
-
+    private void incrementScore() {
+        score++;
     }
 
-    public void setController( ArrayList<String> keyList){
-        //Change the input controller of given player
+    private ArrayList<String> getController() {
+        return controller;
     }
-    public void start(Stage primaryStage){
 
+    private void setController( ArrayList<String> controller) {
+        this.controller = controller;
     }
+
 }
+//

@@ -20,10 +20,6 @@ public class Bullet extends GameObject {
         isCrushed = false;
     }
 
-    public void start(Stage primaryStage) {
-
-    }
-
     //methods
     /*Destruct method destroys the current bullet
     if any collision occurs
@@ -44,7 +40,7 @@ public class Bullet extends GameObject {
                 super.setyLoc(super.getyLoc() + 1);
             }
         }
-    }
+    }//
 
     //Setters and Getters
     public int getDir() {

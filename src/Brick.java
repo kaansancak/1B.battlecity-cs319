@@ -6,10 +6,6 @@ import javafx.stage.Stage;
  */
 public class Brick extends Destructible {
 
-    public void start(Stage primaryStage) {
-
-    }
-
     //Variables
     private Image damagedImage;
 
@@ -32,4 +28,4 @@ public class Brick extends Destructible {
             super.setImage(damagedImage);
         }
     }
-}
+}//

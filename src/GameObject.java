@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 /**
  * Created by kaan on 10/28/2017.
  */
-public abstract class GameObject extends Application {
+public abstract class GameObject {
 
     //Variables
     private final int BULLET_DAMAGE = 200;
@@ -19,7 +19,7 @@ public abstract class GameObject extends Application {
     private Image image;
     private int width;
     private int height;
-
+//
 
     //methods
     public void updateLocation(){

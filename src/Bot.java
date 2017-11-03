@@ -5,10 +5,6 @@ import javafx.stage.Stage;
  */
 public class Bot extends Tank {
 
-    public void start(Stage primaryStage) {
-
-    }
-
     public Bot( int xLoc, int yLoc){
         super.setxLoc( xLoc);
         super.setyLoc( yLoc);
@@ -29,4 +25,4 @@ public class Bot extends Tank {
     }
 
 
-}
+}//
