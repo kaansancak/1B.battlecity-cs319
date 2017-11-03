@@ -4,31 +4,23 @@
  the idea of the class is to have
  */
 
-
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.media.Media;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-
-//import javax.print.attribute.standard.Media;
-import javax.swing.*;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static javafx.application.Application.launch;
-
-public class Settings extends Application implements EventHandler<ActionEvent> {
+public class Settings implements EventHandler<ActionEvent> {
 
     /*
     List of items i need:
@@ -52,11 +44,12 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
 
     private Stage settingsWindow;
     private Scene settingsScene;
+    private boolean returnCall  = false;
 
     //private JFXPanel settingsLayout;
     Menu menu;
     FileManager file;
-
+    private VBox vBox;
     // Player 1 default controls
     Label player1;
     Label player1_up;
@@ -64,6 +57,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     Label player1_left;
     Label player1_right;
     Label player1_fire;
+    Label player1Label;
 
     TextField[] player1_textfields;
     HBox[] player1_boxes;
@@ -78,6 +72,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     Label player2_left;
     Label player2_right;
     Label player2_fire;
+    Label player2Label;
 
     TextField[] player2_textfields;
     HBox[] player2_boxes;
@@ -104,10 +99,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
     MediaPlayer player;
 
 
-    public static void main( String[] args) { launch(args); }
-
-    public void start(Stage primaryStage) throws Exception {
-
+    public Settings(){
         file = new FileManager();
         media = file.getScannedAudios();
 
@@ -117,6 +109,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player1_keyList.add( "RIGHT");
         player1_keyList.add( "DOWN");
         player1_keyList.add( "SPACEBAR");
+        player1Label = new Label( "Player 1 keys\n" + player1_keyList.toString());
 
         player2_keyList = new ArrayList<String>(0);
         player1_keyList.add( "A");
@@ -124,8 +117,10 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player1_keyList.add( "D");
         player1_keyList.add( "D");
         player1_keyList.add( "Z");
+        player2Label = new Label("Player 2 keys\n" + player2_keyList.toString());
 
-        settingsWindow = primaryStage;
+
+        settingsWindow = new Stage();
         settingsWindow.setTitle( "Options");
 
         StackPane settingsLayout = new StackPane();
@@ -141,6 +136,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player1_right = new Label("RIGHT");
         player1_fire = new Label("SPACEBAR");
 
+
         // Player 2 instructions display
         player2_up = new Label("W");
         player2_down = new Label("S");
@@ -149,6 +145,8 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player2_fire = new Label("Z");
 
         initLabels(); // initializing the labels
+        initCheckBoxes();
+        initSlider();
 
         // comboboxes for each player
         player1_settings = new ComboBox();
@@ -186,14 +184,15 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         backToMenu = new Button("Back");
 
         submit.setOnAction(this);
-        backToMenu.setOnAction(this);
+        backToMenu.setOnAction( event -> {
+            settingsWindow.close();
+            returnCall = true;
+        });
 
         // initialize the default volume
         volume = 100;
         latestVolume = 100;
 
-        // checkboxes
-        initCheckBoxes( mute, unmute);
 
         // setting listener for the checkboxes
         mute.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -212,7 +211,6 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         });
 
         // slider
-        initSlider( volumeBar);
         volumeBar.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -221,11 +219,9 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-        /// musicbox combobox
+        //musicbox combobox
         musicBox = new ComboBox<javafx.scene.media.Media>();
         musicBox.getItems().addAll(
-             /*   for( int i = 0; i < media.size(); i++)
-                    media.get(i);*/
              media.get(0),
              media.get(1)
         );
@@ -237,12 +233,26 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
                 selectBackGroundMusic( newValue);
             }
         });
-
-
+        addSettingsComponents();
+        settingsLayout.getChildren().add(vBox);
         settingsScene = new Scene( settingsLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
         settingsWindow.setScene( settingsScene);
-        settingsWindow.show();
+    }
 
+    public void addSettingsComponents(){
+        vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(3.0);
+        vBox.setFillWidth(true);
+        vBox.getChildren().addAll( volumeBar, mute, unmute, musicBox, player1Label, player2Label, submit, backToMenu);
+    }
+
+    public void showSettings(){
+        settingsWindow.showAndWait();
+    }
+
+    public void closeSettings(){
+        settingsWindow.close();
     }
 
     private void selectBackGroundMusic( Media song) {
@@ -250,7 +260,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         player.play();
     }
 
-    private void initCheckBoxes( CheckBox mute, CheckBox unmute) {
+    private void initCheckBoxes() {
         mute = new CheckBox( "Mute");
         unmute = new CheckBox( "Unmute");
 
@@ -258,7 +268,7 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         unmute.setSelected( true);
     }
 
-    private void initSlider( Slider volumeBar) {
+    private void initSlider() {
         volumeBar = new Slider();
         volumeBar.setMin(0);
         volumeBar.setMax(100);
@@ -342,22 +352,15 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
             return player2_keyList;
     }
 
+    public boolean isReturnCall() {
+        return returnCall;
+    }
+
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == submit) {
             //setSettings(// keylist)
         }
-        else if( event.getSource() == backToMenu) {
-            // back to menu
-            // there should be close window and show menu
-            settingsWindow.close();
-            showMenu();
-        }
-    }
-
-    private void showMenu() {
-        menu = new Menu();
-        // menu should open
     }
 
     private void initLabels() {
@@ -397,12 +400,5 @@ public class Settings extends Application implements EventHandler<ActionEvent> {
         }
 
     }
-
-
-
-
-
-
-
 
 }
