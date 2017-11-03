@@ -97,8 +97,6 @@ public class MapManager {
         }
     }
 
-
-
     // getter and setters
     public boolean isGameStatus() {
         return gameStatus;
