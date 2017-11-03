@@ -52,9 +52,8 @@ public class Map {
 
     }
 
-    public boolean isPassable(int x, int y, int dir){
-
-    return  true;
+    public boolean isPassableTile(int x, int y){
+    if( gameObjects[x][y].isPassable())
     }
 
     public void drawMap(int height, int width){

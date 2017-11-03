@@ -68,4 +68,8 @@ public abstract class Tank extends GameObject {
     public void setDir(int dir) {
         this.dir = dir;
     }
+
+    public boolean isMovableTile(){
+        return false;
+    }
 }

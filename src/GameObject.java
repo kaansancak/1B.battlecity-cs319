@@ -80,6 +80,8 @@ public abstract class GameObject {
         return xLoc;
     }
 
+    public abstract boolean isMovableTile();
+
     public void setxLoc(int xLoc) {
         this.xLoc = xLoc;
     }

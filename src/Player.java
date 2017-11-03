@@ -25,4 +25,7 @@ public class Player extends Tank {
         //Change the input controller of given player
     }
 
+    public boolean isMovableTile(){
+        return false;
+    }
 }

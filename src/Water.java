@@ -11,4 +11,8 @@ public class Water extends Undestructible {
         super.setxLoc( xLoc);
         super.setyLoc( yLoc);
     }
+
+    public boolean isMovableTile(){
+        return false;
+    }
 }
