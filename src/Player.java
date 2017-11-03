@@ -1,5 +1,3 @@
-import javafx.stage.Stage;
-
 import java.util.ArrayList;
 
 /*import java.util.ArrayList;
@@ -26,7 +24,5 @@ public class Player extends Tank {
     public void setController( ArrayList<String> keyList){
         //Change the input controller of given player
     }
-    public void start(Stage primaryStage){
 
-    }
 }

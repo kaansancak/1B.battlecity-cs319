@@ -1,10 +1,9 @@
-import javafx.application.Application;
 import javafx.scene.image.Image;
 
 /**
  * Created by kaan on 10/28/2017.
  */
-public abstract class GameObject extends Application {
+public abstract class GameObject {
 
     //Variables
     private final int BULLET_DAMAGE = 200;
@@ -26,13 +25,14 @@ public abstract class GameObject extends Application {
         /* This method will be filled
         it will update the location of a gameobject
          */
-    };
+    }
+
     public void updateObject(){
         /* This method will be filled
         it will update the current status of a gameobject
         e.g destroyed or alive
          */
-    };
+    }
 
     //Setters and getters of variables
     public int getyLoc() {
