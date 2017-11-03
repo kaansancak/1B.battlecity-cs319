@@ -30,8 +30,7 @@ public class Map {
 
     }
     /* GameObject File Decode
-    * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
-    * 4 = Player, 5 = Bot
+    * 0 = null , 1 = Brick 2 = Bush 3 = IronWall 4 = Water
     * */
     public Map(int level, int[][] obstaclesMap){
         this.level = level;
@@ -101,7 +100,10 @@ public class Map {
     }
 
     public boolean isPassableTile(int x, int y){
-    if( gameObjects[x][y].isPassable())
+      if( gameObjects[x][y].isPassable()){
+
+      }
+      return false;
     }
 
     public void drawMap(int height, int width){
