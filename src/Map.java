@@ -32,6 +32,7 @@ public class Map {
     * 4 = Player, 5 = Bot
     * */
     public Map(int level, int[][] obstaclesMap){
+        tilePane = new TilePane();
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
