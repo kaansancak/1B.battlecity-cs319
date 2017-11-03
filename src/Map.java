@@ -31,11 +31,12 @@ public class Map {
 
     }
     public void addObjects(GameObject[][] gameObjects){
-
+        this.gameObjects = gameObjects;
     }
     public void updateObjects(){
 
     }
+
     public boolean isDestructed(GameObject gameObject){
 
     }
