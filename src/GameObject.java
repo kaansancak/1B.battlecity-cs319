@@ -1,9 +1,10 @@
+import javafx.application.Application;
 import javafx.scene.image.Image;
 
 /**
  * Created by kaan on 10/28/2017.
  */
-public abstract class GameObject {
+public abstract class GameObject extends Application {
 
     //Variables
     private final int BULLET_DAMAGE = 200;

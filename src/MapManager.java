@@ -1,4 +1,12 @@
+import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
 public class MapManager {
+    private final int TILES = 20;
+    private int tileX, tileY;
     private boolean gameStatus;
     private int mapLevel;
     private Map map;
@@ -6,19 +14,135 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private GameObject[][] gameObjects;
+    private StackPane stackPane;
 
-    MapManager(){}
-    MapManager(int level, int [][]obstaclesMap){}
+    private ArrayList<Image> images;
 
-private void readObstaclesMap(int level){}
+
+    MapManager(){
+
+    }
+    MapManager(int level){
+        map = new Map(mapLevel);
+        stackPane = new StackPane();
+        tileX = (int)stackPane.getWidth()/TILES;
+        tileY = (int)stackPane.getHeight()/TILES;
+        obstaclesMap = new int[TILES][TILES];
+        gameObjects = new GameObject[TILES][TILES];
+        gameStatus = true;
+        mapFinished = false;
+        mapLevel = level;
+        readObstaclesMap();
+        intToObject();
+        collisionManager = new CollisionManager(gameObjects);
+        images = new ArrayList<>();
+        try {
+            images = mapManagerFileManager.getScannedImages();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* NEW METHOD TO CREATE OBJECTS
+       // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
+    */
+    private void intToObject(){
+        for(int i = 0; i < TILES; i++){
+            for(int j = 0; j < TILES; j++) {
+                if(obstaclesMap[i][j] == 0){
+                    gameObjects[i][j] = null;// ground
+                }
+                else if(obstaclesMap[i][j] == 1){
+                    gameObjects[i][j] = new Brick(i*tileX, j*tileY);
+                }
+                else if(obstaclesMap[i][j] == 2){
+                    gameObjects[i][j] = new Bush(i*tileX, j*tileY);
+                }
+                else if(obstaclesMap[i][j] == 3){
+                    gameObjects[i][j] = new IronWall(i*tileX, j*tileY);
+                }
+                else if(obstaclesMap[i][j] == 4){
+                    gameObjects[i][j] = new Water(i*tileX, j*tileY);
+                }
+            }
+        }
+
+    }
+
+    private void readObstaclesMap(){
+        try {
+            obstaclesMap = mapManagerFileManager.getMapLevelData(mapLevel);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
     //private GameObject[] manageObjects(CollisionManager collisionManager, Map map){}
     private void updateMapObjects(Map map){}
     private void updateMap(){}
-    private void startsLevel(int level, int[][] obstaclesMap){}
+    private void startsLevel(int level){}
     private void stopGameLoop(){}
     private void gameLoop(){}
    // private boolean isMapFinished(){}
     private void finishLevel(){}
 
 
+
+    // getter and setters
+    public boolean isGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(boolean gameStatus) {
+        this.gameStatus = gameStatus;
+    }
+
+    public int getMapLevel() {
+        return mapLevel;
+    }
+
+    public void setMapLevel(int mapLevel) {
+        this.mapLevel = mapLevel;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public boolean isMapFinished() {
+        return mapFinished;
+    }
+
+    public void setMapFinished(boolean mapFinished) {
+        this.mapFinished = mapFinished;
+    }
+
+    public FileManager getMapManagerFileManager() {
+        return mapManagerFileManager;
+    }
+
+    public void setMapManagerFileManager(FileManager mapManagerFileManager) {
+        this.mapManagerFileManager = mapManagerFileManager;
+    }
+
+    public int[][] getObstaclesMap() {
+        return obstaclesMap;
+    }
+
+    public void setObstaclesMap(int[][] obstaclesMap) {
+        this.obstaclesMap = obstaclesMap;
+    }
+
+    public CollisionManager getCollisionManager() {
+        return collisionManager;
+    }
+
+    public void setCollisionManager(CollisionManager collisionManager) {
+        this.collisionManager = collisionManager;
+    }
 }

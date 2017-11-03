@@ -1,7 +1,13 @@
+import javafx.stage.Stage;
+
 /**
  * Created by kaan on 10/28/2017.
  */
 public class Bot extends Tank {
+
+    public void start(Stage primaryStage) {
+
+    }
 
     public Bot( int xLoc, int yLoc){
         super.setxLoc( xLoc);
