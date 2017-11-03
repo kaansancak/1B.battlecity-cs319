@@ -6,10 +6,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
+import java.applet.AudioClip;
 import java.io.FileNotFoundException;
 
 /**
@@ -76,7 +80,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == menuButtons[0]){
-             Map gameMap = new Map();
+            setPlayerCount(1);
+            startGame();
         }else if( event.getSource() == menuButtons[1]){
             setPlayerCount(2);
             startGame();
@@ -92,8 +97,6 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             exitBattleCity();
         }
     }
-
-
 
     private void showHowToPlay() {
         String message = "";
@@ -117,7 +120,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             e.printStackTrace();
         }
 
-        //f.getScannedAudios().get(0).play();
+        new MediaPlayer(f.getScannedAudios().get(0)).play(); //burada müzik deniyorum :D
         creditsFrame = new ViewFrame( "CREDITS", s);
         if(creditsFrame.isReturnCall()){
             menuWindow.show();
