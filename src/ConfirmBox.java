@@ -25,7 +25,6 @@ public class ConfirmBox{
         Button yesButton = new Button("Yes");
         Button noButton = new Button("No");
 
-
         yesButton.setOnAction( event -> {
             answer = true;
             answerWindow.close();
@@ -35,7 +34,6 @@ public class ConfirmBox{
             answer = false;
             answerWindow.close();
         });
-
         VBox answerBoxes = new VBox(10);
         answerBoxes.getChildren().addAll(answerLabel, yesButton, noButton);
         answerBoxes.setAlignment(Pos.CENTER);

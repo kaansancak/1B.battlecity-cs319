@@ -1,12 +1,13 @@
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.File;
-import javafx.scene.image.Image;
+import java.util.Scanner;
 // probably import java.io.Serializable
 
 
@@ -18,8 +19,8 @@ public class FileManager /* probably extends serializable*/ {
     private ArrayList<Media> scannedAudios;
     private Scanner scan;
     private int[][] scannedMap;
-    private final int NUMBER_IMAGES = 1;
-    private final int NUMBER_AUDIOS = 1;
+    private final int NUMBER_IMAGES = 2;
+    private final int NUMBER_AUDIOS = 2;
 
     // initialize file manager
     public FileManager(){
