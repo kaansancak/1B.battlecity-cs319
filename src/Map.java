@@ -46,7 +46,7 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
-        mapScene = new Scene( tilePane);
+        mapScene = new Scene(tilePane);
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
@@ -75,8 +75,8 @@ public class Map {
                     }
 
                     temp = new ImageView(gameObjects[i][j].getImage());
-                    temp.relocate(i * tileY, j * tileY);
-                    tilePane.getChildren().addAll(temp);
+                    temp.relocate(i * tileX, j * tileY);
+                    tilePane.getChildren().add(i*TILES+j,temp);
                 }
             }
         }
