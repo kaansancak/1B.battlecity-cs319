@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
@@ -76,6 +77,10 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         menuLayout.getChildren().add( mBBox);
 
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
+
+        String  style= getClass().getResource("style.css").toExternalForm();
+        menuScene.getStylesheets().add(style);
+
         menuWindow.setScene(menuScene);
         menuWindow.show();
     }
@@ -154,8 +159,29 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         for ( int i = 0 ; i < MENU_BUTTON_COUNT ; i++) {
             menuButtons[i] = new Button();
             menuButtons[i].setOnAction(this);
+            menuButtons[i].setId("glass-grey");
+            menuButtons[i].setPrefSize(150, 20);
         }
+        
+        menuButtons[0].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
 
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[0].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[0].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[0].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
         //Set the titles of Menu Buttons
         menuButtons[0].setText("Single Player");
         menuButtons[1].setText("Multiplayer");
