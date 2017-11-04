@@ -1,16 +1,16 @@
-import javafx.scene.layout.Pane;
-
 import javafx.scene.Scene;
-import javafx.scene.layout.TilePane;
-import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 import java.io.FileNotFoundException;
 
 public class MapManager {
     private final int TILES = 20;
     private int tileX, tileY;
     private boolean gameStatus;
+    private int playerCount;
     private int mapLevel;
     private Map map;
     private boolean mapFinished;
@@ -59,12 +59,13 @@ public class MapManager {
     MapManager(){
 
     }
-    MapManager(int level){
+    MapManager(int playerCount, int level){
         mapManagerFileManager = new FileManager();
         mapLevel = level;
+        this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
-        map = new Map(level, obstaclesMap);
+        map = new Map(playerCount, level, obstaclesMap);
         getImages();
         gameStatus = true;
         mapFinished = false;
@@ -125,7 +126,7 @@ public Pane getMapPane(){
 
     private void updateMap(){
         mapLevel++;
-        map = new Map(mapLevel, readObstaclesMap());
+        map = new Map(playerCount, mapLevel, readObstaclesMap());
         startsLevel();
     }
     private void startsLevel(){
