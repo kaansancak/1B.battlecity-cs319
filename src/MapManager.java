@@ -27,6 +27,8 @@ public class MapManager {
         mapFinished = false;
         map.intToObject();
         startsLevel();
+        map.showMap();
+
         //gameLoop();
     }
 

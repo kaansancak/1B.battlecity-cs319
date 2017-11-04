@@ -76,6 +76,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     }
 
+
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == menuButtons[0]){
