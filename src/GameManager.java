@@ -1,4 +1,3 @@
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -39,7 +38,7 @@ public class GameManager{
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
-        mapManager = new MapManager(currentGameLevel);
+        mapManager = new MapManager(player_count, currentGameLevel);
         gameFinished = false;
         gameCompletedLevels = 0;
     }
