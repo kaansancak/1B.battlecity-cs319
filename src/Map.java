@@ -25,9 +25,7 @@ public class Map {
     private ArrayList<Image> images;
     Scene mapScene;
     Stage mapStage;
-
-
-
+    
     public Map( ){
 
     }
