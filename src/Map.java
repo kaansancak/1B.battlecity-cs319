@@ -39,6 +39,7 @@ public class Map {
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
         tilePane = new TilePane();
+        tilePane.setPrefColumns(20);
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
@@ -46,14 +47,16 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
-        mapScene = new Scene(tilePane);
+    }
+
+    public void showMap(){
+        mapScene = new Scene( tilePane);
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
     }
 
     public void intToObject(){
-
         for(int i = 0; i < TILES; i++){
             for(int j = 0; j < TILES; j++) {
                 if(obstaclesMap[i][j] == 0){
@@ -75,8 +78,8 @@ public class Map {
                     }
 
                     temp = new ImageView(gameObjects[i][j].getImage());
-                    temp.relocate(i * tileX, j * tileY);
-                    tilePane.getChildren().add(i*TILES+j,temp);
+                    temp.relocate(i * tileY, j * tileY);
+                    tilePane.getChildren().addAll(temp);
                 }
             }
         }
