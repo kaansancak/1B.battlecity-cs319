@@ -1,4 +1,6 @@
+import javafx.scene.Scene;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
@@ -12,6 +14,20 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private Scene scene;
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public void start(Stage stage) throws Exception{
+
+
+    }
 
     MapManager(){
 
@@ -67,14 +83,17 @@ public TilePane getMapTilePane(){
         map = new Map(mapLevel, readObstaclesMap());
         startsLevel();
     }
+
     private void startsLevel(){
         readObstaclesMap();
         collisionManager = new CollisionManager(map.getGameObjects());
         map.addObjects(map.getGameObjects());
     }
+
     private boolean stopGameLoop(){
         return isMapFinished();
     }
+
     private void gameLoop(){
         if(!stopGameLoop()){
             manageObjects();
@@ -84,11 +103,12 @@ public TilePane getMapTilePane(){
         else{
             finishLevel();
         }
-
     }
+
     private void finishLevel(){
         map.finishMap();
     }
+
     private void getImages(){
         try {
             map.setImages(mapManagerFileManager.getScannedImages());
