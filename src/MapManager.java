@@ -1,4 +1,13 @@
+import javafx.animation.AnimationTimer;
+import javafx.scene.layout.Pane;
+
+import javafx.scene.Scene;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
@@ -6,37 +15,98 @@ public class MapManager {
     private final int TILES = 20;
     private int tileX, tileY;
     private boolean gameStatus;
+    private int playerCount;
     private int mapLevel;
     private Map map;
     private boolean mapFinished;
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private AnimationTimer at = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            gameLoop();
+        }
+    };
+    Stage stage = new Stage();
+
+    public void start(Stage stage) throws Exception{
+        this.stage = stage;
+        stage.setScene(new Scene(map.getMapPane()));
+        stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
+            if(e.getCode() == KeyCode.A){
+                movePlayer(map.getPlayer(0),0); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.W){
+                movePlayer(map.getPlayer(0),1); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.D){
+                movePlayer(map.getPlayer(0),2); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.S){
+                movePlayer(map.getPlayer(0),3); //player 0 direction 0
+            }
+            if(e.getCode() == KeyCode.LEFT){
+                movePlayer(map.getPlayer(1),0); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.UP){
+                movePlayer(map.getPlayer(1),1); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.RIGHT){
+                movePlayer(map.getPlayer(1),2); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.DOWN){
+                movePlayer(map.getPlayer(1),3); //player 0 direction 0
+            }
+            if(e.getCode() == KeyCode.SPACE){
+                map.fire(map.getPlayer(0)); //player 0 direction 0
+            }
+            if(e.getCode() == KeyCode.SHIFT){
+                map.fire(map.getPlayer(1)); //player 0 direction 0
+            }
+        });
+
+
+    }
 
     MapManager(){
 
     }
-    MapManager(int level){
+    MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
+        this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
-        map = new Map(level, obstaclesMap);
+        map = new Map(playerCount, level, obstaclesMap);
         getImages();
         gameStatus = true;
         mapFinished = false;
         map.intToObject();
         startsLevel();
-        map.showMap();
-
-        //gameLoop();
+        start(stage);
+        gameLoop();
     }
 
-public TilePane getMapTilePane(){
-        return map.getTilePane();
+    public void movePlayer( Player player, int dir){
+        int newX = player.getxLoc();
+        int newY = player.getyLoc();
+        switch ( dir){
+            case 0: newX++;
+            case 1: newX--;
+            case 2: newY++;
+            case 3: newY--;
+        }
+        if( map.isPassableTile( newX, newY)){
+            player.move(dir);
+        }
+    }
+
+public Pane getMapPane(){
+        return map.getMapPane();
 }
 
-    /* NEW METHOD TO CREATE OBJECTS
+    /* NEW METHOD TO CREATE OBJECT
        // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
     */
 
@@ -49,22 +119,24 @@ public TilePane getMapTilePane(){
         return obstaclesMap;
     }
     private void manageObjects(){
-        for(int i = 0; i < TILES ; i++){
-            for(int j = 0; j < TILES; j++) {
-                if (map.getGameObjects()[i][j] instanceof Bullet){
-                    collisionManager.checkCollision((Bullet)map.getGameObjects()[i][j]);
+        for(int i = 0; i < map.getBullets().size() ; i++){
+            {
+                    collisionManager.checkCollision(map.getBullets().get(i));
                 }
             }
-        }
     }
 
     private void updateMapObjects(){
 
     }
 
+    private void handleBots(){
+
+    }
+
     private void updateMap(){
         mapLevel++;
-        map = new Map(mapLevel, readObstaclesMap());
+        map = new Map(playerCount, mapLevel, readObstaclesMap());
         startsLevel();
     }
     private void startsLevel(){
@@ -77,9 +149,9 @@ public TilePane getMapTilePane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
-            manageObjects();
-            updateMapObjects();
-            gameLoop();
+            map.updateObjects();
+            stage.getScene();
+            stage.show();
         }
         else{
             finishLevel();
