@@ -1,14 +1,11 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-public class GameManager extends Application{
+public class GameManager{
 
     private final int GAME_START_LEVEL = 1;
     private final int GAME_FINAL_LEVEL = 2;
     private MapManager mapManager;
     private ScreenManager screenManager;
     private FileManager gameManagerFileManager;
-    private InputController inputController;
+    private Settings inputController;
     private int highestScore;
     private Player[] players;
     private int[] currentScores;
@@ -20,20 +17,14 @@ public class GameManager extends Application{
 
     GameManager(){}
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-    }
-
     GameManager(int player_count){
         players = new Player[player_count];
         currentScores = new int[player_count];
-        mapManager = new MapManager();
         gameManagerFileManager = new FileManager();
-        //screenManager = new ScreenManager();
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
+        mapManager = new MapManager(currentGameLevel);
         gameFinished = false;
         gameCompletedLevels = 0;
     }
@@ -61,7 +52,6 @@ public class GameManager extends Application{
 
 
     private void quitGame(){}
-    //private SoundManager getSetting(){}
     private void saveHighestScore(int scoregame){ if(scoregame>highestScore)
                                                     { highestScore = scoregame; }}
     private int getHighestScore(){ return highestScore; }

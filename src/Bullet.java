@@ -63,4 +63,9 @@ public class Bullet extends GameObject {
     public void setCrushed(boolean crushed) {
         isCrushed = crushed;
     }
+
+
+    public boolean isMovableTile(){
+        return true;
+    }
 }

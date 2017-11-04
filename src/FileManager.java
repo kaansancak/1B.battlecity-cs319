@@ -1,12 +1,13 @@
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.File;
-import javafx.scene.image.Image;
+import java.util.Scanner;
 // probably import java.io.Serializable
 
 
@@ -18,8 +19,8 @@ public class FileManager /* probably extends serializable*/ {
     private ArrayList<Media> scannedAudios;
     private Scanner scan;
     private int[][] scannedMap;
-    private final int NUMBER_IMAGES = 1;
-    private final int NUMBER_AUDIOS = 1;
+    private final int NUMBER_IMAGES = 5;
+    private final int NUMBER_AUDIOS = 2;
 
     // initialize file manager
     public FileManager(){
@@ -27,9 +28,6 @@ public class FileManager /* probably extends serializable*/ {
         scannedTexts = new ArrayList<>();
         scannedAudios = new ArrayList<>();
         scannedMap = new int[TILES][TILES];
-        // maybe we need a string to hold directory
-        // which will initialized here and changed in
-        // methods
     }
 
     // level names will be "level" + levelCount + ".txt" -> level3.txt e.g
@@ -100,7 +98,7 @@ public class FileManager /* probably extends serializable*/ {
     // images from file
     public ArrayList<Image> getScannedImages() throws FileNotFoundException {
         for(int i = 0; i < NUMBER_IMAGES; i++){ // assumed png
-            scannedImages.add(new Image("."+"/MediaFiles/image" + i + ".png"));
+            scannedImages.add(new Image(Paths.get("."+"/MediaFiles/image" + i + ".png").toUri().toString()));
         }
         return scannedImages;
     }

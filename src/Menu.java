@@ -6,14 +6,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
 
-import java.applet.AudioClip;
 import java.io.FileNotFoundException;
 
 /**
@@ -28,6 +25,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private VBox mBBox;
     private ViewFrame creditsFrame;
     private ViewFrame howToPlayFrame;
+    private Settings settings;
     private int playerCount;
     private int menuTypeId;
     private JFXPanel menuLayout;
@@ -40,6 +38,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        settings = new Settings();
         //Set the title of the stage
         f = new FileManager();
         menuWindow = primaryStage;
@@ -77,6 +76,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     }
 
+
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == menuButtons[0]){
@@ -86,19 +86,26 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             setPlayerCount(2);
             startGame();
         }else if( event.getSource() == menuButtons[2]){
-
+            startSettings();
         }else if( event.getSource() == menuButtons[3]){
-            menuWindow.close();
             showHowToPlay();
         }else if( event.getSource() == menuButtons[4]){
-            menuWindow.close();
             showCredits();
         }else if( event.getSource() == menuButtons[5]){
             exitBattleCity();
         }
     }
 
+    private void startSettings() {
+        menuWindow.close();
+        settings.showSettings();
+        if ( settings.isReturnCall())
+            menuWindow.show();
+
+    }
+
     private void showHowToPlay() {
+        menuWindow.close();
         String message = "";
         try {
             message = f.getHowToPlayDoc();
@@ -113,6 +120,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     }
 
     private void showCredits() {
+        menuWindow.close();
         String s = null;
         try {
             s = f.getCreditsDoc();

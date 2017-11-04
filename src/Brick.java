@@ -27,4 +27,8 @@ public class Brick extends Destructible {
             super.setImage(damagedImage);
         }
     }
+
+    public boolean isMovableTile(){
+        return false;
+    }
 }

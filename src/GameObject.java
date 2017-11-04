@@ -25,13 +25,14 @@ public abstract class GameObject {
         /* This method will be filled
         it will update the location of a gameobject
          */
-    };
+    }
+
     public void updateObject(){
         /* This method will be filled
         it will update the current status of a gameobject
         e.g destroyed or alive
          */
-    };
+    }
 
     //Setters and getters of variables
     public int getyLoc() {
@@ -78,6 +79,8 @@ public abstract class GameObject {
 
         return xLoc;
     }
+
+    public abstract boolean isMovableTile();
 
     public void setxLoc(int xLoc) {
         this.xLoc = xLoc;
