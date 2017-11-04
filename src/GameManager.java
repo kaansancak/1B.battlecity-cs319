@@ -38,7 +38,9 @@ public class GameManager{
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
-        mapManager = new MapManager(player_count, currentGameLevel);
+        try{mapManager = new MapManager(player_count, currentGameLevel);} catch (Exception e) {
+            e.printStackTrace();
+        }
         gameFinished = false;
         gameCompletedLevels = 0;
     }

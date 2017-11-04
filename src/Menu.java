@@ -14,6 +14,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -57,7 +58,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         initMenuButtons( menuButtons);
         StackPane menuLayout = new StackPane();
 
-        Image im = new Image("/Images/backgroundImage.png", true);
+        Image im = new Image(Paths.get("."+"/MediaFiles/backgroundImage.png").toUri().toString(), true);
         menuLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         //Add Boxes to the VBoX

@@ -17,6 +17,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Settings implements EventHandler<ActionEvent> {
@@ -123,7 +124,7 @@ public class Settings implements EventHandler<ActionEvent> {
         settingsWindow.setTitle( "Options");
 
         StackPane settingsLayout = new StackPane();
-        Image im = new Image("/Images/backgroundImage.png", true);
+        Image im = new Image(Paths.get("."+"/MediaFiles/backgroundImage.png").toUri().toString(), true);
         settingsLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         initLabels(); // initializing the labels

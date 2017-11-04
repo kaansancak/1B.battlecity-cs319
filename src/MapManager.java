@@ -65,7 +65,7 @@ public class MapManager {
     MapManager(){
 
     }
-    MapManager(int playerCount, int level){
+    MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
         this.playerCount = playerCount;
@@ -77,6 +77,7 @@ public class MapManager {
         mapFinished = false;
         map.intToObject();
         startsLevel();
+        start(stage);
         gameLoop();
     }
 
@@ -143,8 +144,8 @@ public Pane getMapPane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
-            updateMapObjects();
             stage.setScene(new Scene(map.getMapPane()));
+            stage.show();
             gameLoop();
         }
         else{

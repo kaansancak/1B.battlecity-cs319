@@ -45,6 +45,11 @@ public class Map {
         players = new Player[playerCount];
         tilePane = new TilePane();
         tilePane.setPrefColumns(20);
+        for(int i = 0; i < playerCount; i++){
+            players[i] = new Player(i, i);
+            players[i].setyLoc(getHeight());
+            players[i].setxLoc(i*getWidth());
+        }
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
@@ -95,6 +100,10 @@ public class Map {
                         gameObjects[i][j] = new Water(i * tileX, j * tileY);
                         gameObjects[i][j].setImage(images.get(4));
                     }
+                    else if (obstaclesMap[i][j] == 5) {
+                    gameObjects[i][j] = new Water(i * tileX, j * tileY);
+                    gameObjects[i][j].setImage(images.get(5));
+                }
 
                     temp = new ImageView(gameObjects[i][j].getImage());
                     temp.relocate(i * tileY, j * tileY);
