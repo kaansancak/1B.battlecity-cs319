@@ -6,12 +6,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -55,6 +59,9 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         initMenuButtons( menuButtons);
         StackPane menuLayout = new StackPane();
 
+        Image im = new Image(Paths.get("."+"/MediaFiles/backgroundImage.png").toUri().toString(), true);
+        menuLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+
         //Add Boxes to the VBoX
         mBBox = new VBox();
         mBBox.setSpacing(10);
@@ -69,11 +76,13 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         //Add VBox to the Menu Layout
         menuLayout.getChildren().add( mBBox);
 
-        //Add Menu layout the the Scene
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
+
+        String  style= getClass().getResource("style.css").toExternalForm();
+        menuScene.getStylesheets().add(style);
+
         menuWindow.setScene(menuScene);
         menuWindow.show();
-
     }
 
 
@@ -150,8 +159,129 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         for ( int i = 0 ; i < MENU_BUTTON_COUNT ; i++) {
             menuButtons[i] = new Button();
             menuButtons[i].setOnAction(this);
+            menuButtons[i].setId("glass-grey");
+            menuButtons[i].setPrefSize(150, 20);
         }
 
+        menuButtons[0].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[0].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[0].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[0].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
+
+        menuButtons[1].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[1].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[1].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[1].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
+
+        menuButtons[2].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[2].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[2].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[2].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
+
+        menuButtons[3].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[3].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[3].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[3].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
+
+        menuButtons[4].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[4].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[4].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[4].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
+
+        menuButtons[5].setOnMouseEntered(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[5].setStyle("-fx-background-color:#c3c4c4;");
+            }
+        });
+        menuButtons[5].setOnMouseExited(new EventHandler<MouseEvent>
+                () {
+
+            @Override
+            public void handle(MouseEvent t) {
+                menuButtons[5].setStyle("-fx-background-color:\n" +
+                        "        #dae7f3,\n" +
+                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
+            }
+        });
         //Set the titles of Menu Buttons
         menuButtons[0].setText("Single Player");
         menuButtons[1].setText("Multiplayer");

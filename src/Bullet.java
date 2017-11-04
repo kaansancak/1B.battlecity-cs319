@@ -32,11 +32,17 @@ public class Bullet extends GameObject {
     //in given direction
     public void move() {
         if (!isCrushed()) {
-            if (dir == 1) {
-                super.setxLoc(super.getxLoc() + 1);
-            } else {
-                super.setyLoc(super.getyLoc() + 1);
+            if (dir == 0) {
+                super.setxLoc(super.getxLoc() + 3);
+            } else if(dir == 1) {
+                super.setyLoc(super.getxLoc() - 3);
+            }else if(dir == 2) {
+                super.setyLoc(super.getyLoc() + 3);
+            }else if(dir == 3) {
+                super.setyLoc(super.getyLoc() - 3);
             }
+
+
         }
     }
 

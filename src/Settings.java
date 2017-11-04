@@ -11,13 +11,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Settings implements EventHandler<ActionEvent> {
@@ -87,7 +87,7 @@ public class Settings implements EventHandler<ActionEvent> {
 
     // sound manager part
     private int volume;
-    private int latestVolume; // volume before unmute
+   // private int latest; // volume before unmute
 
     private CheckBox mute;
 
@@ -96,6 +96,7 @@ public class Settings implements EventHandler<ActionEvent> {
     private ComboBox<javafx.scene.media.Media> musicBox;
     private ArrayList<javafx.scene.media.Media> media;
     MediaPlayer player;
+    private int latestVolume;
 
 
     public Settings(){
@@ -111,11 +112,11 @@ public class Settings implements EventHandler<ActionEvent> {
         player1Label = new Label( "Player 1 keys\n" + player1_keyList.toString());
 
         player2_keyList = new ArrayList<String>(0);
-        player1_keyList.add( "A");
-        player1_keyList.add( "W");
-        player1_keyList.add( "D");
-        player1_keyList.add( "D");
-        player1_keyList.add( "Z");
+        player2_keyList.add( "A");
+        player2_keyList.add( "W");
+        player2_keyList.add( "D");
+        player2_keyList.add( "S");
+        player2_keyList.add( "Z");
         player2Label = new Label("Player 2 keys\n" + player2_keyList.toString());
 
 
@@ -123,25 +124,8 @@ public class Settings implements EventHandler<ActionEvent> {
         settingsWindow.setTitle( "Options");
 
         StackPane settingsLayout = new StackPane();
-
-        // Defining the area for the settings output
-        player1 = new Label("Settings for the first player");
-        player2 = new Label("Settings for the second player");
-
-        // Player 1 instructions display
-        player1_up = new Label("UP");
-        player1_down = new Label("DOWN");
-        player1_left = new Label("LEFT");
-        player1_right = new Label("RIGHT");
-        player1_fire = new Label("SPACEBAR");
-
-
-        // Player 2 instructions display
-        player2_up = new Label("W");
-        player2_down = new Label("S");
-        player2_left = new Label("A");
-        player2_right = new Label("D");
-        player2_fire = new Label("Z");
+        Image im = new Image(Paths.get("."+"/MediaFiles/backgroundImage.png").toUri().toString(), true);
+        settingsLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         initLabels(); // initializing the labels
         initCheckBoxes();
@@ -171,7 +155,7 @@ public class Settings implements EventHandler<ActionEvent> {
                 "D, R, G, F, CNTRL"
         );
 
-        player1_settings.valueProperty().addListener(new ChangeListener<String>() {
+        player2_settings.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observable, String oldValue, String newValue) {
                 changeKeyList( newValue);
@@ -197,8 +181,14 @@ public class Settings implements EventHandler<ActionEvent> {
         mute.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov,
                                 Boolean old_val, Boolean new_val) {
-                System.out.println(mute.isSelected());
-                mute();
+                if( mute.isSelected()) {
+                    System.out.println(mute.isSelected());
+                    mute();
+                }
+                else {
+                    unmute();
+                }
+
             }
         });
 
@@ -236,7 +226,7 @@ public class Settings implements EventHandler<ActionEvent> {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(3.0);
         vBox.setFillWidth(true);
-        vBox.getChildren().addAll( volumeBar, mute, musicBox, player1Label, player2Label, submit, backToMenu);
+        vBox.getChildren().addAll( volumeBar, mute, musicBox, player1Label, player1_settings, player2Label, player2_settings, submit, backToMenu);
     }
 
     public void showSettings(){
@@ -263,7 +253,7 @@ public class Settings implements EventHandler<ActionEvent> {
         volumeBar = new Slider();
         volumeBar.setMin(0);
         volumeBar.setMax(100);
-        volumeBar.setValue(volume);
+        volumeBar.setValue(100);
 
         volumeBar.setShowTickLabels( true);
         volumeBar.setShowTickMarks( true);
@@ -277,6 +267,11 @@ public class Settings implements EventHandler<ActionEvent> {
         changeVolume( volume); // will change the slider too
     }
 
+    private void unmute() {
+        volume = latestVolume;
+        changeVolume(volume);
+    }
+
     private void changeVolume( int volume) {
         this.volume = volume;
         volumeBar.setValue( volume);
@@ -288,46 +283,35 @@ public class Settings implements EventHandler<ActionEvent> {
     private void changeKeyList( String newKeyList){
 
         int player_id;
-        ArrayList<String> keyList = new ArrayList<String>(0);
         if( newKeyList.charAt(0) == '4' || newKeyList.charAt(0) == '1')
         {
             player_id = 1;
-            player1_left.setText( Character.toString(newKeyList.charAt(0)));
-            player1_up.setText( Character.toString(newKeyList.charAt(3)));
-            player1_right.setText( Character.toString(newKeyList.charAt(6)));
-            player1_down.setText( Character.toString(newKeyList.charAt(9)));
-            player1_fire.setText( newKeyList.substring( 12, 16));
-
-            keyList.add( Character.toString(newKeyList.charAt(0)));
-            keyList.add( Character.toString(newKeyList.charAt(3)));
-            keyList.add( Character.toString(newKeyList.charAt(6)));
-            keyList.add( Character.toString(newKeyList.charAt(9)));
-            keyList.add( newKeyList.substring( 12, 16));
+            player1_keyList.set(0, Character.toString(newKeyList.charAt(0)));
+            player1_keyList.set(1, Character.toString(newKeyList.charAt(0)));
+            player1_keyList.set(2, Character.toString(newKeyList.charAt(3)));
+            player1_keyList.set(3, Character.toString(newKeyList.charAt(6)));
+            player1_keyList.set(4, Character.toString(newKeyList.charAt(9)));
+            player1_keyList.set(5, newKeyList.substring( 12, 16));
         }
         else
         {
             player_id = 2;
-            player2_left.setText( Character.toString(newKeyList.charAt(0)));
-            player2_up.setText( Character.toString(newKeyList.charAt(3)));
-            player2_right.setText( Character.toString(newKeyList.charAt(6)));
-            player2_down.setText( Character.toString(newKeyList.charAt(9)));
-            player2_fire.setText( newKeyList.substring( 12, 16));
-
-            keyList.add( Character.toString(newKeyList.charAt(0)));
-            keyList.add( Character.toString(newKeyList.charAt(3)));
-            keyList.add( Character.toString(newKeyList.charAt(6)));
-            keyList.add( Character.toString(newKeyList.charAt(9)));
-            keyList.add( newKeyList.substring( 12, 16));
+            player2_keyList.set(0, Character.toString(newKeyList.charAt(0)));
+            player2_keyList.set(1, Character.toString(newKeyList.charAt(0)));
+            player2_keyList.set(2, Character.toString(newKeyList.charAt(3)));
+            player2_keyList.set(3, Character.toString(newKeyList.charAt(6)));
+            player2_keyList.set(4, Character.toString(newKeyList.charAt(9)));
+            player2_keyList.set(5, newKeyList.substring( 12, 16));
         }
-        saveTheList( player_id, keyList);
+        updateUI( player_id);
     }
 
-    private void saveTheList( int player_id, ArrayList<String> keyList) {
+    private void updateUI( int player_id) {
 
         if( player_id == 1)
-            player1_keyList = keyList;
+            player1Label = new Label( "Player 1 keys\n" + player1_keyList.toString());
         else
-            player2_keyList = keyList;
+            player2Label = new Label( "Player 1 keys\n" + player2_keyList.toString());
     }
 
     private ArrayList<String> getTheKeyList( int player_id) {
@@ -345,8 +329,13 @@ public class Settings implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == submit) {
-            //setSettings(// keylist)
+            update();
         }
+    }
+
+    private void update() {
+        player1Label = new Label( "Player 1 keys\n" + player1_keyList.toString());
+        player2Label = new Label( "Player 1 keys\n" + player2_keyList.toString());
     }
 
     private void initLabels() {
@@ -359,12 +348,6 @@ public class Settings implements EventHandler<ActionEvent> {
             player1_boxes[i] = new HBox();
         }
 
-        player1_boxes[0].getChildren().addAll(player1_up, player1_textfields[0]);
-        player1_boxes[1].getChildren().addAll(player1_down, player1_textfields[1]);
-        player1_boxes[2].getChildren().addAll(player1_left, player1_textfields[2]);
-        player1_boxes[3].getChildren().addAll(player1_right, player1_textfields[3]);
-        player1_boxes[4].getChildren().addAll(player1_fire, player1_textfields[4]);
-
         // player 2
         player2_textfields = new TextField[5];
         player2_boxes = new HBox[5];
@@ -373,12 +356,6 @@ public class Settings implements EventHandler<ActionEvent> {
             player2_textfields[i] = new TextField();
             player2_boxes[i] = new HBox();
         }
-
-        player2_boxes[0].getChildren().addAll(player2_up, player2_textfields[0]);
-        player2_boxes[1].getChildren().addAll(player2_down, player2_textfields[1]);
-        player2_boxes[2].getChildren().addAll(player2_left, player2_textfields[2]);
-        player2_boxes[3].getChildren().addAll(player2_right, player2_textfields[3]);
-        player2_boxes[4].getChildren().addAll(player2_fire, player2_textfields[4]);
 
         for (int i = 0; i < 5; i++) {
             player1_boxes[i].setSpacing(10);
