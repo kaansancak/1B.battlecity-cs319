@@ -1,5 +1,10 @@
 import javafx.scene.layout.Pane;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import java.io.FileNotFoundException;
 
 public class MapManager {
@@ -12,6 +17,44 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+
+    public void start(Stage stage) throws Exception{
+        stage.setScene(new Scene(map.getTilePane()));
+        stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
+            if(e.getCode() == KeyCode.A){
+                map.getPlayer(0).move(0); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.W){
+                map.getPlayer(0).move(1); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.D){
+                map.getPlayer(0).move(2); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.S){
+                map.getPlayer(0).move(3); //player 0 direction 0
+            }
+            if(e.getCode() == KeyCode.LEFT){
+                map.getPlayer(1).move(0); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.UP){
+                map.getPlayer(1).move(1); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.RIGHT){
+                map.getPlayer(1).move(2); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.DOWN){
+                map.getPlayer(1).move(3); //player 0 direction 0
+            }
+            if(e.getCode() == KeyCode.SPACE){
+                map.getPlayer(0).fire(); //player 0 direction 0
+            }
+            if(e.getCode() == KeyCode.SHIFT){
+                map.getPlayer(1).fire(); //player 0 direction 0
+            }
+        });
+
+
+    }
 
     MapManager(){
 

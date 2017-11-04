@@ -1,3 +1,8 @@
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+
 public class GameManager{
 
     private final int GAME_START_LEVEL = 1;
@@ -14,6 +19,16 @@ public class GameManager{
     private int currentGameLevel;
     private boolean gameFinished;
     private int gameCompletedLevels;
+
+    public void start (Stage stage) throws Exception{
+        mapManager.start(stage);
+        stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
+            if(e.getCode() == KeyCode.PAUSE){
+                // stage.setScene(); // pause game screen
+            }
+
+        });
+    }
 
     GameManager(){}
 
