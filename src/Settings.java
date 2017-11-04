@@ -11,9 +11,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -125,6 +124,8 @@ public class Settings implements EventHandler<ActionEvent> {
         settingsWindow.setTitle( "Options");
 
         StackPane settingsLayout = new StackPane();
+        Image im = new Image("/Images/backgroundImage.png", true);
+        settingsLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         initLabels(); // initializing the labels
         initCheckBoxes();

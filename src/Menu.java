@@ -6,9 +6,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -55,6 +57,9 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         initMenuButtons( menuButtons);
         StackPane menuLayout = new StackPane();
 
+        Image im = new Image("/Images/backgroundImage.png", true);
+        menuLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+
         //Add Boxes to the VBoX
         mBBox = new VBox();
         mBBox.setSpacing(10);
@@ -69,11 +74,9 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         //Add VBox to the Menu Layout
         menuLayout.getChildren().add( mBBox);
 
-        //Add Menu layout the the Scene
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
         menuWindow.setScene(menuScene);
         menuWindow.show();
-
     }
 
 
