@@ -119,13 +119,11 @@ public Pane getMapPane(){
         return obstaclesMap;
     }
     private void manageObjects(){
-        for(int i = 0; i < TILES ; i++){
-            for(int j = 0; j < TILES; j++) {
-                if (map.getGameObjects()[i][j] instanceof Bullet){
-                    collisionManager.checkCollision((Bullet)map.getGameObjects()[i][j]);
+        for(int i = 0; i < map.getBullets().size() ; i++){
+            {
+                    collisionManager.checkCollision(map.getBullets().get(i));
                 }
             }
-        }
     }
 
     private void updateMapObjects(){

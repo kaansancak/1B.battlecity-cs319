@@ -117,6 +117,14 @@ public class Map {
 
     }
 
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(ArrayList<Bullet> bullets) {
+        this.bullets = bullets;
+    }
+
     public void fire(Tank tank){
         mapPane.getChildren().add(new Circle(tank.getxLoc(), tank.getyLoc(), 5));
         bullets.add(tank.createBullet());
