@@ -130,8 +130,8 @@ public class Map {
         this.gameObjects = gameObjects;
     }
     public void updateObjects(){
-        for(bullets bullet){
-            bullet;
+        for(int i = 0; i < bullets.size(); i++){
+            bullets.get(i).move();
         }
     }
 

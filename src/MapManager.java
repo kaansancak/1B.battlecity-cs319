@@ -151,6 +151,7 @@ public Pane getMapPane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
+            map.updateObjects();
             stage.getScene();
             stage.show();
         }
