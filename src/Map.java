@@ -3,6 +3,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class Map {
     private int tileX, tileY;
     private ArrayList<Image> images;
     private Player players[];
+    private ArrayList<Bullet> bullets;
     Scene mapScene;
     Stage mapStage;
 
@@ -58,6 +60,7 @@ public class Map {
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
         mapPane.getChildren().addAll(tilePane);
+        bullets = new ArrayList<>();
     }
 
     public Player getPlayer( int index){
@@ -114,9 +117,15 @@ public class Map {
 
     }
 
+    public void fire(Tank tank){
+        mapPane.getChildren().add(new Circle(tank.getxLoc(), tank.getyLoc(), 5));
+        bullets.add(tank.createBullet());
+    }
+
     public void createObjects(GameObject[][] gameObjects){
 
     }
+
     public void addObjects(GameObject[][] gameObjects){
         this.gameObjects = gameObjects;
     }

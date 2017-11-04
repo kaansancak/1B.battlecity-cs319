@@ -1,3 +1,4 @@
+import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.Scene;
@@ -21,6 +22,12 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private AnimationTimer at = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            gameLoop();
+        }
+    };
     Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
@@ -52,10 +59,10 @@ public class MapManager {
                 movePlayer(map.getPlayer(1),3); //player 0 direction 0
             }
             if(e.getCode() == KeyCode.SPACE){
-                map.getPlayer(0).fire(); //player 0 direction 0
+                map.fire(map.getPlayer(0)); //player 0 direction 0
             }
             if(e.getCode() == KeyCode.SHIFT){
-                map.getPlayer(1).fire(); //player 0 direction 0
+                map.fire(map.getPlayer(1)); //player 0 direction 0
             }
         });
 
@@ -144,9 +151,8 @@ public Pane getMapPane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
-            stage.setScene(new Scene(map.getMapPane()));
+            stage.getScene();
             stage.show();
-            gameLoop();
         }
         else{
             finishLevel();

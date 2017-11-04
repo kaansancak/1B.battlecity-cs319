@@ -11,8 +11,9 @@ public abstract class Tank extends GameObject {
     private int dir;
 
     //Methods
-    public void createBullet(){
+    public Bullet createBullet(){
         Bullet tankBullet = new Bullet( id, dir, super.getxLoc(), super.getyLoc());
+        return tankBullet;
     }
 
     public boolean isAlive(){
@@ -32,14 +33,17 @@ public abstract class Tank extends GameObject {
             if( dir == 0)
                 super.setxLoc(super.getxLoc() + 1);
             else if( dir == 1)
-                super.setxLoc( super.getxLoc() + 1);
+                super.setxLoc( super.getxLoc() - 1);
             else if ( dir == 2)
                 super.setyLoc( super.getyLoc() + 1);
             else if( dir == 3)
                 super.setyLoc( super.getyLoc() - 1);
     }
 
-    public void fire(){}
+    public void fire(){
+        createBullet();
+    }
+
     public void getDamaged(){
         health = health - BULLET_DAMAGE;
     }
