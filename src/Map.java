@@ -130,7 +130,9 @@ public class Map {
         this.gameObjects = gameObjects;
     }
     public void updateObjects(){
-
+        for(bullets bullet){
+            bullet;
+        }
     }
 
     public boolean isDestructed(GameObject gameObject){
