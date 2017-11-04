@@ -20,11 +20,11 @@ public class GameManager{
     GameManager(int player_count){
         players = new Player[player_count];
         currentScores = new int[player_count];
-        mapManager = new MapManager();
         gameManagerFileManager = new FileManager();
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
+        mapManager = new MapManager(currentGameLevel);
         gameFinished = false;
         gameCompletedLevels = 0;
     }

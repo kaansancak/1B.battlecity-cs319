@@ -1,9 +1,6 @@
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.TilePane;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class MapManager {
     private final int TILES = 20;
@@ -20,15 +17,17 @@ public class MapManager {
 
     }
     MapManager(int level){
+        mapManagerFileManager = new FileManager();
+        mapLevel = level;
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
         map = new Map(level, obstaclesMap);
+        getImages();
         gameStatus = true;
         mapFinished = false;
-        mapLevel = level;
-        getImages();
+        map.intToObject();
         startsLevel();
-        gameLoop();
+        //gameLoop();
     }
 
 public TilePane getMapTilePane(){
@@ -41,7 +40,7 @@ public TilePane getMapTilePane(){
 
     private int[][] readObstaclesMap(){
         try {
-            obstaclesMap = mapManagerFileManager.getMapLevelData(mapLevel);
+            obstaclesMap = mapManagerFileManager.getMapLevelData(1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -72,10 +71,7 @@ public TilePane getMapTilePane(){
         map.addObjects(map.getGameObjects());
     }
     private boolean stopGameLoop(){
-        if(isMapFinished()){ // user input to stop loop for pause screen
-            return true;
-        }
-        return false;
+        return isMapFinished();
     }
     private void gameLoop(){
         if(!stopGameLoop()){

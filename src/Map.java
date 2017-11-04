@@ -2,6 +2,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public class Map {
     private ImageView temp;
     private int tileX, tileY;
     private ArrayList<Image> images;
+    Scene mapScene;
+    Stage mapStage;
 
 
 
@@ -33,18 +36,24 @@ public class Map {
     * 4 = Player, 5 = Bot
     * */
     public Map(int level, int[][] obstaclesMap){
+        this.obstaclesMap = obstaclesMap;
+        gameObjects = new GameObject[TILES][TILES];
         tilePane = new TilePane();
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
-        this.obstaclesMap = obstaclesMap;
         tileX = (int) tilePane.getTileWidth();
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
+        mapScene = new Scene( tilePane);
+        mapStage = new Stage();
+        mapStage.setScene(mapScene);
+        mapStage.show();
     }
 
-    private void intToObject(){
+    public void intToObject(){
+
         for(int i = 0; i < TILES; i++){
             for(int j = 0; j < TILES; j++) {
                 if(obstaclesMap[i][j] == 0){

@@ -19,7 +19,7 @@ public class FileManager /* probably extends serializable*/ {
     private ArrayList<Media> scannedAudios;
     private Scanner scan;
     private int[][] scannedMap;
-    private final int NUMBER_IMAGES = 2;
+    private final int NUMBER_IMAGES = 5;
     private final int NUMBER_AUDIOS = 2;
 
     // initialize file manager
@@ -98,7 +98,7 @@ public class FileManager /* probably extends serializable*/ {
     // images from file
     public ArrayList<Image> getScannedImages() throws FileNotFoundException {
         for(int i = 0; i < NUMBER_IMAGES; i++){ // assumed png
-            scannedImages.add(new Image("."+"/MediaFiles/image" + i + ".png"));
+            scannedImages.add(new Image(Paths.get("."+"/MediaFiles/image" + i + ".png").toUri().toString()));
         }
         return scannedImages;
     }
