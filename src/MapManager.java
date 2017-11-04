@@ -1,4 +1,8 @@
+import javafx.scene.layout.Pane;
+
 import javafx.scene.Scene;
+import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -17,33 +21,35 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
-        stage.setScene(new Scene(map.getTilePane()));
+        this.stage = stage;
+        stage.setScene(new Scene(map.getMapPane()));
         stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
             if(e.getCode() == KeyCode.A){
-                map.getPlayer(0).move(0); //player 0 direction 0
+                movePlayer(map.getPlayer(0),0); //player 0 direction 0
             }
             else if(e.getCode() == KeyCode.W){
-                map.getPlayer(0).move(1); //player 0 direction 0
+                movePlayer(map.getPlayer(0),1); //player 0 direction 0
             }
             else if(e.getCode() == KeyCode.D){
-                map.getPlayer(0).move(2); //player 0 direction 0
+                movePlayer(map.getPlayer(0),2); //player 0 direction 0
             }
             else if(e.getCode() == KeyCode.S){
-                map.getPlayer(0).move(3); //player 0 direction 0
+                movePlayer(map.getPlayer(0),3); //player 0 direction 0
             }
             if(e.getCode() == KeyCode.LEFT){
-                map.getPlayer(1).move(0); //player 0 direction 0
+                movePlayer(map.getPlayer(1),0); //player 0 direction 0
             }
             else if(e.getCode() == KeyCode.UP){
-                map.getPlayer(1).move(1); //player 0 direction 0
+                movePlayer(map.getPlayer(1),1); //player 0 direction 0
             }
             else if(e.getCode() == KeyCode.RIGHT){
-                map.getPlayer(1).move(2); //player 0 direction 0
+                movePlayer(map.getPlayer(1),2); //player 0 direction 0
             }
             else if(e.getCode() == KeyCode.DOWN){
-                map.getPlayer(1).move(3); //player 0 direction 0
+                movePlayer(map.getPlayer(1),3); //player 0 direction 0
             }
             if(e.getCode() == KeyCode.SPACE){
                 map.getPlayer(0).fire(); //player 0 direction 0
@@ -71,9 +77,7 @@ public class MapManager {
         mapFinished = false;
         map.intToObject();
         startsLevel();
-        map.showMap();
-
-        //gameLoop();
+        gameLoop();
     }
 
     public void movePlayer( Player player, int dir){
@@ -139,8 +143,8 @@ public Pane getMapPane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
-            manageObjects();
             updateMapObjects();
+            stage.setScene(new Scene(map.getMapPane()));
             gameLoop();
         }
         else{
