@@ -1,6 +1,7 @@
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
@@ -11,6 +12,7 @@ public class Map {
     // maybe we will need a bool for GUI dominance -
     // for grass and (tanks and bullets)
     private final int TILES = 20;
+    private int playerCount;
     private int level;
     private int height;
     private int width;
@@ -20,13 +22,13 @@ public class Map {
     private int[][] obstaclesMap;
     private double elapsedTime;
     private TilePane tilePane;
+    private Pane mapPane;
     private ImageView temp;
     private int tileX, tileY;
     private ArrayList<Image> images;
+    private Player players[];
     Scene mapScene;
     Stage mapStage;
-
-
 
     public Map( ){
 
@@ -35,9 +37,12 @@ public class Map {
     * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
     * 4 = Player, 5 = Bot
     * */
-    public Map(int level, int[][] obstaclesMap){
+    public Map(int playerCount, int level, int[][] obstaclesMap){
+        mapPane = new Pane();
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
+        this.playerCount = playerCount;
+        players = new Player[playerCount];
         tilePane = new TilePane();
         tilePane.setPrefColumns(20);
         this.level = level;
@@ -47,10 +52,24 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
+        mapPane.getChildren().addAll(tilePane);
+    }
+
+    public Player getPlayer( int index){
+        try {
+            return players[index];
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Pane getMapPane() {
+        return mapPane;
     }
 
     public void showMap(){
-        mapScene = new Scene( tilePane);
+        mapScene = new Scene( mapPane);
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
@@ -85,7 +104,6 @@ public class Map {
         }
 
     }
-
 
     public void createObjects(GameObject[][] gameObjects){
 

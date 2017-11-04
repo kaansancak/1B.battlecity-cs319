@@ -39,6 +39,7 @@ public abstract class Tank extends GameObject {
                 super.setyLoc( super.getyLoc() - 1);
     }
 
+    public void fire(){}
     public void getDamaged(){
         health = health - BULLET_DAMAGE;
     }

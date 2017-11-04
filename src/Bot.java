@@ -4,7 +4,7 @@
 public class Bot extends Tank {
 
     public Bot( int xLoc, int yLoc){
-        super.setDir((int)(Math.random()%4));
+        super.setDir(getRandomDir());
         super.setxLoc( xLoc);
         super.setyLoc( yLoc);
     }
@@ -16,11 +16,16 @@ public class Bot extends Tank {
     This method must be modified according to description
     in the design report.
      */
-    public void startBot(){
-
+    public void runBot( boolean changeDirStatus){
+        if( changeDirStatus)
+            super.setDir(getRandomDir());
+        else if( !changeDirStatus){
+            move(super.getDir());
+        }
     }
-    public boolean isMonotone(){
-        return  true;
+
+    private int getRandomDir(){
+        return (int)( Math.random()%4);
     }
 
     public boolean isMovableTile(){
