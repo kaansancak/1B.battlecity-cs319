@@ -1,4 +1,4 @@
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.Pane;
 
 import java.io.FileNotFoundException;
 
@@ -32,11 +32,25 @@ public class MapManager {
         //gameLoop();
     }
 
-public TilePane getMapTilePane(){
-        return map.getTilePane();
+    public void movePlayer( Player player, int dir){
+        int newX = player.getxLoc();
+        int newY = player.getyLoc();
+        switch ( dir){
+            case 0: newX++;
+            case 1: newX--;
+            case 2: newY++;
+            case 3: newY--;
+        }
+        if( map.isPassableTile( newX, newY)){
+            player.move(dir);
+        }
+    }
+
+public Pane getMapPane(){
+        return map.getMapPane();
 }
 
-    /* NEW METHOD TO CREATE OBJECTS
+    /* NEW METHOD TO CREATE OBJECT
        // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
     */
 
@@ -59,6 +73,10 @@ public TilePane getMapTilePane(){
     }
 
     private void updateMapObjects(){
+
+    }
+
+    private void handleBots(){
 
     }
 

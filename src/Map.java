@@ -1,6 +1,7 @@
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
@@ -20,12 +21,13 @@ public class Map {
     private int[][] obstaclesMap;
     private double elapsedTime;
     private TilePane tilePane;
+    private Pane mapPane;
     private ImageView temp;
     private int tileX, tileY;
     private ArrayList<Image> images;
     Scene mapScene;
     Stage mapStage;
-    
+
     public Map( ){
 
     }
@@ -34,6 +36,7 @@ public class Map {
     * 4 = Player, 5 = Bot
     * */
     public Map(int level, int[][] obstaclesMap){
+        mapPane = new Pane();
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
         tilePane = new TilePane();
@@ -45,10 +48,15 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
+        mapPane.getChildren().addAll(tilePane);
+    }
+
+    public Pane getMapPane() {
+        return mapPane;
     }
 
     public void showMap(){
-        mapScene = new Scene( tilePane);
+        mapScene = new Scene( mapPane);
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
@@ -83,7 +91,6 @@ public class Map {
         }
 
     }
-
 
     public void createObjects(GameObject[][] gameObjects){
 
