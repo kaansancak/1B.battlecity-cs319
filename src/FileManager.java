@@ -19,7 +19,7 @@ public class FileManager /* probably extends serializable*/ {
     private ArrayList<Media> scannedAudios;
     private Scanner scan;
     private int[][] scannedMap;
-    private final int NUMBER_IMAGES = 7;
+    private final int NUMBER_IMAGES = 10;
     private final int NUMBER_AUDIOS = 2;
 
     // initialize file manager

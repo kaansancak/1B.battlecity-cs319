@@ -1,4 +1,5 @@
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -10,6 +11,19 @@ public abstract class GameObject {
     //Location variables
     private int xLoc;
     private int yLoc;
+    private ImageView view;
+
+    public ImageView getView() {
+        return view;
+    }
+
+    public void setView(ImageView view) {
+        this.view = view;
+    }
+
+    public void setViewImage( Image image){
+        view.setImage(image);
+    }
 
     //Structure variables
     private boolean isDestructible;

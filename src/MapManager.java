@@ -1,17 +1,15 @@
 import javafx.animation.AnimationTimer;
-import javafx.scene.layout.Pane;
-
+import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.TilePane;
-import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 
-public class MapManager {
+public class MapManager extends Application {
     private final int TILES = 20;
     private int tileX, tileY;
     private boolean gameStatus;
@@ -22,28 +20,43 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
-    private AnimationTimer at = new AnimationTimer() {
-        @Override
-        public void handle(long now) {
-            gameLoop();
-        }
-    };
     Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
         this.stage = stage;
         stage.setScene(new Scene(map.getMapPane()));
+
+        for( Player player : map.getPlayers()){
+            player.setVelocity(new Point(2,2));
+        }
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                onUpdate();
+            }
+        };
+        timer.start();
+
+    }
+
+    private void onUpdate(){
+
+        listenKeys();
+        map.updatePlayers();
+    }
+
+    private void listenKeys() {
         stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
-            if(e.getCode() == KeyCode.A){
+            if(e.getCode() == KeyCode.D){
                 movePlayer(map.getPlayer(0),0); //player 0 direction 0
             }
-            else if(e.getCode() == KeyCode.W){
+            else if(e.getCode() == KeyCode.A){
                 movePlayer(map.getPlayer(0),1); //player 0 direction 0
             }
-            else if(e.getCode() == KeyCode.D){
+            else if(e.getCode() == KeyCode.S){
                 movePlayer(map.getPlayer(0),2); //player 0 direction 0
             }
-            else if(e.getCode() == KeyCode.S){
+            else if(e.getCode() == KeyCode.W){
                 movePlayer(map.getPlayer(0),3); //player 0 direction 0
             }
             if(e.getCode() == KeyCode.LEFT){
@@ -65,8 +78,6 @@ public class MapManager {
                 map.fire(map.getPlayer(1)); //player 0 direction 0
             }
         });
-
-
     }
 
     MapManager(){
@@ -83,6 +94,7 @@ public class MapManager {
         gameStatus = true;
         mapFinished = false;
         map.intToObject();
+        map.initPlayers();
         startsLevel();
         start(stage);
         gameLoop();

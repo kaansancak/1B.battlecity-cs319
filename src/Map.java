@@ -49,8 +49,6 @@ public class Map {
         tilePane.setPrefColumns(20);
         for(int i = 0; i < playerCount; i++){
             players[i] = new Player(i, i);
-            players[i].setyLoc(getHeight());
-            players[i].setxLoc(i*getWidth());
         }
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
@@ -61,6 +59,29 @@ public class Map {
         setHeight((int)tilePane.getHeight());
         mapPane.getChildren().addAll(tilePane);
         bullets = new ArrayList<>();
+    }
+
+    public void initPlayers(){
+        for( Player player : players){
+            player.setImage(images.get(5));
+            player.setLeftImage(player.getImage());
+            player.setDownImage( images.get(7));
+            player.setUpImage(images.get(8));
+            player.setRightImage(images.get(9));
+            player.setView( new ImageView(player.getImage()));
+            player.setxLoc((int)tilePane.getTileWidth() * 2);
+            player.setyLoc((int) (2* tilePane.getTileHeight()));
+            player.getView().setTranslateX(player.getxLoc());
+            player.getView().setTranslateY(player.getyLoc());
+            mapPane.getChildren().addAll(player.getView());
+        }
+    }
+
+    public void updatePlayers(){
+        for( Player player : players){
+            player.getView().setTranslateX(player.getxLoc());
+            player.getView().setTranslateY(player.getyLoc());
+        }
     }
 
     public Player getPlayer( int index){
@@ -107,10 +128,8 @@ public class Map {
                     gameObjects[i][j] = new Water(i * tileX, j * tileY);
                     gameObjects[i][j].setImage(images.get(5));
                 }
-
-                    temp = new ImageView(gameObjects[i][j].getImage());
-                    temp.relocate(i * tileY, j * tileY);
-                    tilePane.getChildren().addAll(temp);
+                    gameObjects[i][j].setView( new ImageView( gameObjects[i][j].getImage()));
+                    tilePane.getChildren().addAll(gameObjects[i][j].getView());
                 }
             }
         }
@@ -164,10 +183,13 @@ public class Map {
     }
 
     public boolean isPassableTile(int x, int y){
-        return gameObjects[x][y].isMovableTile();
+        return true;
     }
 
     // getters and setters
+    public Player[] getPlayers(){
+        return players;
+    }
 
     public ArrayList<Image> getImages() {
         return images;
