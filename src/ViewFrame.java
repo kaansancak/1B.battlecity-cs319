@@ -27,7 +27,6 @@ public class ViewFrame {
         viewFrame.initModality(Modality.APPLICATION_MODAL);
         viewFrame.setTitle(title);
         Label[] labels = new Label[7];
-
         for( int i = 0; i < message.size(); i++)
         {
             labels[i] = new Label(message.get(i));
@@ -43,22 +42,20 @@ public class ViewFrame {
             returnCall = true;
             viewFrame.close();
         });
-
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
-        pane.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-
+        pane.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         VBox answerBoxes = new VBox(10);
         answerBoxes.getChildren().addAll(labels[0],labels[1],labels[2],labels[3],labels[4],labels[5],labels[6], returnButton);
         answerBoxes.setAlignment(Pos.CENTER);
         pane.getChildren().add( answerBoxes);
-        Scene frameScene = new Scene(pane, 600, 400);
+        Scene frameScene = new Scene(pane, 600, 600);
         String  style = getClass().getResource("style.css").toExternalForm();
         frameScene.getStylesheets().add(style);
         viewFrame.setScene(frameScene);
         viewFrame.showAndWait();
     }
 
-    private void styleButton(Button returnButton) {
+    private void styleButton( Button returnButton) {
         returnButton.setId("glass-grey");
         returnButton.setPrefSize(100, 5);
 
@@ -82,11 +79,9 @@ public class ViewFrame {
             }
         });
     }
-
     public boolean isReturnCall() {
         return returnCall;
     }
-
     public void setReturnCall(boolean returnCall) {
         this.returnCall = returnCall;
     }

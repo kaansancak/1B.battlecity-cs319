@@ -46,7 +46,7 @@ public class ConfirmBox{
         VBox answerBoxes = new VBox(10);
         answerBoxes.getChildren().addAll(answerLabel, yesButton, noButton);
         answerBoxes.setAlignment(Pos.CENTER);
-        Image im = new Image(Paths.get("."+"/MediaFiles/confirmboxBackground.png").toUri().toString(), true);
+        Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
         pane.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         pane.getChildren().add( answerBoxes);
         Scene answerScene = new Scene( pane, 600, 200);

@@ -146,14 +146,11 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private void showCredits() {
         menuWindow.close();
         ArrayList<String> s = new ArrayList<>();
-        //String s = null;
         try {
             s = f.getCreditsDoc();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        new MediaPlayer(f.getScannedAudios().get(0)).play(); //burada müzik deniyorum :D
         creditsFrame = new ViewFrame( "CREDITS", s);
         if(creditsFrame.isReturnCall()){
             menuWindow.show();
