@@ -32,6 +32,7 @@ public class Settings implements EventHandler<ActionEvent> {
 
     FileManager file;
     private VBox vBox;
+    private Label settings;
 
     // Player 1 Items
     Label player1Label;
@@ -63,6 +64,8 @@ public class Settings implements EventHandler<ActionEvent> {
         media = file.getScannedAudios();
         settingsWindow = new Stage();
         settingsWindow.setTitle( "Options");
+        settings = new Label("Settings");
+        settings.setId("welcome-text");
 
         StackPane settingsLayout = new StackPane();
 
@@ -95,7 +98,7 @@ public class Settings implements EventHandler<ActionEvent> {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(3.0);
         vBox.setFillWidth(true);
-        vBox.getChildren().addAll( volumeBar, mute, musicBox, player1Label, player1_settings, player2Label, player2_settings, submit, backToMenu);
+        vBox.getChildren().addAll( settings, volumeBar, mute, musicBox, player1Label, player1_settings, player2Label, player2_settings, submit, backToMenu);
     }
 
     public void showSettings(){
@@ -136,8 +139,6 @@ public class Settings implements EventHandler<ActionEvent> {
         volumeBar.setMax(100);
         volumeBar.setValue(100);
         volumeBar.setMaxWidth(300);
-        volumeBar.setShowTickLabels( true);
-        volumeBar.setShowTickMarks( true);
         volumeBar.setMajorTickUnit( 50);
         volumeBar.setBlockIncrement( 10);
         // add style

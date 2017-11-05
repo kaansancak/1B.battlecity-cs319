@@ -57,7 +57,8 @@
 }
 
 .slider .track {
-    -fx-pref-height:20;
+    -fx-pref-height:10;
+
 }
 
 .slider:vertical .track {
@@ -65,6 +66,7 @@
 }
 
 .slider .thumb {
-    -fx-pref-height: 30;
-    -fx-pref-width: 30;
+    -fx-pref-height: 25;
+    -fx-pref-width: 25;
+    -fx-color: #5f9ea0;
 }
