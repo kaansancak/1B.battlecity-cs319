@@ -40,3 +40,18 @@
    -fx-text-fill:  #fffaf0;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
+
+#actiontarget {
+  -fx-font-size: 20px;
+  -fx-fill: FIREBRICK;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+#actiontarget1 {
+  -fx-font-size: 20px;
+  -fx-fill: FIREBRICK;
+  -fx-text-fill: #fffaf0;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}

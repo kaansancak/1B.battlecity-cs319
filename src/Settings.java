@@ -47,16 +47,9 @@ public class Settings implements EventHandler<ActionEvent> {
     private boolean returnCall  = false;
 
     //private JFXPanel settingsLayout;
-    Menu menu;
     FileManager file;
     private VBox vBox;
     // Player 1 default controls
-    Label player1;
-    Label player1_up;
-    Label player1_down;
-    Label player1_left;
-    Label player1_right;
-    Label player1_fire;
     Label player1Label;
 
     TextField[] player1_textfields;
@@ -66,12 +59,6 @@ public class Settings implements EventHandler<ActionEvent> {
     ComboBox player1_settings;
 
     // Player 2 default controls
-    Label player2;
-    Label player2_up;
-    Label player2_down;
-    Label player2_left;
-    Label player2_right;
-    Label player2_fire;
     Label player2Label;
 
     TextField[] player2_textfields;
@@ -188,7 +175,6 @@ public class Settings implements EventHandler<ActionEvent> {
                 else {
                     unmute();
                 }
-
             }
         });
 
@@ -361,7 +347,5 @@ public class Settings implements EventHandler<ActionEvent> {
             player1_boxes[i].setSpacing(10);
             player2_boxes[i].setSpacing(10);
         }
-
     }
-
 }

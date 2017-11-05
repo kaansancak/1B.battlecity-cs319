@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -130,13 +131,12 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void showHowToPlay() {
         menuWindow.close();
-        String message = "";
+        ArrayList<String> message = new ArrayList<>();
         try {
             message = f.getHowToPlayDoc();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         howToPlayFrame = new ViewFrame( "HOW TO PLAY", message);
         if ( howToPlayFrame.isReturnCall()){
             menuWindow.show();
@@ -145,7 +145,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void showCredits() {
         menuWindow.close();
-        String s = null;
+        ArrayList<String> s = new ArrayList<>();
+        //String s = null;
         try {
             s = f.getCreditsDoc();
         } catch (FileNotFoundException e) {

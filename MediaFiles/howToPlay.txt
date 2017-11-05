@@ -1,1 +1,8 @@
-how _ ?
+Press 'Single Player' for the single player game.
+Press 'Multiplayer' for the multiplayer game.
+During the game press 'p' to pause.
+Check the control buttons from the 'Settings'
+Goal:
+Destroy all enemy tanks to pass the level and gain the score!
+Your tank has 3 lives. 
+
