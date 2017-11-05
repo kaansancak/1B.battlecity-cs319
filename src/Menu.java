@@ -6,11 +6,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
@@ -35,6 +37,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private JFXPanel menuLayout;
     private Button[] menuButtons;
     private FileManager f;
+    MediaPlayer player;
+    Label battleCity;
 
     public static void main( String[] args){
         launch(args);
@@ -43,6 +47,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     @Override
     public void start(Stage primaryStage) throws Exception {
         settings = new Settings();
+
         //Set the title of the stage
         f = new FileManager();
         menuWindow = primaryStage;
@@ -52,11 +57,19 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             exitBattleCity();
         });
 
+        battleCity = new Label("Battle City");
+        battleCity.setId("welcome-text");
+
+
+        player = new MediaPlayer( f.getOpeningSong());
+        player.play();
+
         //Inıtialize menu Buttons
         menuButtons = new Button[MENU_BUTTON_COUNT];
 
         //Give name and set listener to the menu buttons
         initMenuButtons( menuButtons);
+
         StackPane menuLayout = new StackPane();
 
         Image im = new Image(Paths.get("."+"/MediaFiles/backgroundImage.png").toUri().toString(), true);
@@ -69,18 +82,20 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         mBBox.setAlignment( Pos.CENTER);
         mBBox.setFillWidth(true);
 
+        mBBox.getChildren().add(battleCity);
+
         for ( Button menuButton : menuButtons){
             mBBox.getChildren().add( menuButton);
         }
+
 
         //Add VBox to the Menu Layout
         menuLayout.getChildren().add( mBBox);
 
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
 
-        String  style= getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("style.css").toExternalForm();
         menuScene.getStylesheets().add(style);
-
         menuWindow.setScene(menuScene);
         menuWindow.show();
     }
@@ -146,11 +161,13 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void startGame() {
         menuWindow.close();
+        player.stop();
         GameManager gameManager = new GameManager(playerCount);
     }
 
     private void exitBattleCity() {
-        boolean answer = ConfirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?");
+        ConfirmBox confirmBox = new ConfirmBox();
+        boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?");
         if(answer)
         menuWindow.close();
     }

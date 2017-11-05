@@ -117,6 +117,11 @@ public class FileManager /* probably extends serializable*/ {
         return scannedAudios;
     }
 
+    public Media getOpeningSong() {
+        Media openingSong = new Media(Paths.get("MediaFiles/opening.mp3").toUri().toString());
+        return openingSong;
+    }
+
     public int[][] getScannedMap() {
         return scannedMap;
     }
