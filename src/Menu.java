@@ -39,6 +39,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private Button[] menuButtons;
     private FileManager f;
     MediaPlayer player;
+    MediaPlayer player1;
+    MediaPlayer viewframePlayer;
     Label battleCity;
 
     public static void main( String[] args){
@@ -47,6 +49,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         settings = new Settings();
 
         //Set the title of the stage
@@ -57,16 +60,22 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             e.consume();
             exitBattleCity();
         });
-
-        battleCity = new Label("Battle City");
-        battleCity.setId("welcome-text");
-
-
         player = new MediaPlayer( f.getOpeningSong());
         player.play();
 
+        player1 = new MediaPlayer( f.getGeneralSong());
+
+        //if( creditsFrame.methodCalled())
+            //player.stop();
+
+        battleCity = new Label("Battle City");
+        battleCity.setId("welcome-text");
+        //viewframePlayer;
+
+
         //Inıtialize menu Buttons
         menuButtons = new Button[MENU_BUTTON_COUNT];
+
 
         //Give name and set listener to the menu buttons
         initMenuButtons( menuButtons);
@@ -111,10 +120,13 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             setPlayerCount(2);
             startGame();
         }else if( event.getSource() == menuButtons[2]){
+            //player.stop();
             startSettings();
         }else if( event.getSource() == menuButtons[3]){
+            //player.stop();
             showHowToPlay();
         }else if( event.getSource() == menuButtons[4]){
+           // player.stop();
             showCredits();
         }else if( event.getSource() == menuButtons[5]){
             exitBattleCity();
@@ -122,6 +134,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     }
 
     private void startSettings() {
+        //player1.play();
+        player.stop();
         menuWindow.close();
         settings.showSettings();
         if ( settings.isReturnCall())
@@ -129,7 +143,16 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     }
 
+    public void stopTheSong() {
+        System.out.println("Im here");
+        player1.stop();
+        System.out.println("Im here");
+        //player.play();
+    }
+
     private void showHowToPlay() {
+        //player1.play();
+        player.stop();
         menuWindow.close();
         ArrayList<String> message = new ArrayList<>();
         try {
@@ -144,6 +167,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     }
 
     private void showCredits() {
+        //player1.play();
+        player.stop();
         menuWindow.close();
         ArrayList<String> s = new ArrayList<>();
         try {

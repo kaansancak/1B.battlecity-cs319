@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,8 +21,14 @@ import java.util.ArrayList;
 public class ViewFrame {
 
     private boolean returnCall = false;
+    Menu menu;
+    MediaPlayer player;
+    MediaPlayer player1;
+    FileManager f;
 
     public ViewFrame( String title, ArrayList<String> message){
+        f = new FileManager();
+        menu = new Menu();
         Stage viewFrame = new Stage();
         StackPane pane = new StackPane();
         viewFrame.initModality(Modality.APPLICATION_MODAL);
@@ -33,12 +40,15 @@ public class ViewFrame {
             labels[i].setId("actiontarget1");
             labels[i].setPadding( new Insets(5,5,5,5));
         }
+        //player1 = new MediaPlayer( f.getGeneralSong());
+        //player1.play();
 
         Button returnButton = new Button();
         styleButton(returnButton);
         returnButton.setText("Back");
 
         returnButton.setOnAction( event -> {
+            playMenuIntro();
             returnCall = true;
             viewFrame.close();
         });
@@ -53,6 +63,12 @@ public class ViewFrame {
         frameScene.getStylesheets().add(style);
         viewFrame.setScene(frameScene);
         viewFrame.showAndWait();
+    }
+
+    public void playMenuIntro() {
+        player = new MediaPlayer( f.getOpeningSong());
+       // player1.stop();
+        player.play();
     }
 
     private void styleButton( Button returnButton) {

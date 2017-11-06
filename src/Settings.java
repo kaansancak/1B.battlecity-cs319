@@ -8,6 +8,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,8 +32,13 @@ public class Settings implements EventHandler<ActionEvent> {
     private boolean returnCall  = false;
 
     FileManager file;
-    private VBox vBox;
+    BorderPane border;
+    private VBox player1Box;
+    private VBox player2Box;
+    private HBox soundBox;
+    private HBox buttonBox;
     private Label settings;
+    Menu menu;
 
     // Player 1 Items
     Label player1Label;
@@ -60,6 +66,16 @@ public class Settings implements EventHandler<ActionEvent> {
 
     public Settings(){
 
+        border = new BorderPane();
+        player1Box = new VBox();
+        player2Box = new VBox();
+        soundBox = new HBox();
+        buttonBox = new HBox();
+        border.setTop(soundBox);
+        border.setLeft(player1Box);
+        border.setRight(player2Box);
+        border.setBottom(buttonBox);
+
         file = new FileManager();
         media = file.getScannedAudios();
         settingsWindow = new Stage();
@@ -85,8 +101,8 @@ public class Settings implements EventHandler<ActionEvent> {
         initComboboxes();
         initButtons();
         addSettingsComponents();
-
-        settingsLayout.getChildren().addAll(vBox);
+        
+        settingsLayout.getChildren().addAll( border);
         settingsScene = new Scene( settingsLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
         String  style = getClass().getResource("style.css").toExternalForm();
         settingsScene.getStylesheets().add(style);
@@ -94,11 +110,21 @@ public class Settings implements EventHandler<ActionEvent> {
     }
 
     public void addSettingsComponents(){
-        vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setSpacing(3.0);
-        vBox.setFillWidth(true);
-        vBox.getChildren().addAll( settings, volumeBar, mute, musicBox, player1Label, player1_settings, player2Label, player2_settings, submit, backToMenu);
+        soundBox.setPadding(new Insets(200, 50, 50, 50));
+        soundBox.setSpacing(40);
+        soundBox.getChildren().addAll( volumeBar, mute, musicBox);
+
+        player1Box.setPadding(new Insets(50, 30, 15, 100));
+        player1Box.setSpacing(10);
+        player1Box.getChildren().addAll( player1Label, player1_settings);
+
+        player2Box.setPadding(new Insets(50, 100, 15, 30));
+        player2Box.setSpacing(10);
+        player2Box.getChildren().addAll( player2Label, player2_settings);
+
+        buttonBox.setPadding(new Insets(15, 200, 50, 200));
+        buttonBox.setSpacing(30);
+        buttonBox.getChildren().addAll( submit, backToMenu);
     }
 
     public void showSettings(){
@@ -117,6 +143,7 @@ public class Settings implements EventHandler<ActionEvent> {
     private void initCheckBox() {
         mute = new CheckBox( "Mute");
         mute.setSelected( false);
+        mute.setId("labels");
 
         // setting listener for the checkboxes
         mute.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -138,7 +165,7 @@ public class Settings implements EventHandler<ActionEvent> {
         volumeBar.setMin(0);
         volumeBar.setMax(100);
         volumeBar.setValue(100);
-        volumeBar.setMaxWidth(300);
+        volumeBar.setMaxWidth(350);
         volumeBar.setMajorTickUnit( 50);
         volumeBar.setBlockIncrement( 10);
         // add style
@@ -158,8 +185,6 @@ public class Settings implements EventHandler<ActionEvent> {
         submit.setOnAction(this);
         submit.setId("glass-grey");
         submit.setPrefSize(100, 10);
-
-
         submit.setOnMouseEntered(new EventHandler<MouseEvent>
                 () {
             @Override
@@ -178,9 +203,10 @@ public class Settings implements EventHandler<ActionEvent> {
                         "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
             }
         });
-
         backToMenu = new Button("Back");
         backToMenu.setOnAction( event -> {
+           // menu = new Menu();
+           // menu.stopTheSong();
             settingsWindow.close();
             returnCall = true;
         });
@@ -264,7 +290,7 @@ public class Settings implements EventHandler<ActionEvent> {
         player1_keyList.add( "DOWN");
         player1_keyList.add( "SPACEBAR");
         player1Label = new Label( "Player 1 keys\n" + player1_keyList.toString());
-        // add style
+        player1Label.setId("labels");
 
         // player 2 items
         player2_keyList.add( "A");
@@ -273,7 +299,7 @@ public class Settings implements EventHandler<ActionEvent> {
         player2_keyList.add( "S");
         player2_keyList.add( "Z");
         player2Label = new Label("Player 2 keys\n" + player2_keyList.toString());
-        // add style
+        player2Label.setId("labels");
     }
 
     private void mute() {
