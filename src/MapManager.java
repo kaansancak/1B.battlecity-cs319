@@ -1,5 +1,4 @@
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -9,7 +8,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
-public class MapManager extends Application {
+public class MapManager {
     private final int TILES = 20;
     private int tileX, tileY;
     private boolean gameStatus;
@@ -40,9 +39,9 @@ public class MapManager extends Application {
     }
 
     private void onUpdate(){
-
         listenKeys();
         map.updatePlayers();
+        map.updateBullets();
     }
 
     private void listenKeys() {
@@ -109,8 +108,9 @@ public class MapManager extends Application {
             case 2: newY++;
             case 3: newY--;
         }
-        if( map.isPassableTile( newX, newY)){
+        if( map.isMoveableLoc( newX, newY)){
             player.move(dir);
+            player.setDir(dir);
         }
     }
 

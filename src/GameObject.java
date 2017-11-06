@@ -1,6 +1,8 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.awt.geom.Point2D;
+
 /**
  * Created by kaan on 10/28/2017.
  */
@@ -12,6 +14,8 @@ public abstract class GameObject {
     private int xLoc;
     private int yLoc;
     private ImageView view;
+    private Point2D velocity;
+
 
     public ImageView getView() {
         return view;
@@ -95,6 +99,14 @@ public abstract class GameObject {
     }
 
     public abstract boolean isMovableTile();
+
+    public Point2D getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Point2D velocity) {
+        this.velocity = velocity;
+    }
 
     public void setxLoc(int xLoc) {
         this.xLoc = xLoc;

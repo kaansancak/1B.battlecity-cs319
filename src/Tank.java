@@ -11,8 +11,8 @@ public abstract class Tank extends GameObject {
     private int dir;
 
     //Methods
-    public Bullet createBullet(){
-        Bullet tankBullet = new Bullet( id, dir, super.getxLoc(), super.getyLoc());
+    public Bullet fire(){
+        Bullet tankBullet = new Bullet( id, super.getxLoc()+(int)getImage().getHeight(), super.getyLoc()+(int)getImage().getWidth()/2, dir);
         return tankBullet;
     }
 
@@ -30,6 +30,7 @@ public abstract class Tank extends GameObject {
         return dir;
     }
     public void move( int dir){
+            this.dir = dir;
             if( dir == 0)
                 super.setxLoc(super.getxLoc() + 1);
             else if( dir == 1)
@@ -38,10 +39,6 @@ public abstract class Tank extends GameObject {
                 super.setyLoc( super.getyLoc() + 1);
             else if( dir == 3)
                 super.setyLoc( super.getyLoc() - 1);
-    }
-
-    public void fire(){
-        createBullet();
     }
 
     public void getDamaged(){

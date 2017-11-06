@@ -3,7 +3,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -145,8 +144,20 @@ public class Map {
     }
 
     public void fire(Tank tank){
-        mapPane.getChildren().add(new Circle(tank.getxLoc(), tank.getyLoc(), 5));
-        bullets.add(tank.createBullet());
+       Bullet fired = tank.fire();
+       if(fired != null)
+           System.out.print(tank.getDir() + " " + fired.getDir());
+       mapPane.getChildren().addAll(fired.getView());
+       System.out.print("Bullet Created");
+       bullets.add(fired);
+    }
+
+    public void updateBullets(){
+        for( Bullet bullet : bullets){
+            bullet.move();
+            bullet.getView().setTranslateX(bullet.getxLoc());
+            bullet.getView().setTranslateY(bullet.getyLoc());
+        }
     }
 
     public void createObjects(GameObject[][] gameObjects){
@@ -183,6 +194,17 @@ public class Map {
     }
 
     public boolean isPassableTile(int x, int y){
+        return true;
+    }
+
+    public boolean isMoveableLoc( int x, int y){
+        for( GameObject[] gameObject1: gameObjects){
+            for( GameObject gameObject: gameObject1 ){
+                System.out.print("Checking");
+                if( gameObject.getView().contains(getPlayer(0).getView().getTranslateX(), getPlayer(0).getView().getTranslateY()))
+                    return false;
+            }
+        }
         return true;
     }
 

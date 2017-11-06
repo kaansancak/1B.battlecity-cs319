@@ -50,13 +50,11 @@ public class Player extends Tank {
         this.downImage = downImage;
     }
 
-    private Point2D velocity;
     private ArrayList<String> controller;
 
     public Player(int id, int controllerId) {
-        velocity = new Point2D.Double(0,0);
+        super.setVelocity( new Point2D.Double(0,0));
         super.setId(id);
-
         this.controllerId = controllerId;
     }
 
@@ -83,13 +81,6 @@ public class Player extends Tank {
         super.setViewImage(super.getImage());
     }
 
-    public Point2D getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(Point2D velocity) {
-        this.velocity = velocity;
-    }
 
     private void incrementScore() {
         score++;
