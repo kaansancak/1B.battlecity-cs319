@@ -126,6 +126,11 @@ public class FileManager /* probably extends serializable*/ {
         return openingSong;
     }
 
+    public Media getGeneralSong() {
+        Media generalSong = new Media(Paths.get("MediaFiles/generalSong.mp3").toUri().toString());
+        return generalSong;
+    }
+
     public int[][] getScannedMap() {
         return scannedMap;
     }

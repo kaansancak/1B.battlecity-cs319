@@ -42,11 +42,19 @@
 }
 
 #actiontarget {
-  -fx-font-size: 20px;
-  -fx-fill: FIREBRICK;
-  -fx-font-weight: bold;
-  -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
-}
+   -fx-font-size: 20px;
+   -fx-fill: FIREBRICK;
+   -fx-font-weight: bold;
+   -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+ }
+
+#labels {
+   -fx-font-size: 12px;
+   -fx-fill: FIREBRICK;
+   -fx-text-fill: #fffaf0;
+   -fx-font-weight: bold;
+   -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+ }
 
 #actiontarget1 {
   -fx-font-size: 20px;
@@ -58,7 +66,6 @@
 
 .slider .track {
     -fx-pref-height:10;
-
 }
 
 .slider:vertical .track {
@@ -69,4 +76,20 @@
     -fx-pref-height: 25;
     -fx-pref-width: 25;
     -fx-color: #5f9ea0;
+}
+.check-box .box {
+
+-fx-background-color: white;
+-fx-border-color:grey;
+-fx-border-radius:3px;
+
+}
+.check-box:selected .mark {
+
+-fx-background-color: white;
+
+}
+.check-box:selected .box {
+
+-fx-background-color: #28a3f4;
 }
