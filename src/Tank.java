@@ -83,7 +83,8 @@ public abstract class Tank extends GameObject {
         updateView();
     }
 
-    private void updateView(){
+
+    public void updateView(){
         super.setViewImage(super.getImage());
     }
 

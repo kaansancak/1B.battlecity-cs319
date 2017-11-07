@@ -20,9 +20,10 @@ public class Bot extends Tank {
     in the design report.
      */
     public void runBot( boolean changeDirStatus){
-        if( changeDirStatus)
-            super.setDir(getRandomDir());
-        else if( !changeDirStatus){
+        if( false) {
+            super.setDir(getRandomDir()%4);
+        }
+        else if( true){
             move(super.getDir());
         }
     }
