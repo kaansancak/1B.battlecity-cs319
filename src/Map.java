@@ -209,18 +209,30 @@ public class Map {
         return true;
     }
 
-    public boolean isMoveableLoc( double x, double y) {
-/*
+    public ImageView getMovedView( int x, int y){
+        ImageView movedView = new ImageView(getPlayer(0).getImage());
+        movedView.setTranslateX(x);
+        movedView.setTranslateY(y);
+        movedView.setVisible(false);
+        mapPane.getChildren().addAll(movedView);
+        return movedView;
+    }
+    public boolean isMoveableLoc( ImageView  mockUp) {
+        mockUp.setFitWidth(40);
+        mockUp.setFitHeight(40);
+        int i = 1;
         for (GameObject object : allObjects) {
-            System.out.print(object.getView().getBoundsInParent());
-            if (object.getView().getBoundsInParent().intersects(getPlayer(0).getView().getBoundsInLocal())) {
+            if( i == 1)
+                System.out.print( mockUp.getBoundsInParent() + " " + object.getView().getBoundsInParent() );
+            if (object.getView().getBoundsInParent().intersects(mockUp.getBoundsInParent())) {
                 if (object instanceof Bush)
                     return true;
                 return false;
-            }*/
-            return  true;
+            }
         }
-  
+        return true;
+    }
+
 
         /* for( GameObject[] gameObject1: gameObjects){
             for( GameObject gameObject: gameObject1 ){
