@@ -127,6 +127,7 @@ public class MapManager {
     MapManager(){
 
     }
+
     MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
