@@ -1,4 +1,4 @@
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -11,6 +11,44 @@ public abstract class Tank extends GameObject {
     private int id;
     private int health;
     private int dir;
+
+
+    private Image rightImage;
+    private Image upImage;
+    private Image leftImage;
+    private Image downImage;
+
+    public Image getRightImage() {
+        return rightImage;
+    }
+
+    public void setRightImage(Image rightImage) {
+        this.rightImage = rightImage;
+    }
+
+    public Image getUpImage() {
+        return upImage;
+    }
+
+    public void setUpImage(Image upImage) {
+        this.upImage = upImage;
+    }
+
+    public Image getLeftImage() {
+        return leftImage;
+    }
+
+    public void setLeftImage(Image leftImage) {
+        this.leftImage = leftImage;
+    }
+
+    public Image getDownImage() {
+        return downImage;
+    }
+
+    public void setDownImage(Image downImage) {
+        this.downImage = downImage;
+    }
 
     //Methods
     public Bullet fire(){
@@ -28,20 +66,28 @@ public abstract class Tank extends GameObject {
     boolean but not void
      */
 
-    public int requestMove(){
-        return dir;
+    public void move(int dir) {
+        if ( dir == 0){
+            super.setxLoc(super.getxLoc() + (int)getVelocity().getX());
+            super.setImage( rightImage);
+        }else if ( dir == 1){
+            super.setxLoc(super.getxLoc() - (int)getVelocity().getX());
+            super.setImage( leftImage);
+        }else if ( dir == 2){
+            super.setyLoc( super.getyLoc() + (int)getVelocity().getY());
+            super.setImage( downImage);
+        }else{
+            super.setyLoc( super.getyLoc() - (int)getVelocity().getY());
+            super.setImage( upImage);
+        }
+        updateView();
     }
-    public void move( int dir){
-            this.dir = dir;
-            if( dir == 0)
-                super.setxLoc(super.getxLoc() + 1);
-            else if( dir == 1)
-                super.setxLoc( super.getxLoc() - 1);
-            else if ( dir == 2)
-                super.setyLoc( super.getyLoc() + 1);
-            else if( dir == 3)
-                super.setyLoc( super.getyLoc() - 1);
+
+    private void updateView(){
+        super.setViewImage(super.getImage());
     }
+
+
 
     public void getDamaged(){
         health = health - BULLET_DAMAGE;

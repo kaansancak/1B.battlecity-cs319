@@ -1,9 +1,12 @@
+import java.awt.geom.Point2D;
+
 /**
  * Created by kaan on 10/28/2017.
  */
 public class Bot extends Tank {
 
     public Bot( int xLoc, int yLoc){
+        super.setVelocity( new Point2D.Double(0,0));
         super.setDir(getRandomDir());
         super.setxLoc( xLoc);
         super.setyLoc( yLoc);
@@ -23,6 +26,8 @@ public class Bot extends Tank {
             move(super.getDir());
         }
     }
+
+
 
     private int getRandomDir(){
         return (int)( Math.random()%4);
