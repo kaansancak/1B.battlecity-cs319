@@ -67,7 +67,7 @@ public class MapManager {
                 case 3:
                     newY--;
             }
-            if (map.tryNextMove(newX,newY)) {
+            if (map.tryNextMove(newX,newY,bot.getDir())) {
                 bot.move(bot.getDir());
             }
             else{
@@ -151,7 +151,7 @@ public class MapManager {
             case 2: newY++;
             case 3: newY--;
         }
-        if( map.tryNextMove( newX, newY)){
+        if( map.tryNextMove( newX, newY, dir)){
             player.move(dir);
             player.setDir(dir);
         }
