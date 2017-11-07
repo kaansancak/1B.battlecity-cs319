@@ -3,7 +3,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -47,7 +46,9 @@ public class Map {
         players = new Player[playerCount];
         tilePane = new TilePane();
         tilePane.setPrefColumns(20);
-
+        for(int i = 0; i < playerCount; i++){
+            players[i] = new Player(i, i);
+        }
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
@@ -55,13 +56,31 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
-        for(int i = 0; i < playerCount; i++){
-            players[i] = new Player(i, i);
-            players[i].setyLoc(getHeight());
-            players[i].setxLoc(i*getWidth());
-        }
         mapPane.getChildren().addAll(tilePane);
         bullets = new ArrayList<>();
+    }
+
+    public void initPlayers(){
+        for( Player player : players){
+            player.setImage(images.get(5));
+            player.setLeftImage(player.getImage());
+            player.setDownImage( images.get(7));
+            player.setUpImage(images.get(8));
+            player.setRightImage(images.get(9));
+            player.setView( new ImageView(player.getImage()));
+            player.setxLoc((int)tilePane.getTileWidth() * 2);
+            player.setyLoc((int) (2* tilePane.getTileHeight()));
+            player.getView().setTranslateX(player.getxLoc());
+            player.getView().setTranslateY(player.getyLoc());
+            mapPane.getChildren().addAll(player.getView());
+        }
+    }
+
+    public void updatePlayers(){
+        for( Player player : players){
+            player.getView().setTranslateX(player.getxLoc());
+            player.getView().setTranslateY(player.getyLoc());
+        }
     }
 
     public Player getPlayer( int index){
@@ -108,10 +127,8 @@ public class Map {
                     gameObjects[i][j] = new Water(i * tileX, j * tileY);
                     gameObjects[i][j].setImage(images.get(5));
                 }
-
-                    temp = new ImageView(gameObjects[i][j].getImage());
-                    temp.relocate(i * tileY, j * tileY);
-                    tilePane.getChildren().addAll(temp);
+                    gameObjects[i][j].setView( new ImageView( gameObjects[i][j].getImage()));
+                    tilePane.getChildren().addAll(gameObjects[i][j].getView());
                 }
             }
         }
@@ -127,8 +144,20 @@ public class Map {
     }
 
     public void fire(Tank tank){
-        mapPane.getChildren().add(new Circle(tank.getxLoc(), tank.getyLoc(), 5));
-        bullets.add(tank.createBullet());
+       Bullet fired = tank.fire();
+       if(fired != null)
+           System.out.print(tank.getDir() + " " + fired.getDir());
+       mapPane.getChildren().addAll(fired.getView());
+       System.out.print("Bullet Created");
+       bullets.add(fired);
+    }
+
+    public void updateBullets(){
+        for( Bullet bullet : bullets){
+            bullet.move();
+            bullet.getView().setTranslateX(bullet.getxLoc());
+            bullet.getView().setTranslateY(bullet.getyLoc());
+        }
     }
 
     public void createObjects(GameObject[][] gameObjects){
@@ -165,10 +194,24 @@ public class Map {
     }
 
     public boolean isPassableTile(int x, int y){
-        return gameObjects[x][y].isMovableTile();
+        return true;
+    }
+
+    public boolean isMoveableLoc( int x, int y){
+        for( GameObject[] gameObject1: gameObjects){
+            for( GameObject gameObject: gameObject1 ){
+                System.out.print("Checking");
+                if( gameObject.getView().contains(getPlayer(0).getView().getTranslateX(), getPlayer(0).getView().getTranslateY()))
+                    return false;
+            }
+        }
+        return true;
     }
 
     // getters and setters
+    public Player[] getPlayers(){
+        return players;
+    }
 
     public ArrayList<Image> getImages() {
         return images;
