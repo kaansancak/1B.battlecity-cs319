@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Map {
@@ -65,6 +66,7 @@ public class Map {
     }
 
     public void initBot(Bot b){
+        b.setVelocity(new Point2D.Double(2,2));
         b.setImage(images.get(5));
         b.setLeftImage(b.getImage());
         b.setDownImage( images.get(7));
@@ -249,18 +251,18 @@ public class Map {
         return movedView;
     }
     public boolean isMoveableLoc( ImageView  mockUp) {
-        mockUp.setFitWidth(30);
+        /*mockUp.setFitWidth(30);
         mockUp.setFitHeight(30);
         int i = 1;
         for (GameObject object : allObjects) {
             if( i == 1)
-                System.out.print( mockUp.getBoundsInParent() + " " + object.getView().getBoundsInParent() );
-            if (object.getView().get.contains(mockUp.getBoundsInParent())) {
+                System.out.print( mockUp.getBou() + " " + object.getView().getBoundsInParent() );
+            if (object.getView().getBoundsInLocal().intersects(mockUp.getBoundsInParent())) {
                 if (object instanceof Bush)
                     return true;
                 return false;
             }
-        }
+        }*/
         return true;
     }
 
