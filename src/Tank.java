@@ -83,20 +83,8 @@ public abstract class Tank extends GameObject {
         updateView();
     }
 
-    protected void updateImage( int dir){
-        if ( dir == 0){
-            super.setImage( rightImage);
-        }else if ( dir == 1){
-            super.setImage( leftImage);
-        }else if ( dir == 2){
-            super.setImage( downImage);
-        }else{
-            super.setImage( upImage);
-        }
 
-    }
-
-    protected void updateView(){
+    public void updateView(){
         super.setViewImage(super.getImage());
     }
 

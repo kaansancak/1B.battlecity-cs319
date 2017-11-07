@@ -16,6 +16,8 @@ public class Player extends Tank {
 
     public Player(int id, int controllerId) {
         super.setVelocity( new Point2D.Double(0,0));
+        super.getView().setFitHeight(30);
+        super.getView().setFitWidth(30);
         super.setId(id);
         this.controllerId = controllerId;
     }
