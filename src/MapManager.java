@@ -100,14 +100,15 @@ public class MapManager {
     }
 
     public void movePlayer( Player player, int dir){
-        int newX = player.getxLoc();
-        int newY = player.getyLoc();
+        double newX = player.getView().getTranslateX();
+        double newY = player.getView().getTranslateY();
         switch ( dir){
-            case 0: newX++;
+            case 0: newX ++;
             case 1: newX--;
             case 2: newY++;
             case 3: newY--;
         }
+        //map.printObjects();
         if( map.isMoveableLoc( newX, newY)){
             player.move(dir);
             player.setDir(dir);
