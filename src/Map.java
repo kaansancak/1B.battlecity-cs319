@@ -46,19 +46,17 @@ public class Map {
         gameObjects = new GameObject[TILES][TILES];
         this.playerCount = playerCount;
         players = new Player[playerCount];
-        tilePane = new TilePane();
-        tilePane.setPrefColumns(20);
         for(int i = 0; i < playerCount; i++){
             players[i] = new Player(i, i);
         }
+        mapPane.setPrefWidth(640);
+        mapPane.setPrefHeight(640);
+        tileX = (int)mapPane.getPrefWidth() / TILES;
+        tileY = (int)mapPane.getPrefHeight() / TILES;
+
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
-        tileX = (int) tilePane.getTileWidth();
-        tileY = (int) tilePane.getTileHeight();
-        setWidth((int)tilePane.getWidth());
-        setHeight((int)tilePane.getHeight());
-        mapPane.getChildren().addAll(tilePane.getC);
         bullets = new ArrayList<>();
     }
 
@@ -72,8 +70,8 @@ public class Map {
             player.setUpImage(images.get(8));
             player.setRightImage(images.get(9));
             player.setView( new ImageView(player.getImage()));
-            player.setxLoc((int)tilePane.getTileWidth() * 2);
-            player.setyLoc((int) (2* tilePane.getTileHeight()));
+            player.setxLoc( tileX * 2);
+            player.setyLoc((2 * tileY));
             player.getView().setTranslateX(player.getxLoc());
             player.getView().setTranslateY(player.getyLoc());
             mapPane.getChildren().addAll(player.getView());
@@ -132,8 +130,10 @@ public class Map {
                     gameObjects[i][j] = new Water(i * tileX, j * tileY);
                     gameObjects[i][j].setImage(images.get(5));
                 }
-                    gameObjects[i][j].setView( new ImageView( gameObjects[i][j].getImage()));
-                    tilePane.getChildren().addAll(gameObjects[i][j].getView());
+                    gameObjects[i][j].setView(new ImageView(gameObjects[i][j].getImage()));
+                    gameObjects[i][j].getView().setTranslateX(gameObjects[i][j].getxLoc());
+                    gameObjects[i][j].getView().setTranslateY(gameObjects[i][j].getyLoc());
+                    mapPane.getChildren().addAll(gameObjects[i][j].getView());
                     allObjects.add(gameObjects[i][j]);
                 }
             }
@@ -220,7 +220,7 @@ public class Map {
             }*/
             return  true;
         }
-
+  
 
         /* for( GameObject[] gameObject1: gameObjects){
             for( GameObject gameObject: gameObject1 ){

@@ -1,5 +1,10 @@
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
 import javafx.scene.Scene;
+import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -7,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class MapManager {
     private final int TILES = 20;
@@ -19,6 +25,7 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private ArrayList<GameObject> bots;
     Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
@@ -42,6 +49,14 @@ public class MapManager {
         listenKeys();
         map.updatePlayers();
         map.updateBullets();
+
+        if(Math.random() < 0.1){
+
+        }
+    }
+
+    public void addBot(){
+
     }
 
     private void listenKeys() {
@@ -77,6 +92,8 @@ public class MapManager {
                 map.fire(map.getPlayer(1)); //player 0 direction 0
             }
         });
+
+
     }
 
     MapManager(){
@@ -85,6 +102,7 @@ public class MapManager {
     MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
+        bots = new ArrayList<>();
         this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
@@ -100,16 +118,15 @@ public class MapManager {
     }
 
     public void movePlayer( Player player, int dir){
-        double newX = player.getView().getTranslateX();
-        double newY = player.getView().getTranslateY();
+        int newX = player.getxLoc();
+        int newY = player.getyLoc();
         switch ( dir){
-            case 0: newX ++;
+            case 0: newX++;
             case 1: newX--;
             case 2: newY++;
             case 3: newY--;
         }
-        //map.printObjects();
-        if( map.isMoveableLoc( newX, newY)){
+        if( map.isMoveableLoc( map.getMovedView( newX, newY))){
             player.move(dir);
             player.setDir(dir);
         }
