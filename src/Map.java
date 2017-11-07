@@ -3,7 +3,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -29,6 +28,9 @@ public class Map {
     private ArrayList<Image> images;
     private Player players[];
     private ArrayList<Bullet> bullets;
+
+    private ArrayList<Bot> bots;
+    private ArrayList<GameObject> allObjects;
     Scene mapScene;
     Stage mapStage;
 
@@ -40,25 +42,40 @@ public class Map {
     * 4 = Player, 5 = Bot
     * */
     public Map(int playerCount, int level, int[][] obstaclesMap){
+        allObjects = new ArrayList<GameObject>();
         mapPane = new Pane();
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
         this.playerCount = playerCount;
         players = new Player[playerCount];
-        tilePane = new TilePane();
-        tilePane.setPrefColumns(20);
         for(int i = 0; i < playerCount; i++){
             players[i] = new Player(i, i);
         }
+        mapPane.setPrefWidth(640);
+        mapPane.setPrefHeight(640);
+
+        tileX = (int)mapPane.getPrefWidth() / TILES;
+        tileY = (int)mapPane.getPrefHeight() / TILES;
+
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
-        tileX = (int) tilePane.getTileWidth();
-        tileY = (int) tilePane.getTileHeight();
-        setWidth((int)tilePane.getWidth());
-        setHeight((int)tilePane.getHeight());
-        mapPane.getChildren().addAll(tilePane);
         bullets = new ArrayList<>();
+        bots = new ArrayList<>();
+    }
+
+    public void initBot(Bot b){
+        b.setImage(images.get(5));
+        b.setLeftImage(b.getImage());
+        b.setDownImage( images.get(7));
+        b.setUpImage(images.get(9));
+        b.setRightImage(images.get(8));
+        b.setView( new ImageView(b.getImage()));
+        b.getView().setTranslateX(b.getxLoc());
+        b.getView().setTranslateY(b.getyLoc());
+        mapPane.getChildren().addAll(b.getView());
+        remainingBots--;
+        bots.add(b);
     }
 
     public void initPlayers(){
@@ -69,11 +86,20 @@ public class Map {
             player.setUpImage(images.get(8));
             player.setRightImage(images.get(9));
             player.setView( new ImageView(player.getImage()));
-            player.setxLoc((int)tilePane.getTileWidth() * 2);
-            player.setyLoc((int) (2* tilePane.getTileHeight()));
+            player.setxLoc( tileX * 2);
+            player.setyLoc((2 * tileY));
             player.getView().setTranslateX(player.getxLoc());
             player.getView().setTranslateY(player.getyLoc());
+            player.getView().setFitHeight(30);
+            player.getView().setFitWidth(30);
             mapPane.getChildren().addAll(player.getView());
+        }
+    }
+
+    public void updateBots(){
+        for(Bot bot: bots){
+            bot.getView().setTranslateX(bot.getxLoc());
+            bot.getView().setTranslateY(bot.getyLoc());
         }
     }
 
@@ -81,6 +107,7 @@ public class Map {
         for( Player player : players){
             player.getView().setTranslateX(player.getxLoc());
             player.getView().setTranslateY(player.getyLoc());
+         //   System.out.print( player.getView().getBoundsInParent() + " " + player.getView().getBoundsInParent());
         }
     }
 
@@ -128,12 +155,24 @@ public class Map {
                     gameObjects[i][j] = new Water(i * tileX, j * tileY);
                     gameObjects[i][j].setImage(images.get(5));
                 }
-                    gameObjects[i][j].setView( new ImageView( gameObjects[i][j].getImage()));
-                    tilePane.getChildren().addAll(gameObjects[i][j].getView());
+                    gameObjects[i][j].setView(new ImageView(gameObjects[i][j].getImage()));
+                    gameObjects[i][j].getView().setTranslateX(gameObjects[i][j].getxLoc());
+                    gameObjects[i][j].getView().setTranslateY(gameObjects[i][j].getyLoc());
+                    mapPane.getChildren().addAll(gameObjects[i][j].getView());
+                    allObjects.add(gameObjects[i][j]);
                 }
             }
         }
 
+    }
+
+
+    public ArrayList<Bot> getBots() {
+        return bots;
+    }
+
+    public void setBots(ArrayList<Bot> bots) {
+        this.bots = bots;
     }
 
     public ArrayList<Bullet> getBullets() {
@@ -145,8 +184,20 @@ public class Map {
     }
 
     public void fire(Tank tank){
-        mapPane.getChildren().add(new Circle(tank.getxLoc(), tank.getyLoc(), 5));
-        bullets.add(tank.createBullet());
+       Bullet fired = tank.fire();
+       if(fired != null)
+           System.out.print(tank.getDir() + " " + fired.getDir());
+       mapPane.getChildren().addAll(fired.getView());
+       System.out.print("Bullet Created");
+       bullets.add(fired);
+    }
+
+    public void updateBullets(){
+        for( Bullet bullet : bullets){
+            bullet.move();
+            bullet.getView().setTranslateX(bullet.getxLoc());
+            bullet.getView().setTranslateY(bullet.getyLoc());
+        }
     }
 
     public void createObjects(GameObject[][] gameObjects){
@@ -182,9 +233,78 @@ public class Map {
 
     }
 
+    public void printObjects(){
+        Player player = getPlayer(0);
+        System.out.print( player.getView().getBoundsInLocal());
+    }
+
     public boolean isPassableTile(int x, int y){
         return true;
     }
+
+    public boolean tryNextMove( int x, int y, int dir){
+        int a = x/tileX;
+        int b = y/tileY;
+
+        if(dir == 0){
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a+1][b] == null )){
+                if(!(gameObjects[a+1][b] instanceof Bush))
+                    return false;
+            }
+        }
+        else if(dir == 1){
+            if(!(gameObjects[a-1][b] == null )){
+                if(!(gameObjects[a-1][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+        }
+        else if(dir == 2){
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a][b+1] == null )){
+                if(!(gameObjects[a][b+1] instanceof Bush))
+                    return false;
+            }
+        }
+        else if(dir == 3){
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a][b-1] == null )){
+                if(!(gameObjects[a][b-1] instanceof Bush))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+
+
+        /* for( GameObject[] gameObject1: gameObjects){
+            for( GameObject gameObject: gameObject1 ){
+                System.out.print( gameObject.getClass().toString());
+                if( gameObject.getView().intersects(getPlayer(0).getView().getBoundsInParent())){
+                    System.out.print( gameObject.getClass().toString());
+                    if( gameObject instanceof Bush)
+                        return true;
+                    return false;
+                }
+
+            }
+        }
+        return true;*/
+
 
     // getters and setters
     public Player[] getPlayers(){
@@ -227,6 +347,7 @@ public class Map {
     public int getRemainingBots() {
         return remainingBots;
     }
+    public int getAliveBots(){ return bots.size(); }
 
     public void setRemainingBots(int remainingBots) {
         this.remainingBots = remainingBots;

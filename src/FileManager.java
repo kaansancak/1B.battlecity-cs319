@@ -59,22 +59,26 @@ public class FileManager /* probably extends serializable*/ {
         return scan.nextInt();
     }
     // howToPlay.txt
-    public String getHowToPlayDoc() throws FileNotFoundException{
+    public ArrayList<String> getHowToPlayDoc() throws FileNotFoundException{
         curFil = new File("."+"/MediaFiles/howToPlay.txt");
         scan = new Scanner(curFil);
-        String s = "";
+        ArrayList<String> s = new ArrayList<>();
+        String line = "";
         while(scan.hasNext()){
-            s += scan.nextLine();
+            line = scan.nextLine();
+            s.add(line);
         }
         return s;
     }
     // credits.txt
-    public String getCreditsDoc() throws FileNotFoundException{
+    public ArrayList<String> getCreditsDoc() throws FileNotFoundException{
         curFil = new File("."+"/MediaFiles/credits.txt");
         scan = new Scanner(curFil);
-        String s = "";
+        ArrayList<String> s = new ArrayList<>();
+        String line = "";
         while(scan.hasNext()){
-            s += scan.nextLine();
+            line = scan.nextLine();
+            s.add(line);
         }
         return s;
     }
@@ -115,6 +119,16 @@ public class FileManager /* probably extends serializable*/ {
             scannedAudios.add(new Media(Paths.get("MediaFiles/audio" + i + ".wav").toUri().toString())); // audioooo
         }
         return scannedAudios;
+    }
+
+    public Media getOpeningSong() {
+        Media openingSong = new Media(Paths.get("MediaFiles/opening.mp3").toUri().toString());
+        return openingSong;
+    }
+
+    public Media getGeneralSong() {
+        Media generalSong = new Media(Paths.get("MediaFiles/opening.mp3").toUri().toString());
+        return generalSong;
     }
 
     public int[][] getScannedMap() {

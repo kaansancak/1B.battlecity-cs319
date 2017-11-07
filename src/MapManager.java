@@ -1,5 +1,4 @@
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -8,8 +7,9 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-public class MapManager extends Application {
+public class MapManager {
     private final int TILES = 20;
     private int tileX, tileY;
     private boolean gameStatus;
@@ -20,6 +20,7 @@ public class MapManager extends Application {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private ArrayList<Bot> bots;
     Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
@@ -40,9 +41,46 @@ public class MapManager extends Application {
     }
 
     private void onUpdate(){
-
         listenKeys();
+        checkBots();
         map.updatePlayers();
+        map.updateBots();
+        map.updateBullets();
+
+        if(Math.random() < 0.001 && map.getRemainingBots() > 0){
+            addBot();
+            System.out.println("hola");
+        }
+    }
+
+    public void checkBots(){
+        for(Bot bot : map.getBots()){
+            int newX = bot.getxLoc();
+            int newY = bot.getyLoc();
+            switch (bot.getDir()) {
+                case 0:
+                    newX++;
+                case 1:
+                    newX--;
+                case 2:
+                    newY++;
+                case 3:
+                    newY--;
+            }
+            if (map.tryNextMove(newX,newY,bot.getDir())) {
+                bot.move(bot.getDir());
+            }
+            else{
+                bot.runBot(true); // bot is stuck
+            }
+        }
+    }
+
+    public void addBot(){
+        Bot temp = new Bot((int)(Math.abs(Math.random()*640)), (int)(map.getMapPane().getPrefHeight()-32-Math.random()*150));
+        temp.runBot(true);
+        bots.add(temp);
+        map.initBot(temp);
     }
 
     private void listenKeys() {
@@ -78,14 +116,18 @@ public class MapManager extends Application {
                 map.fire(map.getPlayer(1)); //player 0 direction 0
             }
         });
+
+
     }
 
     MapManager(){
 
     }
+
     MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
+        bots = new ArrayList<>();
         this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
@@ -109,8 +151,9 @@ public class MapManager extends Application {
             case 2: newY++;
             case 3: newY--;
         }
-        if( map.isPassableTile( newX, newY)){
+        if( map.tryNextMove( newX, newY, dir)){
             player.move(dir);
+            player.setDir(dir);
         }
     }
 
@@ -161,6 +204,7 @@ public Pane getMapPane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
+            mapFinished = (map.getRemainingBots()==0) && (map.getAliveBots()==0);
             map.updateObjects();
             stage.getScene();
             stage.show();
