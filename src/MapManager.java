@@ -25,7 +25,7 @@ public class MapManager {
     private AnimationTimer at = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            gameLoop();
+            start();
         }
     };
     Stage stage = new Stage();
@@ -64,9 +64,9 @@ public class MapManager {
             if(e.getCode() == KeyCode.SHIFT){
                 map.fire(map.getPlayer(1)); //player 0 direction 0
             }
+
         });
-
-
+    updateMapObjects();
     }
 
     MapManager(){
@@ -127,7 +127,7 @@ public Pane getMapPane(){
     }
 
     private void updateMapObjects(){
-
+        manageObjects();
     }
 
     private void handleBots(){

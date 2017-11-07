@@ -47,11 +47,7 @@ public class Map {
         players = new Player[playerCount];
         tilePane = new TilePane();
         tilePane.setPrefColumns(20);
-        for(int i = 0; i < playerCount; i++){
-            players[i] = new Player(i, i);
-            players[i].setyLoc(getHeight());
-            players[i].setxLoc(i*getWidth());
-        }
+
         this.level = level;
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
@@ -59,6 +55,11 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
+        for(int i = 0; i < playerCount; i++){
+            players[i] = new Player(i, i);
+            players[i].setyLoc(getHeight());
+            players[i].setxLoc(i*getWidth());
+        }
         mapPane.getChildren().addAll(tilePane);
         bullets = new ArrayList<>();
     }
