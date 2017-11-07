@@ -67,7 +67,7 @@ public class MapManager {
                 case 3:
                     newY--;
             }
-            if (map.isMoveableLoc(map.getMovedView(newX,newY))) {
+            if (map.tryNextMove(newX,newY)) {
                 bot.move(bot.getDir());
             }
             else{
@@ -151,7 +151,7 @@ public class MapManager {
             case 2: newY++;
             case 3: newY--;
         }
-        if( map.isMoveableLoc( map.getMovedView( newX, newY))){
+        if( map.tryNextMove( newX, newY)){
             player.move(dir);
             player.setDir(dir);
         }

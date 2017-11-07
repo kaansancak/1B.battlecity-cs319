@@ -1,3 +1,5 @@
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -5,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Map {
@@ -240,29 +243,28 @@ public class Map {
         return true;
     }
 
-    public ImageView getMovedView( int x, int y){
-        ImageView movedView = new ImageView(getPlayer(0).getImage());
-        movedView.setTranslateX(x);
-        movedView.setTranslateY(y);
-        movedView.setVisible(false);
-        mapPane.getChildren().addAll(movedView);
-        return movedView;
-    }
-    public boolean isMoveableLoc( ImageView  mockUp) {
-        mockUp.setFitWidth(30);
-        mockUp.setFitHeight(30);
-        int i = 1;
-        for (GameObject object : allObjects) {
-            if( i == 1)
-                System.out.print( mockUp.getBoundsInParent() + " " + object.getView().getBoundsInParent() );
-            if (object.getView().get.contains(mockUp.getBoundsInParent())) {
-                if (object instanceof Bush)
-                    return true;
+    public boolean tryNextMove( int x, int y){
+        int a = x/tileX;
+        int b = y/tileY;
+        if(!(gameObjects[a][b] == null )){
+            if(!(gameObjects[a][b] instanceof Bush))
                 return false;
-            }
+        }
+        if(!(gameObjects[a+1][b] == null)){
+            if(!(gameObjects[a+1][b] instanceof Bush))
+                return false;
+        }
+        if(!(gameObjects[a][b+1] == null )){
+            if(!(gameObjects[a][b+1] instanceof Bush))
+                return false;
+        }
+        if(!(gameObjects[a+1][b+1] == null )){
+            if(!(gameObjects[a+1][b+1] instanceof Bush))
+                return false;
         }
         return true;
     }
+
 
 
         /* for( GameObject[] gameObject1: gameObjects){
