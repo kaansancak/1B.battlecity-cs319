@@ -243,24 +243,49 @@ public class Map {
         return true;
     }
 
-    public boolean tryNextMove( int x, int y){
+    public boolean tryNextMove( int x, int y, int dir){
         int a = x/tileX;
         int b = y/tileY;
-        if(!(gameObjects[a][b] == null )){
-            if(!(gameObjects[a][b] instanceof Bush))
-                return false;
+
+        if(dir == 0){
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a+1][b] == null )){
+                if(!(gameObjects[a+1][b] instanceof Bush))
+                    return false;
+            }
         }
-        if(!(gameObjects[a+1][b] == null)){
-            if(!(gameObjects[a+1][b] instanceof Bush))
-                return false;
+        else if(dir == 1){
+            if(!(gameObjects[a-1][b] == null )){
+                if(!(gameObjects[a-1][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
         }
-        if(!(gameObjects[a][b+1] == null )){
-            if(!(gameObjects[a][b+1] instanceof Bush))
-                return false;
+        else if(dir == 2){
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a][b+1] == null )){
+                if(!(gameObjects[a][b+1] instanceof Bush))
+                    return false;
+            }
         }
-        if(!(gameObjects[a+1][b+1] == null )){
-            if(!(gameObjects[a+1][b+1] instanceof Bush))
-                return false;
+        else if(dir == 3){
+            if(!(gameObjects[a][b] == null )){
+                if(!(gameObjects[a][b] instanceof Bush))
+                    return false;
+            }
+            if(!(gameObjects[a][b-1] == null )){
+                if(!(gameObjects[a][b-1] instanceof Bush))
+                    return false;
+            }
         }
         return true;
     }

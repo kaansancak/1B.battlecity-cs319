@@ -60,10 +60,10 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             e.consume();
             exitBattleCity();
         });
-        player = new MediaPlayer( f.getOpeningSong());
-        player.play();
+        //player = new MediaPlayer( f.getOpeningSong());
+        //player.play();
 
-        player1 = new MediaPlayer( f.getGeneralSong());
+        //player1 = new MediaPlayer( f.getGeneralSong());
 
         //if( creditsFrame.methodCalled())
             //player.stop();
@@ -135,7 +135,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void startSettings() {
         //player1.play();
-        player.stop();
+        //player.stop();
         menuWindow.close();
         settings.showSettings();
         if ( settings.isReturnCall())
@@ -145,14 +145,14 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     public void stopTheSong() {
         System.out.println("Im here");
-        player1.stop();
+        //player1.stop();
         System.out.println("Im here");
         //player.play();
     }
 
     private void showHowToPlay() {
         //player1.play();
-        player.stop();
+        //player.stop();
         menuWindow.close();
         ArrayList<String> message = new ArrayList<>();
         try {
@@ -168,7 +168,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void showCredits() {
         //player1.play();
-        player.stop();
+        //player.stop();
         menuWindow.close();
         ArrayList<String> s = new ArrayList<>();
         try {
@@ -184,7 +184,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void startGame() {
         menuWindow.close();
-        player.stop();
+        //player.stop();
         GameManager gameManager = new GameManager(playerCount);
     }
 
