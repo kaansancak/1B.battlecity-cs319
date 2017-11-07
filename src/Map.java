@@ -1,3 +1,5 @@
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -66,7 +68,6 @@ public class Map {
     }
 
     public void initBot(Bot b){
-        b.setVelocity(new Point2D.Double(2,2));
         b.setImage(images.get(5));
         b.setLeftImage(b.getImage());
         b.setDownImage( images.get(7));
@@ -242,29 +243,28 @@ public class Map {
         return true;
     }
 
-    public ImageView getMovedView( int x, int y){
-        ImageView movedView = new ImageView(getPlayer(0).getImage());
-        movedView.setTranslateX(x);
-        movedView.setTranslateY(y);
-        movedView.setVisible(false);
-        mapPane.getChildren().addAll(movedView);
-        return movedView;
-    }
-    public boolean isMoveableLoc( ImageView  mockUp) {
-        /*mockUp.setFitWidth(30);
-        mockUp.setFitHeight(30);
-        int i = 1;
-        for (GameObject object : allObjects) {
-            if( i == 1)
-                System.out.print( mockUp.getBou() + " " + object.getView().getBoundsInParent() );
-            if (object.getView().getBoundsInLocal().intersects(mockUp.getBoundsInParent())) {
-                if (object instanceof Bush)
-                    return true;
+    public boolean tryNextMove( int x, int y){
+        int a = x/tileX;
+        int b = y/tileY;
+        if(!(gameObjects[a][b] == null )){
+            if(!(gameObjects[a][b] instanceof Bush))
                 return false;
-            }
-        }*/
+        }
+        if(!(gameObjects[a+1][b] == null)){
+            if(!(gameObjects[a+1][b] instanceof Bush))
+                return false;
+        }
+        if(!(gameObjects[a][b+1] == null )){
+            if(!(gameObjects[a][b+1] instanceof Bush))
+                return false;
+        }
+        if(!(gameObjects[a+1][b+1] == null )){
+            if(!(gameObjects[a+1][b+1] instanceof Bush))
+                return false;
+        }
         return true;
     }
+
 
 
         /* for( GameObject[] gameObject1: gameObjects){
