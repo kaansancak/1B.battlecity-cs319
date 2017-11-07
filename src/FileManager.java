@@ -127,7 +127,7 @@ public class FileManager /* probably extends serializable*/ {
     }
 
     public Media getGeneralSong() {
-        Media generalSong = new Media(Paths.get("MediaFiles/generalSong.mp3").toUri().toString());
+        Media generalSong = new Media(Paths.get("MediaFiles/opening.mp3").toUri().toString());
         return generalSong;
     }
 

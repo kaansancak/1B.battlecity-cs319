@@ -28,6 +28,7 @@ public class Map {
     private ArrayList<Image> images;
     private Player players[];
     private ArrayList<Bullet> bullets;
+    private ArrayList<GameObject> allObjects;
     Scene mapScene;
     Stage mapStage;
 
@@ -39,6 +40,7 @@ public class Map {
     * 4 = Player, 5 = Bot
     * */
     public Map(int playerCount, int level, int[][] obstaclesMap){
+        allObjects = new ArrayList<GameObject>();
         mapPane = new Pane();
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
@@ -60,6 +62,8 @@ public class Map {
         bullets = new ArrayList<>();
     }
 
+
+
     public void initPlayers(){
         for( Player player : players){
             player.setImage(images.get(5));
@@ -80,6 +84,7 @@ public class Map {
         for( Player player : players){
             player.getView().setTranslateX(player.getxLoc());
             player.getView().setTranslateY(player.getyLoc());
+         //   System.out.print( player.getView().getBoundsInParent() + " " + player.getView().getBoundsInParent());
         }
     }
 
@@ -129,11 +134,13 @@ public class Map {
                 }
                     gameObjects[i][j].setView( new ImageView( gameObjects[i][j].getImage()));
                     tilePane.getChildren().addAll(gameObjects[i][j].getView());
+                    allObjects.add(gameObjects[i][j]);
                 }
             }
         }
 
     }
+
 
     public ArrayList<Bullet> getBullets() {
         return bullets;
@@ -193,20 +200,42 @@ public class Map {
 
     }
 
+    public void printObjects(){
+        Player player = getPlayer(0);
+        System.out.print( player.getView().getBoundsInLocal());
+    }
+
     public boolean isPassableTile(int x, int y){
         return true;
     }
 
-    public boolean isMoveableLoc( int x, int y){
-        for( GameObject[] gameObject1: gameObjects){
+    public boolean isMoveableLoc( double x, double y) {
+/*
+        for (GameObject object : allObjects) {
+            System.out.print(object.getView().getBoundsInParent());
+            if (object.getView().getBoundsInParent().intersects(getPlayer(0).getView().getBoundsInLocal())) {
+                if (object instanceof Bush)
+                    return true;
+                return false;
+            }*/
+            return  true;
+        }
+  
+
+        /* for( GameObject[] gameObject1: gameObjects){
             for( GameObject gameObject: gameObject1 ){
-                System.out.print("Checking");
-                if( gameObject.getView().contains(getPlayer(0).getView().getTranslateX(), getPlayer(0).getView().getTranslateY()))
+                System.out.print( gameObject.getClass().toString());
+                if( gameObject.getView().intersects(getPlayer(0).getView().getBoundsInParent())){
+                    System.out.print( gameObject.getClass().toString());
+                    if( gameObject instanceof Bush)
+                        return true;
                     return false;
+                }
+
             }
         }
-        return true;
-    }
+        return true;*/
+
 
     // getters and setters
     public Player[] getPlayers(){
