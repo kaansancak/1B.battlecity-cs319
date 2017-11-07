@@ -58,7 +58,7 @@ public class Map {
         tileY = (int) tilePane.getTileHeight();
         setWidth((int)tilePane.getWidth());
         setHeight((int)tilePane.getHeight());
-        mapPane.getChildren().addAll(tilePane);
+        mapPane.getChildren().addAll(tilePane.getC);
         bullets = new ArrayList<>();
     }
 
@@ -220,7 +220,7 @@ public class Map {
             }*/
             return  true;
         }
-  
+
 
         /* for( GameObject[] gameObject1: gameObjects){
             for( GameObject gameObject: gameObject1 ){
