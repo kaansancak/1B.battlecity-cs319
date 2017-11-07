@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class MapManager {
     private final int TILES = 20;
@@ -23,6 +24,7 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
+    private ArrayList<GameObject> bots;
     Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
@@ -46,6 +48,14 @@ public class MapManager {
         listenKeys();
         map.updatePlayers();
         map.updateBullets();
+
+        if(Math.random() < 0.1){
+
+        }
+    }
+
+    public void addBot(){
+
     }
 
     private void listenKeys() {
@@ -91,6 +101,7 @@ public class MapManager {
     MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
+        bots = new ArrayList<>();
         this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
