@@ -249,13 +249,13 @@ public class Map {
         return movedView;
     }
     public boolean isMoveableLoc( ImageView  mockUp) {
-        mockUp.setFitWidth(40);
-        mockUp.setFitHeight(40);
+        mockUp.setFitWidth(30);
+        mockUp.setFitHeight(30);
         int i = 1;
         for (GameObject object : allObjects) {
             if( i == 1)
                 System.out.print( mockUp.getBoundsInParent() + " " + object.getView().getBoundsInParent() );
-            if (object.getView().getBoundsInParent().intersects(mockUp.getBoundsInParent())) {
+            if (object.getView().get.contains(mockUp.getBoundsInParent())) {
                 if (object instanceof Bush)
                     return true;
                 return false;

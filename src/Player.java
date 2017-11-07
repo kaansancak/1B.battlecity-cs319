@@ -1,5 +1,3 @@
-import javafx.scene.image.Image;
-
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 

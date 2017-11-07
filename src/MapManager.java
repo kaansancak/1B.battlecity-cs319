@@ -1,10 +1,5 @@
 import javafx.animation.AnimationTimer;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-
 import javafx.scene.Scene;
-import javafx.scene.layout.TilePane;
-import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -72,7 +67,7 @@ public class MapManager {
                 case 3:
                     newY--;
             }
-            if (map.isMoveableLoc(newX, newY)) {
+            if (map.isMoveableLoc(map.getMovedView(newX,newY))) {
                 bot.move(bot.getDir());
             }
             else{
