@@ -24,7 +24,7 @@ public class MapManager {
     private FileManager mapManagerFileManager;
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
-    private ArrayList<GameObject> bots;
+    private ArrayList<Bot> bots;
     Stage stage = new Stage();
 
     public void start(Stage stage) throws Exception{
@@ -46,16 +46,45 @@ public class MapManager {
 
     private void onUpdate(){
         listenKeys();
+        checkBots();
         map.updatePlayers();
+        map.updateBots();
         map.updateBullets();
 
-        if(Math.random() < 0.1){
+        if(Math.random() < 0.001 && map.getRemainingBots() > 0){
+            addBot();
+            System.out.println("hola");
+        }
+    }
 
+    public void checkBots(){
+        for(Bot bot : map.getBots()){
+            int newX = bot.getxLoc();
+            int newY = bot.getyLoc();
+            switch (bot.getDir()) {
+                case 0:
+                    newX++;
+                case 1:
+                    newX--;
+                case 2:
+                    newY++;
+                case 3:
+                    newY--;
+            }
+            if (map.isMoveableLoc(newX, newY)) {
+                bot.move(bot.getDir());
+            }
+            else{
+                bot.runBot(true); // bot is stuck
+            }
         }
     }
 
     public void addBot(){
-
+        Bot temp = new Bot((int)(Math.abs(Math.random()*640)), (int)(map.getMapPane().getPrefHeight()-32-Math.random()*150));
+        temp.runBot(true);
+        bots.add(temp);
+        map.initBot(temp);
     }
 
     private void listenKeys() {
@@ -178,6 +207,7 @@ public Pane getMapPane(){
     }
     private void gameLoop(){
         if(!stopGameLoop()){
+            mapFinished = (map.getRemainingBots()==0) && (map.getAliveBots()==0);
             map.updateObjects();
             stage.getScene();
             stage.show();

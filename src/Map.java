@@ -28,6 +28,8 @@ public class Map {
     private ArrayList<Image> images;
     private Player players[];
     private ArrayList<Bullet> bullets;
+
+    private ArrayList<Bot> bots;
     private ArrayList<GameObject> allObjects;
     Scene mapScene;
     Stage mapStage;
@@ -51,6 +53,7 @@ public class Map {
         }
         mapPane.setPrefWidth(640);
         mapPane.setPrefHeight(640);
+
         tileX = (int)mapPane.getPrefWidth() / TILES;
         tileY = (int)mapPane.getPrefHeight() / TILES;
 
@@ -58,9 +61,22 @@ public class Map {
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
         bullets = new ArrayList<>();
+        bots = new ArrayList<>();
     }
 
-
+    public void initBot(Bot b){
+        b.setImage(images.get(5));
+        b.setLeftImage(b.getImage());
+        b.setDownImage( images.get(7));
+        b.setUpImage(images.get(9));
+        b.setRightImage(images.get(8));
+        b.setView( new ImageView(b.getImage()));
+        b.getView().setTranslateX(b.getxLoc());
+        b.getView().setTranslateY(b.getyLoc());
+        mapPane.getChildren().addAll(b.getView());
+        remainingBots--;
+        bots.add(b);
+    }
 
     public void initPlayers(){
         for( Player player : players){
@@ -75,6 +91,13 @@ public class Map {
             player.getView().setTranslateX(player.getxLoc());
             player.getView().setTranslateY(player.getyLoc());
             mapPane.getChildren().addAll(player.getView());
+        }
+    }
+
+    public void updateBots(){
+        for(Bot bot: bots){
+            bot.getView().setTranslateX(bot.getxLoc());
+            bot.getView().setTranslateY(bot.getyLoc());
         }
     }
 
@@ -141,6 +164,14 @@ public class Map {
 
     }
 
+
+    public ArrayList<Bot> getBots() {
+        return bots;
+    }
+
+    public void setBots(ArrayList<Bot> bots) {
+        this.bots = bots;
+    }
 
     public ArrayList<Bullet> getBullets() {
         return bullets;
@@ -278,6 +309,7 @@ public class Map {
     public int getRemainingBots() {
         return remainingBots;
     }
+    public int getAliveBots(){ return bots.size(); }
 
     public void setRemainingBots(int remainingBots) {
         this.remainingBots = remainingBots;
