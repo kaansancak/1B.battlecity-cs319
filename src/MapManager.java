@@ -77,7 +77,13 @@ public class MapManager {
     }
 
     public void addBot(){
-        Bot temp = new Bot((int)(Math.abs(Math.random()*640)), (int)(map.getMapPane().getPrefHeight()-32-Math.random()*150));
+        int a = (int)(20*Math.random());
+        int b = 10+(int)(10*Math.random());
+        while(!(map.getGameObjects()[a][b] instanceof Bush || map.getGameObjects()[a/32][b/32] == null)){
+            a = (int) (20*Math.random());
+            b = 10+(int)(10*Math.random());
+        }
+        Bot temp = new Bot(a*32,b*32);
         temp.runBot(true);
         bots.add(temp);
         map.initBot(temp);
