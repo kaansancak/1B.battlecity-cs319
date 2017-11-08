@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 public class Bot extends Tank {
 
     public Bot( int xLoc, int yLoc){
-        super.setVelocity( new Point2D.Double(2,2));
+        super.setVelocity( new Point2D.Double(1,1));
         super.setDir(getRandomDir());
         super.setxLoc( xLoc);
         super.setyLoc( yLoc);

@@ -79,12 +79,11 @@ public class MapManager {
     public void addBot(){
         int a = (int)(20*Math.random());
         int b = 10+(int)(10*Math.random());
-        while(!(map.getGameObjects()[a][b] instanceof Bush || map.getGameObjects()[a/32][b/32] == null)){
+        while(!(map.getGameObjects()[a][b] instanceof Bush || map.getGameObjects()[a][b] == null)){
             a = (int) (20*Math.random());
             b = 10+(int)(10*Math.random());
         }
         Bot temp = new Bot(a*32,b*32);
-        temp.runBot(true);
         bots.add(temp);
         map.initBot(temp);
     }
