@@ -11,10 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
@@ -38,9 +40,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private JFXPanel menuLayout;
     private Button[] menuButtons;
     private FileManager f;
-    MediaPlayer player;
-    MediaPlayer player1;
-    MediaPlayer viewframePlayer;
+
+    public static MediaPlayer player;
     Label battleCity;
 
     public static void main( String[] args){
@@ -60,18 +61,19 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             e.consume();
             exitBattleCity();
         });
-        //player = new MediaPlayer( f.getOpeningSong());
+
+        player = new MediaPlayer( f.getOpeningSong());
         //player.play();
-
-        //player1 = new MediaPlayer( f.getGeneralSong());
-
-        //if( creditsFrame.methodCalled())
-            //player.stop();
+        player.setOnEndOfMedia( new Runnable() {
+            public void run() {
+                player.seek(Duration.ZERO);
+            }
+        });
+        player.play();
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");
         //viewframePlayer;
-
 
         //Inıtialize menu Buttons
         menuButtons = new Button[MENU_BUTTON_COUNT];
@@ -120,13 +122,10 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             setPlayerCount(2);
             startGame();
         }else if( event.getSource() == menuButtons[2]){
-            //player.stop();
             startSettings();
         }else if( event.getSource() == menuButtons[3]){
-            //player.stop();
             showHowToPlay();
         }else if( event.getSource() == menuButtons[4]){
-           // player.stop();
             showCredits();
         }else if( event.getSource() == menuButtons[5]){
             exitBattleCity();
@@ -134,25 +133,13 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     }
 
     private void startSettings() {
-        //player1.play();
-        //player.stop();
         menuWindow.close();
         settings.showSettings();
         if ( settings.isReturnCall())
             menuWindow.show();
-
-    }
-
-    public void stopTheSong() {
-        System.out.println("Im here");
-        //player1.stop();
-        System.out.println("Im here");
-        //player.play();
     }
 
     private void showHowToPlay() {
-        //player1.play();
-        //player.stop();
         menuWindow.close();
         ArrayList<String> message = new ArrayList<>();
         try {
@@ -165,10 +152,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             menuWindow.show();
         }
     }
-
     private void showCredits() {
-        //player1.play();
-        //player.stop();
         menuWindow.close();
         ArrayList<String> s = new ArrayList<>();
         try {
@@ -181,10 +165,19 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             menuWindow.show();
         }
     }
-
+    public void changeTheSong(String song) {
+        Media newSong = new Media(Paths.get("MediaFiles/" + song + ".mp3").toUri().toString());
+        player.stop();
+        player = new MediaPlayer(newSong);
+        player.setOnEndOfMedia( new Runnable() {
+            public void run() {
+                player.seek(Duration.ZERO);
+            }
+        });
+        player.play();
+    }
     private void startGame() {
         menuWindow.close();
-        //player.stop();
         GameManager gameManager = new GameManager(playerCount);
     }
 
@@ -192,7 +185,14 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         ConfirmBox confirmBox = new ConfirmBox();
         boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?");
         if(answer)
-        menuWindow.close();
+            menuWindow.close();
+    }
+
+    public void stopSong(){
+        player.setMute(true);
+    }
+    public void playSong(){
+        player.setMute(false);
     }
 
     private void initMenuButtons(Button[] menuButtons) {

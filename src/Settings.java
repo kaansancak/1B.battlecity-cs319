@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class Settings implements EventHandler<ActionEvent> {
     Label player1Label;
     ArrayList<String> player1_keyList;
     ComboBox player1_settings;
+    Label player1l;
+    Label player2l;
 
     // Player 2 Items
     Label player2Label;
@@ -58,14 +61,14 @@ public class Settings implements EventHandler<ActionEvent> {
     private int volume;
     private CheckBox mute;
     private Slider volumeBar;
-    private ComboBox<Media> musicBox;
+    private ComboBox<String> musicBox;
     private ArrayList<Media> media;
     MediaPlayer player;
     private int latestVolume;
 
 
     public Settings(){
-
+        menu = new Menu();
         border = new BorderPane();
         player1Box = new VBox();
         player2Box = new VBox();
@@ -79,7 +82,7 @@ public class Settings implements EventHandler<ActionEvent> {
         file = new FileManager();
         media = file.getScannedAudios();
         settingsWindow = new Stage();
-        settingsWindow.setTitle( "Options");
+        settingsWindow.setTitle( "Settings");
         settings = new Label("Settings");
         settings.setId("welcome-text");
 
@@ -101,8 +104,11 @@ public class Settings implements EventHandler<ActionEvent> {
         initComboboxes();
         initButtons();
         addSettingsComponents();
-        
-        settingsLayout.getChildren().addAll( border);
+
+        settingsLayout.getChildren().addAll(settings);
+        settingsLayout.setAlignment(Pos.TOP_CENTER);
+        settingsLayout.setPadding( new Insets(50, 150, 50, 150));
+        settingsLayout.getChildren().add(border);
         settingsScene = new Scene( settingsLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
         String  style = getClass().getResource("style.css").toExternalForm();
         settingsScene.getStylesheets().add(style);
@@ -110,19 +116,19 @@ public class Settings implements EventHandler<ActionEvent> {
     }
 
     public void addSettingsComponents(){
-        soundBox.setPadding(new Insets(200, 50, 50, 50));
+        soundBox.setPadding(new Insets(200, 100, 50, 120));
         soundBox.setSpacing(40);
         soundBox.getChildren().addAll( volumeBar, mute, musicBox);
 
-        player1Box.setPadding(new Insets(50, 30, 15, 100));
+        player1Box.setPadding(new Insets(50, 30, 50, 100));
         player1Box.setSpacing(10);
-        player1Box.getChildren().addAll( player1Label, player1_settings);
+        player1Box.getChildren().addAll( player1Label, player1l,  player1_settings);
 
-        player2Box.setPadding(new Insets(50, 100, 15, 30));
+        player2Box.setPadding(new Insets(50, 100, 50, 30));
         player2Box.setSpacing(10);
-        player2Box.getChildren().addAll( player2Label, player2_settings);
+        player2Box.getChildren().addAll( player2Label, player2l, player2_settings);
 
-        buttonBox.setPadding(new Insets(15, 200, 50, 200));
+        buttonBox.setPadding(new Insets(30, 200, 50, 200));
         buttonBox.setSpacing(30);
         buttonBox.getChildren().addAll( submit, backToMenu);
     }
@@ -134,10 +140,15 @@ public class Settings implements EventHandler<ActionEvent> {
     public void closeSettings(){
         settingsWindow.close();
     }
-
-    private void selectBackGroundMusic( Media song) {
-        player = new MediaPlayer( song);
-        player.play();
+    private void selectBackGroundMusic( String song) {
+        if (song.equals("Song 1"))
+            menu.changeTheSong("song1");
+        else if (song.equals("Song 2"))
+            menu.changeTheSong("song2");
+        else if (song.equals("Song 3"))
+            menu.changeTheSong("song3");
+        else
+            menu.changeTheSong("song4");
     }
 
     private void initCheckBox() {
@@ -168,7 +179,6 @@ public class Settings implements EventHandler<ActionEvent> {
         volumeBar.setMaxWidth(350);
         volumeBar.setMajorTickUnit( 50);
         volumeBar.setBlockIncrement( 10);
-        // add style
 
         // slider
         volumeBar.valueProperty().addListener(new ChangeListener<Number>() {
@@ -179,6 +189,7 @@ public class Settings implements EventHandler<ActionEvent> {
             }
         });
     }
+
     private void initButtons() {
         // buttons
         submit = new Button("Submit");
@@ -205,8 +216,6 @@ public class Settings implements EventHandler<ActionEvent> {
         });
         backToMenu = new Button("Back");
         backToMenu.setOnAction( event -> {
-           // menu = new Menu();
-           // menu.stopTheSong();
             settingsWindow.close();
             returnCall = true;
         });
@@ -230,8 +239,9 @@ public class Settings implements EventHandler<ActionEvent> {
             }
         });
     }
+
     private void initComboboxes() {
-        // player 1 combobox
+        // player 1 combobox//
         player1_settings = new ComboBox();
         player1_settings.setPromptText("Player 1");
         player1_settings.setEditable(true);
@@ -266,16 +276,18 @@ public class Settings implements EventHandler<ActionEvent> {
         // add style
 
         //musicbox combobox
-        musicBox = new ComboBox<javafx.scene.media.Media>();
+        musicBox = new ComboBox<String>();
         musicBox.getItems().addAll(
-                media.get(0),
-                media.get(1)
+                "Song 1",
+                "Song 2",
+                "Song 3",
+                "Song 4"
         );
 
         // add listener
-        musicBox.valueProperty().addListener(new ChangeListener<Media>() {
+        musicBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends Media> observable, Media oldValue, Media newValue) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 selectBackGroundMusic( newValue);
             }
         });
@@ -289,8 +301,10 @@ public class Settings implements EventHandler<ActionEvent> {
         player1_keyList.add( "RIGHT");
         player1_keyList.add( "DOWN");
         player1_keyList.add( "SPACEBAR");
-        player1Label = new Label( "Player 1 keys\n" + player1_keyList.toString());
+        player1Label = new Label( "Player 1 keys\n");
+        player1l = new Label(player1_keyList.toString());
         player1Label.setId("labels");
+        player1l.setId("labels");
 
         // player 2 items
         player2_keyList.add( "A");
@@ -298,26 +312,29 @@ public class Settings implements EventHandler<ActionEvent> {
         player2_keyList.add( "D");
         player2_keyList.add( "S");
         player2_keyList.add( "Z");
-        player2Label = new Label("Player 2 keys\n" + player2_keyList.toString());
+        player2Label = new Label("Player 2 keys\n");
         player2Label.setId("labels");
+        player2l = new Label(player2_keyList.toString());
+        player2l.setId("labels");
     }
 
     private void mute() {
         latestVolume = volume;
         volume = 0;
         changeVolume( volume); // will change the slider too
+        menu.stopSong();
     }
 
     private void unmute() {
         volume = latestVolume;
         changeVolume(volume);
+        menu.playSong();
     }
-
     private void changeVolume( int volume) {
         this.volume = volume;
         volumeBar.setValue( volume);
+        menu.player.setVolume(volume);
     }
-
     private int getVolume() {
         return volume;
     }
