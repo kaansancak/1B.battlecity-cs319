@@ -8,6 +8,10 @@ public abstract class Destructible extends Obstacles{
     private static final int INITIAL_HEALTH = 600; //600 wil be changed
     private int health;
 
+    public Destructible(int xLoc, int yLoc) {
+        super(xLoc, yLoc);
+    }
+
     //Methods
 
     //isDestructed Methods checks whether obstacles is destructed

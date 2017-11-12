@@ -1,18 +1,26 @@
+import com.sun.javafx.geom.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javax.swing.text.View;
 import java.awt.geom.Point2D;
 
 /**
  * Created by kaan on 10/28/2017.
  */
-public abstract class GameObject {
+public class GameObject {
 
+    private final int VIEW_WH = 30;
+
+    public GameObject( double xLoc, double yLoc){
+        this.xLoc = xLoc;
+        this.yLoc = yLoc;
+    }
     //Variables
     private final int BULLET_DAMAGE = 200;
     //Location variables
-    private int xLoc;
-    private int yLoc;
+    private double xLoc;
+    private double yLoc;
     private ImageView view;
     private Point2D velocity;
 
@@ -53,11 +61,11 @@ public abstract class GameObject {
     }
 
     //Setters and getters of variables
-    public int getyLoc() {
+    public double getyLoc() {
         return yLoc;
     }
 
-    public void setyLoc(int yLoc) {
+    public void setyLoc(double yLoc) {
         this.yLoc = yLoc;
     }
 
@@ -93,12 +101,11 @@ public abstract class GameObject {
         this.height = height;
     }
 
-    public int getxLoc() {
+    public double getxLoc() {
 
         return xLoc;
     }
 
-    public abstract boolean isMovableTile();
 
     public Point2D getVelocity() {
         return velocity;
@@ -108,7 +115,18 @@ public abstract class GameObject {
         this.velocity = velocity;
     }
 
-    public void setxLoc(int xLoc) {
+    public void setxLoc(double xLoc) {
         this.xLoc = xLoc;
+    }
+
+    public void initView(){
+        view = new ImageView( getImage());
+    }
+
+    public void draw(){
+        view.setFitHeight(30);
+        view.setFitWidth(30);
+        view.setTranslateX( xLoc*VIEW_WH);
+        view.setTranslateY( yLoc*VIEW_WH);
     }
 }

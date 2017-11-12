@@ -7,6 +7,10 @@ public abstract class Obstacles extends GameObject {
     // 0 = Ground, 1 = Brick, 2 = Bush, 4 = IronWall, 5 = Water
     private int typeId;
 
+    public Obstacles(int xLoc, int yLoc) {
+        super(xLoc, yLoc);
+    }
+
     //Methods
 
     //Setters and Getters

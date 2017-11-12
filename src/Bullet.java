@@ -16,15 +16,14 @@ public class Bullet extends GameObject {
     private boolean isCrushed;
 
     //Constructor
-    public Bullet( int id, int xLoc, int yLoc, int dir) {
-        super.setxLoc(xLoc);
-        super.setyLoc(yLoc);
+    public Bullet( int id, double xLoc, double yLoc, int dir) {
+        super(xLoc, yLoc);
         this.id = id;
         this.dir = dir;
         isCrushed = false;
         setDirImage();
         super.setView( new ImageView(super.getImage()));
-        super.setVelocity( new Point2D.Double(4,4));
+        super.setVelocity( new Point2D.Double(0.4,0.4));
     }
 
     private void setDirImage() {
@@ -51,13 +50,13 @@ public class Bullet extends GameObject {
     public void move() {
         if (!isCrushed()) {
             if (dir == 0) {
-                super.setxLoc(super.getxLoc() + 3);
+                super.setxLoc(super.getxLoc() + super.getVelocity().getX());
             } else if(dir == 1) {
-                super.setxLoc(super.getxLoc() - 3);
+                super.setxLoc(super.getxLoc() - super.getVelocity().getX());
             }else if(dir == 2) {
-                super.setyLoc(super.getyLoc() + 3);
+                super.setyLoc(super.getyLoc() + super.getVelocity().getY());
             }else if(dir == 3) {
-                super.setyLoc(super.getyLoc() - 3);
+                super.setyLoc(super.getyLoc() - super.getVelocity().getY());
             }
 
 

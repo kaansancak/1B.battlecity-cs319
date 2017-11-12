@@ -6,6 +6,10 @@ public abstract class Undestructible extends Obstacles {
     //Variables
     private int typeId2;
 
+    public Undestructible(int xLoc, int yLoc) {
+        super(xLoc, yLoc);
+    }
+
     //Methods
     public boolean isPassableByTanks(){
         if( typeId2 == 0)

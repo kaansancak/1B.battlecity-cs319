@@ -15,13 +15,11 @@ public class Player extends Tank {
     private ArrayList<String> controller;
 
     public Player(int id, int controllerId) {
-        super.setVelocity( new Point2D.Double(0,0));
+        super();
+        super.setVelocity( new Point2D.Double(0.1, 0.1));
         super.setId(id);
         this.controllerId = controllerId;
     }
-
-
-
 
     private void incrementScore() {
         score++;

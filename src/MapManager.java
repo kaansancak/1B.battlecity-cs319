@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -21,15 +22,33 @@ public class MapManager {
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
+    private InputManager inputManager;
     Stage stage = new Stage();
+
+
+    MapManager(int playerCount, int level) throws Exception {
+        mapManagerFileManager = new FileManager();
+        mapLevel = level;
+        bots = new ArrayList<>();
+        this.playerCount = playerCount;
+        obstaclesMap = new int[TILES][TILES];
+        readObstaclesMap();
+        map = new Map(playerCount, level, obstaclesMap);
+        getImages();
+        gameStatus = true;
+        mapFinished = false;
+        map.intToObject();
+        map.addObjects();
+        map.initPlayers();
+        startsLevel();
+        start(stage);
+        gameLoop();
+        inputManager = new InputManager( this, map.getPlayer(0));
+    }
 
     public void start(Stage stage) throws Exception{
         this.stage = stage;
         stage.setScene(new Scene(map.getMapPane()));
-
-        for( Player player : map.getPlayers()){
-            player.setVelocity(new Point(2,2));
-        }
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -41,8 +60,7 @@ public class MapManager {
     }
 
     private void onUpdate(){
-        listenKeys();
-        checkBots();
+      //  checkBots();
         map.updatePlayers();
         map.updateBots();
         map.updateBullets();
@@ -55,8 +73,8 @@ public class MapManager {
 
     public void checkBots(){
         for(Bot bot : map.getBots()){
-            int newX = bot.getxLoc();
-            int newY = bot.getyLoc();
+            double newX = bot.getxLoc();
+            double newY = bot.getyLoc();
             switch (bot.getDir()) {
                 case 0:
                     newX++;
@@ -85,82 +103,13 @@ public class MapManager {
         }
         Bot temp = new Bot(a*32,b*32);
         bots.add(temp);
-        map.initBot(temp);
+        //map.initBot(temp);
     }
 
-    private void listenKeys() {
-        stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
-            if(e.getCode() == KeyCode.D){
-                movePlayer(map.getPlayer(0),0); //player 0 direction 0
-            }
-            else if(e.getCode() == KeyCode.A){
-                movePlayer(map.getPlayer(0),1); //player 0 direction 0
-            }
-            else if(e.getCode() == KeyCode.S){
-                movePlayer(map.getPlayer(0),2); //player 0 direction 0
-            }
-            else if(e.getCode() == KeyCode.W){
-                movePlayer(map.getPlayer(0),3); //player 0 direction 0
-            }
-            if(e.getCode() == KeyCode.LEFT){
-                movePlayer(map.getPlayer(1),0); //player 0 direction 0
-            }
-            else if(e.getCode() == KeyCode.UP){
-                movePlayer(map.getPlayer(1),1); //player 0 direction 0
-            }
-            else if(e.getCode() == KeyCode.RIGHT){
-                movePlayer(map.getPlayer(1),2); //player 0 direction 0
-            }
-            else if(e.getCode() == KeyCode.DOWN){
-                movePlayer(map.getPlayer(1),3); //player 0 direction 0
-            }
-            if(e.getCode() == KeyCode.SPACE){
-                map.fire(map.getPlayer(0)); //player 0 direction 0
-            }
-            if(e.getCode() == KeyCode.SHIFT){
-                map.fire(map.getPlayer(1)); //player 0 direction 0
-            }
-        });
-
-
+    public Stage getStage() {
+        return stage;
     }
 
-    MapManager(){
-
-    }
-
-    MapManager(int playerCount, int level) throws Exception {
-        mapManagerFileManager = new FileManager();
-        mapLevel = level;
-        bots = new ArrayList<>();
-        this.playerCount = playerCount;
-        obstaclesMap = new int[TILES][TILES];
-        readObstaclesMap();
-        map = new Map(playerCount, level, obstaclesMap);
-        getImages();
-        gameStatus = true;
-        mapFinished = false;
-        map.intToObject();
-        map.initPlayers();
-        startsLevel();
-        start(stage);
-        gameLoop();
-    }
-
-    public void movePlayer( Player player, int dir){
-        int newX = player.getxLoc();
-        int newY = player.getyLoc();
-        switch ( dir){
-            case 0: newX++;
-            case 1: newX--;
-            case 2: newY++;
-            case 3: newY--;
-        }
-        if( map.tryNextMove( newX, newY, dir)){
-            player.move(dir);
-            player.setDir(dir);
-        }
-    }
 
 public Pane getMapPane(){
         return map.getMapPane();

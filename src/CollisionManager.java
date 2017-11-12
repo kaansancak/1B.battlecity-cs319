@@ -12,16 +12,16 @@ public class CollisionManager {
         while ( !bulletObject.isCrushed()){
             isCollided(bulletObject);
         }
-        GameObject crushedObject =  map[bulletObject.getxLoc()][bulletObject.getyLoc()];
-        damage(crushedObject);
+        //GameObject crushedObject =  map[bulletObject.getxLoc()][bulletObject.getyLoc()];
+        //damage(crushedObject);
     }
 
     public boolean isCollided(Bullet bulletObject){
-        if( !isPassable((map[bulletObject.getxLoc()][bulletObject.getyLoc()]))
+        /*if( !isPassable((map[bulletObject.getxLoc()][bulletObject.getyLoc()]))
             && map[bulletObject.getxLoc()][bulletObject.getyLoc()] != null){
                 bulletObject.setCrushed(true);
             return true;
-        }
+        }*/
         return false;
     }
     // do we need another method such as TankPassable which return also false for water ?
