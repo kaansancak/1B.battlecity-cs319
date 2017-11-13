@@ -1,19 +1,60 @@
 import sun.security.krb5.internal.crypto.Des;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class CollisionManager {
 
-    GameObject[][] map;
+    private final ArrayList<Tank> tanks;
+    private final ArrayList<Bullet> bullets;
+    private ArrayList<GameObject> gameObjects;
 
-    public CollisionManager(GameObject[][] map){
-        this.map = map;
+    public CollisionManager(ArrayList<GameObject> gameObjects,
+                            ArrayList<Bullet> bullets, ArrayList<Tank> tanks){
+        this.gameObjects  = gameObjects;
+        this.bullets = bullets;
+        this.tanks = tanks;
     }
 
-    public void checkCollision(Bullet bulletObject){
-        while ( !bulletObject.isCrushed()){
-            isCollided(bulletObject);
+    public void checkCollision(){
+        checkObstacleCollision();
+        checkTankCollision();
+    }
+
+    public void updateRemovals(){
+        tanks.removeIf(Tank::isAlive);
+        bullets.removeIf(Bullet::isCrushed);
+    }
+
+    public void checkObstacleCollision(){
+        for ( Bullet bullet : bullets){
+            for ( GameObject gameObject: gameObjects){
+                if (bullet.getView().getBoundsInParent().intersects(
+                        gameObject.getView().getBoundsInParent())
+                        ) {
+                    if( gameObject instanceof Destructible){
+                        //damage( gameObject);
+                        bullet.setCrushed(true);
+                    }
+                    else if ( gameObject instanceof Undestructible){
+                        bullet.setCrushed(true);
+                    }
+                }
+            }
         }
-        //GameObject crushedObject =  map[bulletObject.getxLoc()][bulletObject.getyLoc()];
-        //damage(crushedObject);
+    }
+
+    public void checkTankCollision(){
+        for ( Bullet bullet : bullets){
+            for ( Tank tank : tanks){
+                if( bullet.getView().getBoundsInParent().
+                        intersects( tank.getView().getBoundsInParent())){
+                   // damage( tank);
+                    bullet.setCrushed(true);
+                }
+            }
+        }
+
     }
 
     public boolean isCollided(Bullet bulletObject){

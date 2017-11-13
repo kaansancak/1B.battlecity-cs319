@@ -12,8 +12,8 @@ public abstract class Tank extends GameObject {
     private int BULLET_DAMAGE = 200;
     private int type;
     private int id;
-    private int health;
     private int dir;
+    private int health;
 
 
     private Image rightImage;
@@ -23,10 +23,12 @@ public abstract class Tank extends GameObject {
 
     public Tank(int xLoc, int yLoc) {
         super(xLoc, yLoc);
+        health = 200;
     }
 
     public Tank() {
         super(0,0);
+        health = 200;
     }
 
     @Override
@@ -71,12 +73,12 @@ public abstract class Tank extends GameObject {
 
     //Methods
     public Bullet fire(){
-        Bullet tankBullet = new Bullet( id, super.getxLoc()+getImage().getHeight(), super.getyLoc()+getImage().getWidth()/2, dir);
+        Bullet tankBullet = new Bullet( id, super.getxLoc(), super.getyLoc(), dir);
         return tankBullet;
     }
 
     public boolean isAlive(){
-        return ( health <= 0);
+        return ( health >= 0);
     }
 
     /* This method must be modified
@@ -110,7 +112,15 @@ public abstract class Tank extends GameObject {
 
 
     public void getDamaged(){
-        health = health - BULLET_DAMAGE;
+        health -= BULLET_DAMAGE;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     //Setters and Getters
@@ -130,13 +140,6 @@ public abstract class Tank extends GameObject {
         this.id = id;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
 
     public int getDir() {
         return dir;

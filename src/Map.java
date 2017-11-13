@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Map {
 
@@ -29,6 +30,7 @@ public class Map {
     private ArrayList<Image> images;
     private Player players[];
     private ArrayList<Bullet> bullets;
+    private ArrayList<Tank> tanks;
 
     private ArrayList<Bot> bots;
     private ArrayList<GameObject> tilesMap;
@@ -44,6 +46,7 @@ public class Map {
     * */
     public Map(int playerCount, int level, int[][] obstaclesMap){
         tilesMap = new ArrayList<GameObject>();
+        tanks = new ArrayList<Tank>();
         mapPane = new Pane();
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
@@ -91,21 +94,49 @@ public class Map {
             player.getView().setTranslateY(player.getyLoc());
             player.getView().setFitHeight(30);
             player.getView().setFitWidth(30);
+            player.setHealth(200);
+            tanks.add(player);
             mapPane.getChildren().addAll(player.getView());
         }
     }
 
-    public void updateBots(){
-        for(Bot bot: bots){
-            bot.draw();
+
+
+    //Update Methods
+
+    public void updatePlayer(){
+        for ( Player player : players){
+            if ( player.getHealth() >= 0)
+                player.draw();
+            else{
+                mapPane.getChildren().remove(player.getView());
+            }
+        }
+    }
+    //Update of Tanks
+    public void updateTanks(){
+        for( Tank tank : tanks){
+            System.out.print( tank.getHealth());
+            if ( tank.getHealth() >= 0)
+            tank.draw();
+            else{
+                mapPane.getChildren().remove(tank.getView());
+            }
         }
     }
 
-    public void updatePlayers(){
-        for( Player player : players){
-            player.draw();
+    //Update of Bullets
+    public void updateBullets(){
+        for( Bullet bullet : bullets) {
+            if (bullet.isCrushed()) {
+                mapPane.getChildren().remove(bullet.getView());
+            } else {
+                bullet.draw();
+                bullet.move();
+            }
         }
     }
+
 
     public Player getPlayer( int index){
         try {
@@ -214,18 +245,8 @@ public class Map {
 
     public void fire(Tank tank){
        Bullet fired = tank.fire();
-       if(fired != null)
-           System.out.print(tank.getDir() + " " + fired.getDir());
        mapPane.getChildren().addAll(fired.getView());
-       System.out.print("Bullet Created");
        bullets.add(fired);
-    }
-
-    public void updateBullets(){
-        for( Bullet bullet : bullets){
-            bullet.move();
-            bullet.draw();
-        }
     }
 
     public void createObjects(GameObject[][] gameObjects){
@@ -270,16 +291,20 @@ public class Map {
         return true;
     }
 
-    public boolean tryNextMove(double x, double y, int dir){
-
+    public boolean tryNextMove(double x, double y, ImageView playerView){
         for ( GameObject gameObject : tilesMap){
+            if ( gameObject.getView().getBoundsInParent().intersects( playerView.getBoundsInParent()))
+                playerView.setVisible(false);
+            else
+                playerView.setVisible(true);
             if( gameObject.getView().getBoundsInParent().intersects(getMockUp(x,y).getBoundsInParent())
                     && !(gameObject instanceof Tile)) {
-                System.out.println( gameObject.getClass().toString());
-                if ((gameObject instanceof Bush))
+                if ((gameObject instanceof Bush)) {
                     return true;
+                }
                 return false;
             }
+
         }
         return true;
         /*
@@ -411,10 +436,21 @@ public class Map {
         this.botCount = botCount;
     }
 
-    public GameObject[][] getGameObjects() {
-        return gameObjects;
+    public ArrayList<GameObject> getGameObjects() {
+        return tilesMap;
     }
 
+    public ArrayList<Tank> getTanks() {
+        return tanks;
+    }
+
+    public ArrayList<GameObject> getTilesMap() {
+        return tilesMap;
+    }
+
+    public GameObject[][] getGameObjectsArray(){
+        return gameObjects;
+    }
     public Scene getMapScene() {
         return mapScene;
     }

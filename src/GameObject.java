@@ -24,7 +24,6 @@ public class GameObject {
     private ImageView view;
     private Point2D velocity;
 
-
     public ImageView getView() {
         return view;
     }

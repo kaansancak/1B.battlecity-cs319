@@ -20,6 +20,11 @@ public class InputManager implements EventHandler<KeyEvent> {
         this.map = mapManager.getMap();
         this.player = player;
         mapScene.setOnKeyPressed( this);
+        mapScene.setOnKeyReleased( event -> {
+            if(event.getCode() == KeyCode.SPACE){
+                map.fire(player); //player 0 direction 0
+            }
+        });
     }
 
     @Override
@@ -36,9 +41,7 @@ public class InputManager implements EventHandler<KeyEvent> {
         else if(e.getCode() == KeyCode.W){
             movePlayer(player,3); //player 0 direction 0
         }
-        if(e.getCode() == KeyCode.SPACE){
-            map.fire(player); //player 0 direction 0
-        }
+
     }
 
     public void movePlayer( Player player, int dir){
@@ -50,9 +53,9 @@ public class InputManager implements EventHandler<KeyEvent> {
             case 2: newY += player.getVelocity().getY();
             case 3: newY -= player.getVelocity().getY();
         }
-        if( map.tryNextMove( newX, newY, dir)){
-            player.move(dir);
+        if( map.tryNextMove( newX, newY, player.getView())){
             player.setDir(dir);
+            player.move(dir);
         }
     }
 

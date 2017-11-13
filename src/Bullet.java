@@ -18,12 +18,13 @@ public class Bullet extends GameObject {
     //Constructor
     public Bullet( int id, double xLoc, double yLoc, int dir) {
         super(xLoc, yLoc);
+        System.out.print( super.getxLoc() + " " + super.getyLoc() );
         this.id = id;
         this.dir = dir;
         isCrushed = false;
         setDirImage();
-        super.setView( new ImageView(super.getImage()));
-        super.setVelocity( new Point2D.Double(0.4,0.4));
+        initView();
+        super.setVelocity( new Point2D.Double(0.25,0.25));
     }
 
     private void setDirImage() {
@@ -43,6 +44,14 @@ public class Bullet extends GameObject {
     public boolean destruct(int xLoc, int yLoc) {
         //This method will be filled
         return true;
+    }
+
+    @Override
+    public void draw() {
+        setDirImage();
+        super.getView().setImage(super.getImage());
+        super.getView().setTranslateX( super.getxLoc() * 27);
+        super.getView().setTranslateY( super.getyLoc() * 27);
     }
 
     //This method moves the bullet through the map

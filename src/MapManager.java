@@ -60,15 +60,19 @@ public class MapManager {
     }
 
     private void onUpdate(){
-      //  checkBots();
-        map.updatePlayers();
-        map.updateBots();
-        map.updateBullets();
-
+        collisionManager.checkCollision();
+        updateAllObjects();
+        collisionManager.updateRemovals();
         if(Math.random() < 0.001 && map.getRemainingBots() > 0){
             addBot();
             System.out.println("hola");
         }
+    }
+
+    public void updateAllObjects(){
+        map.updateTanks();
+        map.updatePlayer();
+        map.updateBullets();
     }
 
     public void checkBots(){
@@ -85,7 +89,7 @@ public class MapManager {
                 case 3:
                     newY--;
             }
-            if (map.tryNextMove(newX,newY,bot.getDir())) {
+            if (map.tryNextMove(newX,newY,bot.getView())) {
                 bot.move(bot.getDir());
             }
             else{
@@ -97,7 +101,7 @@ public class MapManager {
     public void addBot(){
         int a = (int)(20*Math.random());
         int b = 10+(int)(10*Math.random());
-        while(!(map.getGameObjects()[a][b] instanceof Bush || map.getGameObjects()[a][b] == null)){
+        while(!(map.getGameObjectsArray()[a][b] instanceof Bush || map.getGameObjectsArray()[a][b] == null)){
             a = (int) (20*Math.random());
             b = 10+(int)(10*Math.random());
         }
@@ -130,7 +134,7 @@ public Pane getMapPane(){
     private void manageObjects(){
         for(int i = 0; i < map.getBullets().size() ; i++){
             {
-                    collisionManager.checkCollision(map.getBullets().get(i));
+                    collisionManager.checkCollision();
                 }
             }
     }
@@ -150,8 +154,8 @@ public Pane getMapPane(){
     }
     private void startsLevel(){
         readObstaclesMap();
-        collisionManager = new CollisionManager(map.getGameObjects());
-        map.addObjects(map.getGameObjects());
+        collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
+        map.addObjects(map.getGameObjectsArray());
     }
     private boolean stopGameLoop(){
         return isMapFinished();
