@@ -1,17 +1,14 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MapManager {
     private final int TILES = 20;
+    Stage stage = new Stage();
     private int tileX, tileY;
     private boolean gameStatus;
     private int playerCount;
@@ -22,8 +19,7 @@ public class MapManager {
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
-    private InputManager inputManager;
-    Stage stage = new Stage();
+    private InputController inputController;
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -43,7 +39,7 @@ public class MapManager {
         startsLevel();
         start(stage);
         gameLoop();
-        inputManager = new InputManager( this, map.getPlayer(0));
+        inputController = new InputController( this, map.getPlayer(0));
     }
 
     public void start(Stage stage) throws Exception{
@@ -65,7 +61,6 @@ public class MapManager {
         collisionManager.updateRemovals();
         if(Math.random() < 0.001 && map.getRemainingBots() > 0){
             addBot();
-            System.out.println("hola");
         }
     }
 
@@ -73,6 +68,7 @@ public class MapManager {
         map.updateTanks();
         map.updatePlayer();
         map.updateBullets();
+        map.updateDestructibles();
     }
 
     public void checkBots(){

@@ -18,7 +18,6 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -27,43 +26,37 @@ public class Settings implements EventHandler<ActionEvent> {
 
     private static final int SETTINGS_WINDOW_WIDTH = 600;
     private static final int SETTINGS_WINDOWS_HEIGHT = 600;
-
-    private Stage settingsWindow;
-    private Scene settingsScene;
-    private boolean returnCall  = false;
-
     FileManager file;
     BorderPane border;
-    private VBox player1Box;
-    private VBox player2Box;
-    private HBox soundBox;
-    private HBox buttonBox;
-    private Label settings;
     Menu menu;
-
     // Player 1 Items
     Label player1Label;
     ArrayList<String> player1_keyList;
     ComboBox player1_settings;
     Label player1l;
     Label player2l;
-
     // Player 2 Items
     Label player2Label;
     ArrayList<String> player2_keyList;
     ComboBox player2_settings;
-
     // Buttons
     Button submit;
     Button backToMenu;
-
+    MediaPlayer player;
+    private Stage settingsWindow;
+    private Scene settingsScene;
+    private boolean returnCall  = false;
+    private VBox player1Box;
+    private VBox player2Box;
+    private HBox soundBox;
+    private HBox buttonBox;
+    private Label settings;
     // Sound part
     private int volume;
     private CheckBox mute;
     private Slider volumeBar;
     private ComboBox<String> musicBox;
     private ArrayList<Media> media;
-    MediaPlayer player;
     private int latestVolume;
 
 
@@ -333,7 +326,7 @@ public class Settings implements EventHandler<ActionEvent> {
     private void changeVolume( int volume) {
         this.volume = volume;
         volumeBar.setValue( volume);
-        menu.player.setVolume(volume);
+        Menu.player.setVolume(volume);
     }
     private int getVolume() {
         return volume;

@@ -1,21 +1,19 @@
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
 /**
  * Created by kaan on 11/12/2017.
  */
-public class InputManager implements EventHandler<KeyEvent> {
+public class InputController implements EventHandler<KeyEvent> {
 
     private Player player;
     private Scene mapScene;
     private Map map;
 
 
-    public InputManager(MapManager mapManager, Player player){
+    public InputController(MapManager mapManager, Player player){
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;

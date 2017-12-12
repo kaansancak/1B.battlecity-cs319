@@ -27,9 +27,6 @@ public class Bot extends Tank {
             move(super.getDir());
         }
     }
-
-
-
     private int getRandomDir(){
         return (int)( Math.random()%4);
     }

@@ -1,7 +1,5 @@
 import javafx.scene.image.Image;
 
-import java.awt.geom.Point2D;
-
 /**
  * Created by kaan on 10/28/2017.
  */
@@ -97,7 +95,7 @@ public abstract class Tank extends GameObject {
         }else if ( dir == 2){
             super.setyLoc( super.getyLoc() + getVelocity().getY());
             super.setImage( downImage);
-        }else{
+        }else if ( dir == 3){
             super.setyLoc( super.getyLoc() - getVelocity().getY());
             super.setImage( upImage);
         }

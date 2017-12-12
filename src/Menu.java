@@ -8,13 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -29,6 +26,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private static final int MENU_BUTTON_COUNT = 6;
     private static final int MENU_WINDOW_WIDTH = 600;
     private static final int MENU_WINDOWS_HEIGHT = 600;
+    public static MediaPlayer player;
+    Label battleCity;
     private Stage menuWindow;
     private Scene menuScene;
     private VBox mBBox;
@@ -40,9 +39,6 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private JFXPanel menuLayout;
     private Button[] menuButtons;
     private FileManager f;
-
-    public static MediaPlayer player;
-    Label battleCity;
 
     public static void main( String[] args){
         launch(args);
@@ -69,7 +65,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
                 player.seek(Duration.ZERO);
             }
         });
-        player.play();
+      //  player.play();
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");

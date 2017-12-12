@@ -5,15 +5,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Map {
 
     // maybe we will need a bool for GUI dominance -
     // for grass and (tanks and bullets)
     private final int TILES = 20;
+    Scene mapScene;
+    Stage mapStage;
     private int playerCount;
     private int level;
     private int height;
@@ -31,11 +31,9 @@ public class Map {
     private Player players[];
     private ArrayList<Bullet> bullets;
     private ArrayList<Tank> tanks;
-
     private ArrayList<Bot> bots;
     private ArrayList<GameObject> tilesMap;
-    Scene mapScene;
-    Stage mapStage;
+    private ArrayList<Destructible> destructibles;
 
     public Map( ){
 
@@ -47,6 +45,7 @@ public class Map {
     public Map(int playerCount, int level, int[][] obstaclesMap){
         tilesMap = new ArrayList<GameObject>();
         tanks = new ArrayList<Tank>();
+        destructibles = new ArrayList<Destructible>();
         mapPane = new Pane();
         this.obstaclesMap = obstaclesMap;
         gameObjects = new GameObject[TILES][TILES];
@@ -116,7 +115,6 @@ public class Map {
     //Update of Tanks
     public void updateTanks(){
         for( Tank tank : tanks){
-            System.out.print( tank.getHealth());
             if ( tank.getHealth() >= 0)
             tank.draw();
             else{
@@ -169,7 +167,9 @@ public class Map {
                 }
                 else {
                     if (obstaclesMap[i][j] == 1) {
-                        tilesMap.add( new Brick(i,j));
+                        Brick brick = new Brick(i,j);
+                        tilesMap.add( brick);
+                        destructibles.add( brick);
                     } else if (obstaclesMap[i][j] == 2) {
                         tilesMap.add( new Bush(i,j));
                     } else if (obstaclesMap[i][j] == 3) {
@@ -186,7 +186,6 @@ public class Map {
     public void addObjects(){
         for( GameObject gameObject: tilesMap){
             gameObject.draw();
-            System.out.println( gameObject.getView().getTranslateX() + " " + gameObject.getView().getTranslateY());
             mapPane.getChildren().add(gameObject.getView());
         }
     }
@@ -271,7 +270,7 @@ public class Map {
             if( !((Tank) gameObject).isAlive())
                 gameObject = null;
         else if( gameObject instanceof Destructible)
-            if( ((Destructible) gameObject).isDestructed())
+            if( gameObject.isDestructed())
                 gameObject = null;
     }
 
@@ -299,10 +298,7 @@ public class Map {
                 playerView.setVisible(true);
             if( gameObject.getView().getBoundsInParent().intersects(getMockUp(x,y).getBoundsInParent())
                     && !(gameObject instanceof Tile)) {
-                if ((gameObject instanceof Bush)) {
-                    return true;
-                }
-                return false;
+                return (gameObject instanceof Bush);
             }
 
         }
@@ -422,11 +418,12 @@ public class Map {
     public int getRemainingBots() {
         return remainingBots;
     }
-    public int getAliveBots(){ return bots.size(); }
 
     public void setRemainingBots(int remainingBots) {
         this.remainingBots = remainingBots;
     }
+
+    public int getAliveBots(){ return bots.size(); }
 
     public int getBotCount() {
         return botCount;
@@ -440,6 +437,10 @@ public class Map {
         return tilesMap;
     }
 
+    public void setGameObjects(GameObject[][] gameObjects) {
+        this.gameObjects = gameObjects;
+    }
+
     public ArrayList<Tank> getTanks() {
         return tanks;
     }
@@ -451,12 +452,9 @@ public class Map {
     public GameObject[][] getGameObjectsArray(){
         return gameObjects;
     }
+
     public Scene getMapScene() {
         return mapScene;
-    }
-
-    public void setGameObjects(GameObject[][] gameObjects) {
-        this.gameObjects = gameObjects;
     }
 
     public double getElapsedTime() {
@@ -473,5 +471,20 @@ public class Map {
 
     public void setTilePane(TilePane tilePane) {
         this.tilePane = tilePane;
+    }
+
+    public ArrayList<Destructible> getDestructibles() {
+        return destructibles;
+    }
+
+    public void updateDestructibles() {
+        for( Destructible destructible: destructibles){
+            if( destructible.isDestructed())
+                mapPane.getChildren().remove( destructible.getView());
+            else
+                destructible.draw();
+        }
+
+
     }
 }
