@@ -1,8 +1,13 @@
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.event.EventHandler;
 
-public class GameManager{
+
+public class GameManager  {
 
     private final int GAME_START_LEVEL = 1;
     private final int GAME_FINAL_LEVEL = 2;
@@ -18,15 +23,12 @@ public class GameManager{
     private int currentGameLevel;
     private boolean gameFinished;
     private int gameCompletedLevels;
+    private Button pauseButton;
+    private Stage gameManager;
 
     public void start (Stage stage) throws Exception{
         mapManager.start(stage);
-        stage.getScene().setOnKeyPressed( (KeyEvent e) ->{
-            if(e.getCode() == KeyCode.PAUSE){
-                // stage.setScene(); // pause game screen
-            }
-
-        });
+        gameManager = stage;
     }
 
     GameManager(){}
@@ -44,6 +46,7 @@ public class GameManager{
         gameFinished = false;
         gameCompletedLevels = 0;
     }
+
     private boolean isGameOver(){
         return gameCompletedLevels == GAME_FINAL_LEVEL;
     }
@@ -57,15 +60,11 @@ public class GameManager{
     public boolean isGamePaused(){
         return gamePaused;
     }
-    private void pauseGame(){
-        gamePaused = true;
-        gameRunning = false;
-    }
+
     private void continueGame(){
         gamePaused = false;
         gameRunning = true;
     }
-
 
     private void quitGame(){}
     private void saveHighestScore(int scoregame){ if(scoregame>highestScore)
