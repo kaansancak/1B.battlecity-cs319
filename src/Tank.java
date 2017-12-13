@@ -12,6 +12,8 @@ public abstract class Tank extends GameObject {
     private int id;
     private int dir;
     private int health;
+    private int speed;
+    private int oldSpeed;
 
 
     private Image rightImage;
@@ -21,12 +23,16 @@ public abstract class Tank extends GameObject {
 
     public Tank(int xLoc, int yLoc) {
         super(xLoc, yLoc);
-        health = 200;
+        health = 300;
+        speed = 100;
+        oldSpeed = speed;
     }
 
     public Tank() {
         super(0,0);
-        health = 200;
+        health = 300;
+        speed = 100;
+        oldSpeed = speed;
     }
 
     @Override
@@ -115,6 +121,22 @@ public abstract class Tank extends GameObject {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getOldSpeed() {
+        return oldSpeed;
+    }
+
+    public void setOldSpeed(int speed) {
+        this.oldSpeed = speed;
     }
 
     public void setHealth(int health) {

@@ -11,4 +11,8 @@ public class SpeedBonus extends Bonus {
         super.setImage( new Image(Paths.get(IMG_DIR).toUri().toString()));
         super.initView();
     }
+
+    private void normalizeSpeed(Player player) {
+        player.setSpeed(player.getOldSpeed());
+    }
 }

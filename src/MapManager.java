@@ -20,6 +20,8 @@ public class MapManager {
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
     private InputController inputController;
+    private int lifeBonusCount = 0;
+    private int speedBonusCount = 0;
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -62,6 +64,10 @@ public class MapManager {
         if(Math.random() < 0.001 && map.getRemainingBots() > 0){
             addBot();
         }
+        //if( lifeBonusCount < 2)
+            //addLifeBonus();
+        //if( speedBonusCount < 2)
+            //addSpeedBonus();
     }
 
     public void updateAllObjects(){
@@ -69,6 +75,22 @@ public class MapManager {
         map.updatePlayer();
         map.updateBullets();
         map.updateDestructibles();
+    }
+
+    private void setLifeBonusCount( int newCount) {
+        this.lifeBonusCount = newCount;
+    }
+
+    private int getLifeBonusCount() {
+        return lifeBonusCount;
+    }
+
+    private void setSpeedBonusCount( int newCount) {
+        this.speedBonusCount = newCount;
+    }
+
+    private int getSpeedBonusCount() {
+        return speedBonusCount;
     }
 
     public void checkBots(){
@@ -104,6 +126,32 @@ public class MapManager {
         Bot temp = new Bot(a*32,b*32);
         bots.add(temp);
         //map.initBot(temp);
+    }
+
+    public void addLifeBonus() {
+        int a = (int)(20*Math.random());
+        int b = 10 + (int)(10*Math.random());
+        while(!(map.getGameObjectsArray()[a][b] instanceof Bush && map.getGameObjectsArray()[a][b] == null && map.getGameObjectsArray()[a][b] instanceof Water )) {
+            a = (int) (20*Math.random());
+            b = 10+(int)(10*Math.random());
+        }
+        Bonus lifeBonus = new LifeBonus(a*32, b*32);
+        setLifeBonusCount(lifeBonusCount++);
+    }
+
+    public void addSpeedBonus() {
+        int a = (int)(20*Math.random());
+        int b = 10 + (int)(10*Math.random());
+        while(!(map.getGameObjectsArray()[a][b] instanceof Bush && map.getGameObjectsArray()[a][b] == null && map.getGameObjectsArray()[a][b] instanceof Water )) {
+            a = (int) (20*Math.random());
+            b = 10+(int)(10*Math.random());
+        }
+        Bonus speedBonus = new SpeedBonus(a*32, b*32);
+        setLifeBonusCount(speedBonusCount++);
+    }
+
+    public void addBonus() {
+
     }
 
     public Stage getStage() {
