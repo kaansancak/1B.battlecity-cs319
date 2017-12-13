@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MapManager {
+
     private final int TILES = 20;
     Stage stage = new Stage();
     AnimationTimer timer;
@@ -21,6 +22,7 @@ public class MapManager {
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
     private InputController inputController;
+
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -47,6 +49,8 @@ public class MapManager {
             public void handle(long now) {
                 onUpdate();
                 addBot(now);
+                addLifeBonus(now);
+               // addBonus(now, 1);
             }
         };
         timer.start();
@@ -64,6 +68,7 @@ public class MapManager {
         map.updateTanks();
         map.updateBullets();
         map.updateDestructibles();
+        map.updateBonuses();
     }
 
     public void handleBots(){
@@ -79,14 +84,25 @@ public class MapManager {
         }
     }
 
+    private void addLifeBonus(long time) {
+        int type = 0;
+        // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
+        if (time % 150 == 0)
+            map.newBonus(type);
+    }
+    private void addSpeedBonus(long time) {
+        int type = 1;
+        if( time % 200 == 0)
+            map.newBonus(type);
+    }
+
     public Stage getStage() {
         return stage;
     }
 
-
-public Pane getMapPane(){
+    public Pane getMapPane() {
         return map.getMapPane();
-}
+    }
 
     /* NEW METHOD TO CREATE OBJECT
        // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water

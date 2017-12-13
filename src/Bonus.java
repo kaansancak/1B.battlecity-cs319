@@ -4,26 +4,33 @@ public class Bonus extends GameObject {
     private int releaseTime;
     private int effectDuration;
     private boolean released;
-    private boolean taken;
+    private boolean taken = false;
     private boolean timeOut;
 
     public Bonus( int xLoc, int yLoc) {
         super(xLoc, yLoc);
     }
 
-    private boolean isReleased() {
-        return released = true;
+    public void setReleased( boolean released) {
+        this.released = released;
     }
 
-    private boolean isTaken() {
-        return taken = true;
+    private boolean isReleased() {
+        return released;
+    }
+
+    public void setTaken( boolean taken) {
+        this.taken = taken;
+    }
+    public boolean isTaken() {
+        return taken;
     }
 
     private boolean isTimeOut() {
         return timeOut = true;
     }
 
-    private void applyBonus(Player player) {
-        player.setHealth(player.getHealth() + 100);
+    private void applyBonus(Tank tank) {
+        tank.setHealth(tank.getHealth() + 100);
     }
 }
