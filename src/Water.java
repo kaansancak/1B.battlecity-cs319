@@ -15,8 +15,9 @@ public class Water extends Undestructible {
         super.initView();
     }
 
-    public boolean isMovableTile(){
-        return false;
+    @Override
+    public boolean isPassableByBullets() {
+        return true;
     }
 }
 //

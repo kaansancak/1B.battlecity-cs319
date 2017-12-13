@@ -1,17 +1,15 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MapManager {
     private final int TILES = 20;
+    Stage stage = new Stage();
+    AnimationTimer timer;
     private int tileX, tileY;
     private boolean gameStatus;
     private int playerCount;
@@ -22,8 +20,7 @@ public class MapManager {
     private int[][] obstaclesMap;
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
-    private InputManager inputManager;
-    Stage stage = new Stage();
+    private InputController inputController;
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -34,25 +31,22 @@ public class MapManager {
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
         map = new Map(playerCount, level, obstaclesMap);
-        getImages();
         gameStatus = true;
         mapFinished = false;
-        map.intToObject();
-        map.addObjects();
-        map.initPlayers();
         startsLevel();
         start(stage);
         gameLoop();
-        inputManager = new InputManager( this, map.getPlayer(0));
+        inputController = new InputController( this, map.getPlayer(0));
     }
 
     public void start(Stage stage) throws Exception{
         this.stage = stage;
         stage.setScene(new Scene(map.getMapPane()));
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 onUpdate();
+                addBot(now);
             }
         };
         timer.start();
@@ -60,50 +54,29 @@ public class MapManager {
     }
 
     private void onUpdate(){
-      //  checkBots();
-        map.updatePlayers();
-        map.updateBots();
+        collisionManager.checkCollision();
+        updateAllObjects();
+        collisionManager.updateRemovals();
+        handleBots();
+    }
+
+    public void updateAllObjects(){
+        map.updateTanks();
         map.updateBullets();
-
-        if(Math.random() < 0.001 && map.getRemainingBots() > 0){
-            addBot();
-            System.out.println("hola");
-        }
+        map.updateDestructibles();
     }
 
-    public void checkBots(){
-        for(Bot bot : map.getBots()){
-            double newX = bot.getxLoc();
-            double newY = bot.getyLoc();
-            switch (bot.getDir()) {
-                case 0:
-                    newX++;
-                case 1:
-                    newX--;
-                case 2:
-                    newY++;
-                case 3:
-                    newY--;
-            }
-            if (map.tryNextMove(newX,newY,bot.getDir())) {
-                bot.move(bot.getDir());
-            }
-            else{
-                bot.runBot(true); // bot is stuck
-            }
+    public void handleBots(){
+        for( Bot bot: map.getBots()){
+            bot.runBot( map.tryNextMove(bot,bot.getDir()));
         }
+
     }
 
-    public void addBot(){
-        int a = (int)(20*Math.random());
-        int b = 10+(int)(10*Math.random());
-        while(!(map.getGameObjects()[a][b] instanceof Bush || map.getGameObjects()[a][b] == null)){
-            a = (int) (20*Math.random());
-            b = 10+(int)(10*Math.random());
+    private void addBot( long time){
+        if( time % 100 == 0){
+            map.spawnBot();
         }
-        Bot temp = new Bot(a*32,b*32);
-        bots.add(temp);
-        //map.initBot(temp);
     }
 
     public Stage getStage() {
@@ -130,16 +103,12 @@ public Pane getMapPane(){
     private void manageObjects(){
         for(int i = 0; i < map.getBullets().size() ; i++){
             {
-                    collisionManager.checkCollision(map.getBullets().get(i));
+                    collisionManager.checkCollision();
                 }
             }
     }
 
     private void updateMapObjects(){
-
-    }
-
-    private void handleBots(){
 
     }
 
@@ -150,8 +119,8 @@ public Pane getMapPane(){
     }
     private void startsLevel(){
         readObstaclesMap();
-        collisionManager = new CollisionManager(map.getGameObjects());
-        map.addObjects(map.getGameObjects());
+        collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
+        map.addObjects(map.getGameObjectsArray());
     }
     private boolean stopGameLoop(){
         return isMapFinished();
@@ -171,68 +140,17 @@ public Pane getMapPane(){
     private void finishLevel(){
         map.finishMap();
     }
-    private void getImages(){
-        try {
-            map.setImages(mapManagerFileManager.getScannedImages());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     // getter and setters
-    public boolean isGameStatus() {
-        return gameStatus;
-    }
-
-    public void setGameStatus(boolean gameStatus) {
-        this.gameStatus = gameStatus;
-    }
-
-    public int getMapLevel() {
-        return mapLevel;
-    }
-
-    public void setMapLevel(int mapLevel) {
-        this.mapLevel = mapLevel;
-    }
 
     public Map getMap() {
         return map;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
-    }
 
     public boolean isMapFinished() {
         return mapFinished;
     }
 
-    public void setMapFinished(boolean mapFinished) {
-        this.mapFinished = mapFinished;
-    }
 
-    public FileManager getMapManagerFileManager() {
-        return mapManagerFileManager;
-    }
-
-    public void setMapManagerFileManager(FileManager mapManagerFileManager) {
-        this.mapManagerFileManager = mapManagerFileManager;
-    }
-
-    public int[][] getObstaclesMap() {
-        return obstaclesMap;
-    }
-
-    public void setObstaclesMap(int[][] obstaclesMap) {
-        this.obstaclesMap = obstaclesMap;
-    }
-
-    public CollisionManager getCollisionManager() {
-        return collisionManager;
-    }
-
-    public void setCollisionManager(CollisionManager collisionManager) {
-        this.collisionManager = collisionManager;
-    }
 }

@@ -1,8 +1,6 @@
-import com.sun.javafx.geom.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javax.swing.text.View;
 import java.awt.geom.Point2D;
 
 /**
@@ -10,20 +8,40 @@ import java.awt.geom.Point2D;
  */
 public class GameObject {
 
-    private final int VIEW_WH = 30;
-
-    public GameObject( double xLoc, double yLoc){
+    //Variables
+    private final int BULLET_DAMAGE = 200;
+    protected int VIEW_WH = 32;
+    //Location variables
+    protected double xLoc;
+    protected double yLoc;
+    private int VIEW_H = 30;
+    private int VIEW_V = 30;
+    private boolean isDamaged = false;
+    private boolean isDestructed = false;
+    private ImageView view;
+    private Point2D velocity;
+    //Structure variables
+    private boolean isDestructible;
+    //GUI variables
+    private Image image;
+    private int width;
+    private int height;
+    public GameObject(double xLoc, double yLoc){
         this.xLoc = xLoc;
         this.yLoc = yLoc;
     }
-    //Variables
-    private final int BULLET_DAMAGE = 200;
-    //Location variables
-    private double xLoc;
-    private double yLoc;
-    private ImageView view;
-    private Point2D velocity;
 
+    public void setVIEW_WH(int VIEW_WH) {
+        this.VIEW_WH = VIEW_WH;
+    }
+
+    public void setVIEW_H(int VIEW_H) {
+        this.VIEW_H = VIEW_H;
+    }
+
+    public void setVIEW_V(int VIEW_V) {
+        this.VIEW_V = VIEW_V;
+    }
 
     public ImageView getView() {
         return view;
@@ -36,15 +54,6 @@ public class GameObject {
     public void setViewImage( Image image){
         view.setImage(image);
     }
-
-    //Structure variables
-    private boolean isDestructible;
-
-    //GUI variables
-    private Image image;
-    private int width;
-    private int height;
-
 
     //methods
     public void updateLocation(){
@@ -106,6 +115,9 @@ public class GameObject {
         return xLoc;
     }
 
+    public void setxLoc(double xLoc) {
+        this.xLoc = xLoc;
+    }
 
     public Point2D getVelocity() {
         return velocity;
@@ -115,18 +127,32 @@ public class GameObject {
         this.velocity = velocity;
     }
 
-    public void setxLoc(double xLoc) {
-        this.xLoc = xLoc;
-    }
-
     public void initView(){
         view = new ImageView( getImage());
     }
 
+    public boolean isDamaged() {
+        return isDamaged;
+    }
+
+    public void setDamaged(boolean damaged) {
+        isDamaged = damaged;
+    }
+
+    public boolean isDestructed(){
+        return isDestructed;
+    }
+
+    public void setDestructed( boolean destructed){
+        isDestructed = destructed;
+    }
+
     public void draw(){
-        view.setFitHeight(30);
-        view.setFitWidth(30);
+        view.setFitHeight(VIEW_H);
+        view.setFitWidth(VIEW_V);
         view.setTranslateX( xLoc*VIEW_WH);
         view.setTranslateY( yLoc*VIEW_WH);
     }
+
+
 }

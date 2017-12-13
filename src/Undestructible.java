@@ -6,28 +6,19 @@ public abstract class Undestructible extends Obstacles {
     //Variables
     private int typeId2;
 
-    public Undestructible(int xLoc, int yLoc) {
+    protected Undestructible(int xLoc, int yLoc) {
         super(xLoc, yLoc);
     }
 
     //Methods
     public boolean isPassableByTanks(){
-        if( typeId2 == 0)
-            return true;
-        return false;
+        return typeId2 == 0;
     }
 
-    public boolean isPassableByBullets(){
-        if( typeId2 == 0)
-            return false;
-        return true;
-    }
+    public abstract  boolean isPassableByBullets();
 
     public boolean isHidable(){
-        if( typeId2 == 1)
-            return true;
-        else
-            return false;
+        return typeId2 == 1;
     }
 
     //Setters and getters
