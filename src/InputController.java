@@ -42,16 +42,8 @@ public class InputController implements EventHandler<KeyEvent> {
 
     }
 
-    public void movePlayer( Player player, int dir){
-        double newX = player.getxLoc();
-        double newY = player.getyLoc();
-        switch ( dir){
-            case 0: newX += player.getVelocity().getX();
-            case 1: newX -= player.getVelocity().getX();
-            case 2: newY += player.getVelocity().getY();
-            case 3: newY -= player.getVelocity().getY();
-        }
-        if( map.tryNextMove( newX, newY, player.getView())){
+    private void movePlayer( Player player, int dir){
+        if( map.tryNextMove( player, dir)){
             player.setDir(dir);
             player.move(dir);
         }
