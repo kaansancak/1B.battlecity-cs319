@@ -41,6 +41,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private Button[] menuButtons;
     private FileManager f;
 
+
     public static MediaPlayer player;
     Label battleCity;
 
@@ -111,7 +112,9 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         menuWindow.setScene(menuScene);
         menuWindow.show();
     }
-
+    public Stage getMenuWindow() {
+        return menuWindow;
+    }
 
     @Override
     public void handle(ActionEvent event) {
@@ -137,6 +140,11 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         settings.showSettings();
         if ( settings.isReturnCall())
             menuWindow.show();
+    }
+
+
+    public void showMenu(){
+        menuWindow.show();
     }
 
     private void showHowToPlay() {

@@ -153,7 +153,7 @@ public class Settings implements EventHandler<ActionEvent> {
 
     private void initCheckBox() {
         mute = new CheckBox( "Mute");
-        mute.setSelected( true);
+        mute.setSelected( false);
         mute.setId("labels");
 
         // setting listener for the checkboxes

@@ -24,6 +24,7 @@ public class MapManager {
     private ArrayList<Bot> bots;
     private InputManager inputManager;
     Stage stage = new Stage();
+    private boolean answer;
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -56,7 +57,16 @@ public class MapManager {
             }
         };
         timer.start();
+        if(answer)
+            stage.close();
 
+    }
+
+    public void setAnswer( boolean answer) {
+        this.answer = answer;
+    }
+    public boolean getAnswer() {
+        return answer;
     }
 
     private void onUpdate(){

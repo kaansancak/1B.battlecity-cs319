@@ -1,8 +1,11 @@
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -37,6 +40,8 @@ public class Map {
     Scene mapScene;
     Stage mapStage;
 
+    private boolean answer = false;
+
     public Map( ){
 
     }
@@ -55,6 +60,7 @@ public class Map {
         for(int i = 0; i < playerCount; i++){
             players[i] = new Player(2, 2);
         }
+
         mapPane.setPrefWidth(640);
         mapPane.setPrefHeight(640);
 
@@ -67,6 +73,7 @@ public class Map {
         bullets = new ArrayList<>();
         bots = new ArrayList<>();
     }
+
 /*
     public void initBot(Bot b){
         b.setImage(images.get(5));
@@ -156,6 +163,9 @@ public class Map {
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
+    }
+    public void closeMap() {
+        mapStage.close();
     }
 
     public void intToObject(){

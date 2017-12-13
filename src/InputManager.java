@@ -13,12 +13,16 @@ public class InputManager implements EventHandler<KeyEvent> {
     private Player player;
     private Scene mapScene;
     private Map map;
+    private Menu menu;
+    private MapManager mapManager;
 
 
     public InputManager(MapManager mapManager, Player player){
+        this.mapManager = mapManager;
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
+        menu = new Menu();
         mapScene.setOnKeyPressed( this);
         mapScene.setOnKeyReleased( event -> {
             if(event.getCode() == KeyCode.SPACE){
@@ -41,7 +45,19 @@ public class InputManager implements EventHandler<KeyEvent> {
         else if(e.getCode() == KeyCode.W){
             movePlayer(player,3); //player 0 direction 0
         }
+        else if(e.getCode() == KeyCode.P) {
+            pauseGame();
+        }
 
+    }
+
+    private void pauseGame(){
+            PauseMenu pauseMenu = new PauseMenu();
+            pauseMenu.showMenu();
+            if(pauseMenu.isReturnCall()) {
+                mapManager.setAnswer(true);
+            }
+            menu.showMenu();
     }
 
     public void movePlayer( Player player, int dir){
