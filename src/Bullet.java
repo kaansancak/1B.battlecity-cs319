@@ -11,29 +11,40 @@ public class Bullet extends GameObject {
 
     //Variables
     //direction of the bullet
+    private final int BULLET_VIEW_DIMENSION = 10;
+    private final double BULLET_VELOCITY = 0.2;
+    private boolean isCrushed = false;
     private int dir;
     private int id;
-    private boolean isCrushed;
+
 
     //Constructor
     public Bullet( int id, double xLoc, double yLoc, int dir) {
         super(xLoc, yLoc);
-        System.out.print( super.getxLoc() + " " + super.getyLoc() );
+        System.out.println( "----x :" + xLoc + " y: " + yLoc);
         this.id = id;
         this.dir = dir;
-        isCrushed = false;
         setDirImage();
-        initView();
-        super.setVelocity( new Point2D.Double(0.25,0.25));
+        super.setVIEW_H(BULLET_VIEW_DIMENSION);
+        super.setVIEW_V(BULLET_VIEW_DIMENSION);
+        super.setVIEW_WH(30);
+        super.setVelocity( new Point2D.Double(BULLET_VELOCITY,BULLET_VELOCITY));
     }
 
     private void setDirImage() {
         switch (dir){
-            case 0: setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
-            case 1: setImage(new Image(Paths.get("."+"/MediaFiles/bullet_left.png").toUri().toString()));
-            case 2: setImage(new Image(Paths.get("."+"/MediaFiles/bullet_up.png").toUri().toString()));
-            case 3: setImage(new Image(Paths.get("."+"/MediaFiles/bullet_down.png").toUri().toString()));
+            case 0: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
+                    break;
+            case 1: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_left.png").toUri().toString()));
+                    break;
+            case 2: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_down.png").toUri().toString()));
+                    break;
+            case 3: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_up.png").toUri().toString()));
+                    break;
+            default: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
+                    break;
         }
+        super.setView( new ImageView(super.getImage()));
     }
 
     //methods
@@ -44,14 +55,6 @@ public class Bullet extends GameObject {
     public boolean destruct(int xLoc, int yLoc) {
         //This method will be filled
         return true;
-    }
-
-    @Override
-    public void draw() {
-        setDirImage();
-        super.getView().setImage(super.getImage());
-        super.getView().setTranslateX( super.getxLoc() * 27);
-        super.getView().setTranslateY( super.getyLoc() * 27);
     }
 
     //This method moves the bullet through the map
@@ -67,10 +70,9 @@ public class Bullet extends GameObject {
             }else if(dir == 3) {
                 super.setyLoc(super.getyLoc() - super.getVelocity().getY());
             }
-
-
         }
     }
+
 
     //Setters and Getters
     public int getDir() {

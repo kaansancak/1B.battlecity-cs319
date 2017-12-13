@@ -16,6 +16,11 @@ public class IronWall extends Undestructible{
         super.initView();
     }
 
+    @Override
+    public boolean isPassableByBullets() {
+        return false;
+    }
+
     public boolean isMovableTile(){
         return false;
     }

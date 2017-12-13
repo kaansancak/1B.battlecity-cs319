@@ -16,6 +16,11 @@ public class Bush extends Undestructible {
         super.initView();
     }
 
+    @Override
+    public boolean isPassableByBullets() {
+        return true;
+    }
+
     public boolean isMovableTile(){
         return true;
     }
