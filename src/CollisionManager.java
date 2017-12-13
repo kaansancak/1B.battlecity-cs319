@@ -41,12 +41,14 @@ public class CollisionManager {
         }
     }
 
+
     public void checkTankCollision() {
         for (Bullet bullet : bullets) {
             for (Tank tank : tanks) {
                 if (bullet.getView().getBoundsInParent().
                         intersects(tank.getView().getBoundsInParent())) {
-                    // damage( tank);
+                    System.out.print("col");
+                    damageTank(tank);
                     bullet.setCrushed(true);
                 }
             }
@@ -85,6 +87,9 @@ public class CollisionManager {
                 ( gameObject2).setDestructed(true);
             }
         }
+    }
 
+    public  void damageTank( Tank tank){
+        tank.getDamaged();
     }
 }

@@ -67,9 +67,10 @@ public class Map {
     //Decide how to spawn a bot
     public void spawnBot(){
         if( botCount > 0){
-            Bot bot = new Bot( 10, 5);
+            Bot bot = new Bot( 5, 3);
             mapPane.getChildren().addAll(bot.getView());
             bots.add(bot);
+            tanks.add(bot);
             botCount--;
         }
     }
@@ -209,13 +210,15 @@ public class Map {
 
     public boolean tryNextMove(Tank tank, int dir){
         ImageView tankView = tank.getView();
+        ImageView mockUp = getMockUp( tank ,dir);
         for ( GameObject gameObject : tilesMap){
             if ( gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
                 tankView.setVisible(false);
             else
                 tankView.setVisible(true);
-            if( gameObject.getView().getBoundsInParent().intersects(getMockUp(tank,dir).getBoundsInParent())
+            if( gameObject.getView().getBoundsInParent().intersects(mockUp.getBoundsInParent())
                     && !(gameObject instanceof Tile)) {
+                mapPane.getChildren().remove(mockUp);
                 return (gameObject instanceof Bush);
             }
 
