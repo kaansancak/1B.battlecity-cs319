@@ -12,7 +12,7 @@ public class SpeedBonus extends Bonus {
         super.initView();
     }
 
-    private void normalizeSpeed(Player player) {
-        player.setSpeed(player.getOldSpeed());
+    private void normalizeSpeed(Tank tank) {
+        tank.setSpeed(tank.getOldSpeed());
     }
 }

@@ -147,7 +147,7 @@ public class GameObject {
         isDestructed = destructed;
     }
 
-    public void draw(){
+    public void draw() {
         view.setFitHeight(VIEW_H);
         view.setFitWidth(VIEW_V);
         view.setTranslateX( xLoc*VIEW_WH);
