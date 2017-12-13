@@ -5,34 +5,27 @@ import javafx.scene.image.Image;
  */
 public abstract class Tank extends GameObject {
 
-    private final int VIEW_WH = 25;
+    protected final int VIEW_WH = 23;
+    protected Image rightImage;
+    protected Image upImage;
+    protected Image leftImage;
+    protected Image downImage;
+    protected int dir;
+    protected int health;
     //Variables
     private int BULLET_DAMAGE = 200;
     private int type;
     private int id;
-    private int dir;
-    private int health;
-    private int speed;
-    private int oldSpeed;
 
-
-    private Image rightImage;
-    private Image upImage;
-    private Image leftImage;
-    private Image downImage;
 
     public Tank(int xLoc, int yLoc) {
         super(xLoc, yLoc);
-        health = 300;
-        speed = 100;
-        oldSpeed = speed;
+        health = 200;
     }
 
     public Tank() {
         super(0,0);
-        health = 300;
-        speed = 100;
-        oldSpeed = speed;
+        health = 200;
     }
 
     @Override
@@ -101,7 +94,7 @@ public abstract class Tank extends GameObject {
         }else if ( dir == 2){
             super.setyLoc( super.getyLoc() + getVelocity().getY());
             super.setImage( downImage);
-        }else if ( dir == 3){
+        }else{
             super.setyLoc( super.getyLoc() - getVelocity().getY());
             super.setImage( upImage);
         }
@@ -121,22 +114,6 @@ public abstract class Tank extends GameObject {
 
     public int getHealth() {
         return health;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getOldSpeed() {
-        return oldSpeed;
-    }
-
-    public void setOldSpeed(int speed) {
-        this.oldSpeed = speed;
     }
 
     public void setHealth(int health) {
@@ -160,6 +137,8 @@ public abstract class Tank extends GameObject {
         this.id = id;
     }
 
+
+    protected abstract void initImages();
 
     public int getDir() {
         return dir;

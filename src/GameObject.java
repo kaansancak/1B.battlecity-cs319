@@ -10,14 +10,14 @@ public class GameObject {
 
     //Variables
     private final int BULLET_DAMAGE = 200;
-    protected int VIEW_WH = 30;
-    protected int VIEW_H = 30;
-    protected int VIEW_V = 30;
-    protected boolean isDamaged = false;
-    protected boolean isDestructed = false;
+    protected int VIEW_WH = 32;
     //Location variables
-    private double xLoc;
-    private double yLoc;
+    protected double xLoc;
+    protected double yLoc;
+    private int VIEW_H = 30;
+    private int VIEW_V = 30;
+    private boolean isDamaged = false;
+    private boolean isDestructed = false;
     private ImageView view;
     private Point2D velocity;
     //Structure variables
@@ -31,7 +31,7 @@ public class GameObject {
         this.yLoc = yLoc;
     }
 
-    protected void setVIEW_WH(int VIEW_WH) {
+    public void setVIEW_WH(int VIEW_WH) {
         this.VIEW_WH = VIEW_WH;
     }
 

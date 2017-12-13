@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class MapManager {
     private final int TILES = 20;
     Stage stage = new Stage();
+    AnimationTimer timer;
     private int tileX, tileY;
     private boolean gameStatus;
     private int playerCount;
@@ -20,8 +21,6 @@ public class MapManager {
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
     private InputController inputController;
-    private int lifeBonusCount = 0;
-    private int speedBonusCount = 0;
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -32,12 +31,8 @@ public class MapManager {
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
         map = new Map(playerCount, level, obstaclesMap);
-        getImages();
         gameStatus = true;
         mapFinished = false;
-        map.intToObject();
-        map.addObjects();
-        map.initPlayers();
         startsLevel();
         start(stage);
         gameLoop();
@@ -47,10 +42,11 @@ public class MapManager {
     public void start(Stage stage) throws Exception{
         this.stage = stage;
         stage.setScene(new Scene(map.getMapPane()));
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 onUpdate();
+                addBot(now);
             }
         };
         timer.start();
@@ -61,97 +57,26 @@ public class MapManager {
         collisionManager.checkCollision();
         updateAllObjects();
         collisionManager.updateRemovals();
-        if(Math.random() < 0.001 && map.getRemainingBots() > 0){
-            addBot();
-        }
-        //if( lifeBonusCount < 2)
-            //addLifeBonus();
-        //if( speedBonusCount < 2)
-            //addSpeedBonus();
+        handleBots();
     }
 
     public void updateAllObjects(){
         map.updateTanks();
-        map.updatePlayer();
         map.updateBullets();
         map.updateDestructibles();
     }
 
-    private void setLifeBonusCount( int newCount) {
-        this.lifeBonusCount = newCount;
-    }
-
-    private int getLifeBonusCount() {
-        return lifeBonusCount;
-    }
-
-    private void setSpeedBonusCount( int newCount) {
-        this.speedBonusCount = newCount;
-    }
-
-    private int getSpeedBonusCount() {
-        return speedBonusCount;
-    }
-
-    public void checkBots(){
-        for(Bot bot : map.getBots()){
-            double newX = bot.getxLoc();
-            double newY = bot.getyLoc();
-            switch (bot.getDir()) {
-                case 0:
-                    newX++;
-                case 1:
-                    newX--;
-                case 2:
-                    newY++;
-                case 3:
-                    newY--;
-            }
-            if (map.tryNextMove(newX,newY,bot.getView())) {
-                bot.move(bot.getDir());
-            }
-            else{
-                bot.runBot(true); // bot is stuck
-            }
+    public void handleBots(){
+        for( Bot bot: map.getBots()){
+            bot.runBot( map.tryNextMove(bot,bot.getDir()));
         }
+
     }
 
-    public void addBot(){
-        int a = (int)(20*Math.random());
-        int b = 10+(int)(10*Math.random());
-        while(!(map.getGameObjectsArray()[a][b] instanceof Bush || map.getGameObjectsArray()[a][b] == null)){
-            a = (int) (20*Math.random());
-            b = 10+(int)(10*Math.random());
+    private void addBot( long time){
+        if( time % 100 == 0){
+            map.spawnBot();
         }
-        Bot temp = new Bot(a*32,b*32);
-        bots.add(temp);
-        //map.initBot(temp);
-    }
-
-    public void addLifeBonus() {
-        int a = (int)(20*Math.random());
-        int b = 10 + (int)(10*Math.random());
-        while(!(map.getGameObjectsArray()[a][b] instanceof Bush && map.getGameObjectsArray()[a][b] == null && map.getGameObjectsArray()[a][b] instanceof Water )) {
-            a = (int) (20*Math.random());
-            b = 10+(int)(10*Math.random());
-        }
-        Bonus lifeBonus = new LifeBonus(a*32, b*32);
-        setLifeBonusCount(lifeBonusCount++);
-    }
-
-    public void addSpeedBonus() {
-        int a = (int)(20*Math.random());
-        int b = 10 + (int)(10*Math.random());
-        while(!(map.getGameObjectsArray()[a][b] instanceof Bush && map.getGameObjectsArray()[a][b] == null && map.getGameObjectsArray()[a][b] instanceof Water )) {
-            a = (int) (20*Math.random());
-            b = 10+(int)(10*Math.random());
-        }
-        Bonus speedBonus = new SpeedBonus(a*32, b*32);
-        setLifeBonusCount(speedBonusCount++);
-    }
-
-    public void addBonus() {
-
     }
 
     public Stage getStage() {
@@ -187,10 +112,6 @@ public Pane getMapPane(){
 
     }
 
-    private void handleBots(){
-
-    }
-
     private void updateMap(){
         mapLevel++;
         map = new Map(playerCount, mapLevel, readObstaclesMap());
@@ -219,68 +140,17 @@ public Pane getMapPane(){
     private void finishLevel(){
         map.finishMap();
     }
-    private void getImages(){
-        try {
-            map.setImages(mapManagerFileManager.getScannedImages());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     // getter and setters
-    public boolean isGameStatus() {
-        return gameStatus;
-    }
-
-    public void setGameStatus(boolean gameStatus) {
-        this.gameStatus = gameStatus;
-    }
-
-    public int getMapLevel() {
-        return mapLevel;
-    }
-
-    public void setMapLevel(int mapLevel) {
-        this.mapLevel = mapLevel;
-    }
 
     public Map getMap() {
         return map;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
-    }
 
     public boolean isMapFinished() {
         return mapFinished;
     }
 
-    public void setMapFinished(boolean mapFinished) {
-        this.mapFinished = mapFinished;
-    }
 
-    public FileManager getMapManagerFileManager() {
-        return mapManagerFileManager;
-    }
-
-    public void setMapManagerFileManager(FileManager mapManagerFileManager) {
-        this.mapManagerFileManager = mapManagerFileManager;
-    }
-
-    public int[][] getObstaclesMap() {
-        return obstaclesMap;
-    }
-
-    public void setObstaclesMap(int[][] obstaclesMap) {
-        this.obstaclesMap = obstaclesMap;
-    }
-
-    public CollisionManager getCollisionManager() {
-        return collisionManager;
-    }
-
-    public void setCollisionManager(CollisionManager collisionManager) {
-        this.collisionManager = collisionManager;
-    }
 }
