@@ -79,9 +79,6 @@ public abstract class GameObject {
         return isDestructible;
     }
 
-    public void setDestructible(boolean destructible) {
-        isDestructible = destructible;
-    }
 
     public Image getImage() {
         return image;
@@ -89,22 +86,6 @@ public abstract class GameObject {
 
     public void setImage(Image image) {
         this.image = image;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public double getxLoc() {
