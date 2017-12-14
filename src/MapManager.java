@@ -1,7 +1,10 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ public class MapManager {
     private ArrayList<Bot> bots;
     private InputController inputController;
     private boolean paused = false;
+    private Text text;
 
 
 
@@ -34,6 +38,7 @@ public class MapManager {
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
         map = new Map(playerCount, level, obstaclesMap);
+        text = new Text("Remaining Bots: " + map.getRemainingBots() + "\tLevel: " + level + "\nRemaining Health: " + map.getPlayer(0).health + "\tScore: (dir?)" + map.getPlayer(0).dir);
         gameStatus = true;
         mapFinished = false;
         startsLevel();
@@ -44,8 +49,10 @@ public class MapManager {
 
     public void start(Stage stage) throws Exception{
         this.stage = stage;
-        stage.setScene(new Scene(map.getMapPane()));
+        text.setTranslateY(660);
+        map.getMapPane().getChildren().addAll(text);
 
+        stage.setScene(new Scene(map.getMapPane()));
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
@@ -80,6 +87,7 @@ public class MapManager {
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
+        text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " + this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).health + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).dir);
     }
 
     public void updateAllObjects(){
