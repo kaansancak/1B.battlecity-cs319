@@ -11,6 +11,8 @@ public class Map {
     private final int TILES = 20;
     private final int MAP_DIMENSION = 32;
     private final double SHIFT = 0.33;
+    private final int FRAME_UPPER_BOUND = 640;
+    private final int FRAME_LOWER_BOUND = 0;
     private Scene mapScene;
     private Stage mapStage;
     private int playerCount;
@@ -52,8 +54,8 @@ public class Map {
         mapPane = new Pane();
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
-        mapPane.setPrefWidth(640);
-        mapPane.setPrefHeight(640);
+        mapPane.setPrefWidth(FRAME_UPPER_BOUND);
+        mapPane.setPrefHeight(FRAME_UPPER_BOUND);
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
@@ -251,7 +253,6 @@ public class Map {
         Bullet fired = tank.fire();
         mapPane.getChildren().addAll(fired.getView());
         bullets.add(fired);
-        System.out.println( bullets.toString());
     }
 
     public void addObjects(GameObject[][] gameObjects){
@@ -268,6 +269,7 @@ public class Map {
     }
 
     public boolean tryNextMove( Tank tank, int dir){
+        checkBoundries( tank);
         ImageView tankView = tank.getView();
         for( GameObject gameObject : objectHolder){
             tankView.setVisible(true);
@@ -286,7 +288,7 @@ public class Map {
                             tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth()+SHIFT);
                             break;
                         case 2:
-                            tank.setyLoc( gameObject.getyLoc() - gameObject.getView().getFitHeight()+SHIFT);
+                            tank.setyLoc( gameObject.getyLoc() - tankView.getFitHeight() - SHIFT);
                             break;
                         case 3:
                             tank.setyLoc( gameObject.getyLoc() + gameObject.getView().getFitHeight()  +SHIFT);
@@ -298,6 +300,18 @@ public class Map {
         }
         return true;
     }
+
+    private void checkBoundries( Tank tank) {
+        if( tank.getxLoc() < FRAME_LOWER_BOUND){
+            tank.setxLoc( FRAME_LOWER_BOUND);
+        }else if( tank.getxLoc() > FRAME_UPPER_BOUND - tank.getView().getFitWidth())
+            tank.setxLoc( FRAME_UPPER_BOUND - tank.getView().getFitWidth());
+        if( tank.getyLoc() < FRAME_LOWER_BOUND)
+            tank.setyLoc( FRAME_LOWER_BOUND);
+        else if( tank.getyLoc() > FRAME_UPPER_BOUND - tank.getView().getFitHeight())
+            tank.setyLoc( FRAME_UPPER_BOUND - tank.getView().getFitHeight());
+    }
+
 
     public boolean bonusTaken( Bonus bonus, Tank tank, int dir) {
         ImageView tankView = tank.getView();
