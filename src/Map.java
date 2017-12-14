@@ -88,7 +88,7 @@ public class Map {
     }
 
     public void newBonus( int type) {
-        if( type == 0 && lifeBonusCount <= 2) {
+        if( type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
             Bonus lifeBonus = new LifeBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
             lifeBonus.setReleased(true);
             mapPane.getChildren().addAll(lifeBonus.getView());
@@ -96,7 +96,7 @@ public class Map {
             bonuses.add(lifeBonus);
             objectHolder.add(lifeBonus);
         }
-        else if( type == 1 && speedBonusCount <= 2) {
+        else if( type == 1 && speedBonusCount < 2) {
             Bonus speedBonus = new SpeedBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
             speedBonus.setReleased(true);
             mapPane.getChildren().addAll(speedBonus.getView());
@@ -210,7 +210,7 @@ public class Map {
                 }
                 else {
                     if (obstaclesMap[i][j] == 1) {
-                        Brick brick = new Brick(cordinate_x,cordinate_y);
+                        Brick brick = new Brick(cordinate_x,cordinate_y, 0);
                         objectHolder.add( brick);
                         brick.draw();
                     } else if (obstaclesMap[i][j] == 2) {
@@ -225,6 +225,16 @@ public class Map {
                         Water water = new Water(cordinate_x,cordinate_y);
                         objectHolder.add( water);
                         water.draw();
+                    }
+                    else if (obstaclesMap[i][j] == 5) {
+                        Brick brick = new Brick(cordinate_x,cordinate_y, 1);
+                        objectHolder.add( brick);
+                        brick.draw();
+                    }
+                    else if (obstaclesMap[i][j] == 6) {
+                        Brick brick = new Brick(cordinate_x,cordinate_y, 2);
+                        objectHolder.add( brick);
+                        brick.draw();
                     }
                 }
             }

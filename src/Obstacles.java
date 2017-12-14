@@ -4,7 +4,7 @@
 public abstract class Obstacles extends GameObject {
 
     //Variables
-    // 0 = Ground, 1 = Brick, 2 = Bush, 4 = IronWall, 5 = Water
+    // 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall, 4 = Water, 5 = Mini Brick, 6 = Small Brick
     private int typeId;
 
     //Methods

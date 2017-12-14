@@ -22,6 +22,7 @@ public class MapManager {
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
     private InputController inputController;
+    private boolean paused = false;
 
 
 
@@ -44,17 +45,32 @@ public class MapManager {
     public void start(Stage stage) throws Exception{
         this.stage = stage;
         stage.setScene(new Scene(map.getMapPane()));
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                onUpdate();
-                addBot(now);
-                addLifeBonus(now);
-                addSpeedBonus(now);
-            }
-        };
-        timer.start();
 
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    onUpdate();
+                    addBot(now);
+                    addLifeBonus(now);
+                    addSpeedBonus(now);
+                }
+            };
+            timer.start();
+
+    }
+    /*
+        boolean should be send to move method
+        of bots so that it could not move at that moment
+        and the bonus releases should stop
+     */
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+        if( paused == true)
+            timer.stop();
+        timer.start();
+    }
+    public boolean isPaused() {
+        return paused;
     }
 
     private void onUpdate(){
@@ -158,15 +174,11 @@ public class MapManager {
     }
 
     // getter and setters
-
     public Map getMap() {
         return map;
     }
-
-
     public boolean isMapFinished() {
         return mapFinished;
     }
-
 
 }
