@@ -26,6 +26,7 @@ public class ViewFrame {
     public ViewFrame( String title, ArrayList<String> message){
         f = new FileManager();
         Stage viewFrame = new Stage();
+        viewFrame.setResizable(false);
         StackPane pane = new StackPane();
         viewFrame.initModality(Modality.APPLICATION_MODAL);
         viewFrame.setTitle(title);

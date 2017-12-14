@@ -2,6 +2,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -40,9 +41,10 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         this.mapManager = mapManager;
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
         pauseMenuWindow = new Stage();
+        pauseMenuWindow.setResizable(false);
         pauseMenuWindow.setTitle( "Pause Menu");
         pauseMenuLabel = new Label("Pause Menu");
-        pauseMenuLabel.setId("welcome-text");
+        pauseMenuLabel.setId("pausemenu-text");
         StackPane pauseLayout = new StackPane();
 
         volume = 100;
@@ -86,7 +88,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
                         "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
             }
         });
-        backToMenu = new Button("Back");
+        backToMenu = new Button("Menu");
         backToMenu.setOnAction( event -> {
             pauseMenuWindow.close();
             returnCall = true;
@@ -138,13 +140,12 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         volumeBar = new Slider();
         volumeBar.setMin(0);
         volumeBar.setMax(100);
-        volumeBar.setValue(volume);
-
-        volumeBar.setShowTickLabels( true);
-        volumeBar.setShowTickMarks( true);
+        volumeBar.setValue(100);
+        volumeBar.setMaxWidth(350);
         volumeBar.setMajorTickUnit( 50);
         volumeBar.setBlockIncrement( 10);
 
+        // slider
         volumeBar.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -152,19 +153,20 @@ public class PauseMenu implements EventHandler<ActionEvent> {
                 changeVolume( new_value);
             }
         });
-
     }
 
     public void addSettingsComponents(){
         vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
-        vBox.setSpacing(3.0);
+        vBox.setPadding(new Insets(50, 10, 40, 10));
+        vBox.setSpacing(15.0);
         vBox.setFillWidth(true);
         vBox.getChildren().addAll( pauseMenuLabel, volumeBar, returnButton, backToMenu);
     }
 
     public void showPauseMenu() {
         pauseMenuWindow.show();
+        mapManager.setPaused(true);
     }
     public void closeSettings(){
         pauseMenuWindow.close();

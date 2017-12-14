@@ -52,6 +52,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         //Set the title of the stage
         f = new FileManager();
         menuWindow = primaryStage;
+        menuWindow.setResizable(false);
         menuWindow.setTitle( "Battle City");
         menuWindow.setOnCloseRequest(e-> {
             e.consume();

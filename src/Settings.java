@@ -76,6 +76,7 @@ public class Settings implements EventHandler<ActionEvent> {
         media = file.getScannedAudios();
         settingsWindow = new Stage();
         settingsWindow.setTitle( "Settings");
+        settingsWindow.setResizable(false);
         settings = new Label("Settings");
         settings.setId("welcome-text");
 
