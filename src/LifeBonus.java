@@ -6,7 +6,7 @@ public class LifeBonus extends Bonus {
 
     private final String IMG_DIR = "./MediaFiles/image10.png";
 
-    public LifeBonus(int xLoc, int yLoc) {
+    public LifeBonus(double xLoc, double yLoc) {
         super(xLoc, yLoc);
         super.setImage( new Image(Paths.get(IMG_DIR).toUri().toString()));
         super.initView();

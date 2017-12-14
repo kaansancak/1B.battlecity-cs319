@@ -8,17 +8,35 @@ import java.nio.file.Paths;
  */
 public class Tile extends GameObject {
 
-    public Tile( int xLoc, int yLoc ) {
-        super( xLoc, yLoc);
-        super.setImage(new Image(Paths.get("."+"/MediaFiles/void.png").toUri().toString()));
-        super.initView();
+    private final String IMG_DIR =  "./MediaFiles/small_void.png";
+    public Tile( double xLoc, double yLoc ) {
+        this.xLoc = xLoc;
+        this.yLoc = yLoc;
+        view = new ImageView(new Image(Paths.get(IMG_DIR).toUri().toString()));
+        view.setFitHeight(32);
+        view.setFitWidth(32);
+    }
+
+
+
+    @Override
+    public boolean isPassableByTanks() {
+        return true;
+    }
+
+    @Override
+    public boolean isPassableByBullets() {
+        return true;
+    }
+
+    @Override
+    public boolean isHideable() {
+        return false;
     }
 
     @Override
     public void draw() {
-        super.getView().setFitHeight(32);
-        super.getView().setFitWidth(32);
-        super.getView().setTranslateX( super.getxLoc()*32);
-        super.getView().setTranslateY( super.getyLoc()*32);
+        super.getView().setTranslateX( xLoc);
+        super.getView().setTranslateY( yLoc);
     }
 }
