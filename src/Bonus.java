@@ -7,23 +7,25 @@ public class Bonus extends GameObject {
     private boolean taken = false;
     private boolean timeOut;
 
-    public Bonus( int xLoc, int yLoc) {
-        super(xLoc, yLoc);
-    }
-
-    public void setReleased( boolean released) {
-        this.released = released;
+    public Bonus( double xLoc, double yLoc) {
+        this.xLoc = xLoc;
+        this.yLoc = yLoc;
     }
 
     private boolean isReleased() {
         return released;
     }
 
-    public void setTaken( boolean taken) {
-        this.taken = taken;
+    public void setReleased( boolean released) {
+        this.released = released;
     }
+
     public boolean isTaken() {
         return taken;
+    }
+
+    public void setTaken( boolean taken) {
+        this.taken = taken;
     }
 
     private boolean isTimeOut() {
@@ -32,5 +34,20 @@ public class Bonus extends GameObject {
 
     private void applyBonus(Tank tank) {
         tank.setHealth(tank.getHealth() + 100);
+    }
+
+    @Override
+    public boolean isPassableByTanks() {
+        return true;
+    }
+
+    @Override
+    public boolean isPassableByBullets() {
+        return true;
+    }
+
+    @Override
+    public boolean isHideable() {
+        return false;
     }
 }

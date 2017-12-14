@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class Map {
 
-    // maybe we will need a bool for GUI dominance -
-    // for grass and (tanks and bullets)
+
     private final int TILES = 20;
+    private final int MAP_DIMENSION = 32;
+    private final double SHIFT = 0.09;
     private Scene mapScene;
     private Stage mapStage;
     private int playerCount;
@@ -24,13 +25,14 @@ public class Map {
     private ArrayList<Tank> tanks;
     private ArrayList<Bot> bots;
     private ArrayList<Bonus> bonuses;
-    private ArrayList<GameObject> tilesMap;
+    private ArrayList<GameObject> objectHolder;
     private ArrayList<Destructible> destructibles;
     private int lifeBonusCount;
     private int speedBonusCount;
     public Map( ){
 
     }
+
     /* GameObject File Decode
     * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
     * 4 = Player, 5 = Bot
@@ -64,7 +66,7 @@ public class Map {
         bullets = new ArrayList<>();
         bots = new ArrayList<>();
         bonuses = new ArrayList();
-        tilesMap = new ArrayList<GameObject>();
+        objectHolder = new ArrayList<GameObject>();
         tanks = new ArrayList<Tank>();
         destructibles = new ArrayList<Destructible>();
     }
@@ -76,6 +78,7 @@ public class Map {
             mapPane.getChildren().addAll(bot.getView());
             bots.add(bot);
             tanks.add(bot);
+            objectHolder.add(bot);
             botCount--;
         }
     }
@@ -87,6 +90,7 @@ public class Map {
             mapPane.getChildren().addAll(lifeBonus.getView());
             lifeBonusCount++;
             bonuses.add(lifeBonus);
+            objectHolder.add(lifeBonus);
         }
         else if( type == 1 && speedBonusCount <= 2) {
             Bonus speedBonus = new SpeedBonus(300, 300);
@@ -127,13 +131,13 @@ public class Map {
     }
 
     private void updateBots() {
-    for ( Bot bot : bots){
-        if ( bot.getHealth() >= 0)
-            bot.draw();
-        else{
-            mapPane.getChildren().remove(bot.getView());
+        for ( Bot bot : bots){
+            if ( bot.getHealth() >= 0)
+                bot.draw();
+            else{
+                mapPane.getChildren().remove(bot.getView());
+            }
         }
-    }
     }
 
     //Update of Bullets
@@ -149,9 +153,9 @@ public class Map {
 
     //Update Methods
     public void updateDestructibles() {
-        for( Destructible destructible: destructibles){
-            if( destructible.isDestructed())
-                mapPane.getChildren().remove( destructible.getView());
+        for( Destructible destructible: destructibles) {
+            if (destructible.isDestructed())
+                mapPane.getChildren().remove(destructible.getView());
             else
                 destructible.draw();
         }
@@ -162,7 +166,7 @@ public class Map {
         for( Bonus bonus : bonuses) {
             if( bonus.isTaken()) {
                 mapPane.getChildren().remove(bonus.getView());
-                //bonus.getView().setVisible(false);
+                objectHolder.remove(bonus);
             }
             else
                 bonus.draw();
@@ -193,40 +197,48 @@ public class Map {
     private void intToObject(){
         for(int i = 0; i < TILES; i++){
             for(int j = 0; j < TILES; j++) {
-                Tile tile = new Tile(i ,j);
+                int cordinate_x = i * MAP_DIMENSION;
+                int cordinate_y = j * MAP_DIMENSION;
+                Tile tile = new Tile(cordinate_x ,cordinate_y);
+                mapPane.getChildren().addAll( tile.getView());
                 tile.draw();
-                mapPane.getChildren().add( tile.getView());
                 if(obstaclesMap[i][j] == 0){
                     continue;
                 }
                 else {
                     if (obstaclesMap[i][j] == 1) {
-                        Brick brick = new Brick(i,j);
-                        tilesMap.add( brick);
-                        destructibles.add( brick);
+                        Brick brick = new Brick(cordinate_x,cordinate_y);
+                        objectHolder.add( brick);
+                        brick.draw();
                     } else if (obstaclesMap[i][j] == 2) {
-                        tilesMap.add( new Bush(i,j));
+                        Bush bush = new Bush( cordinate_x, cordinate_y);
+                        objectHolder.add( bush);
+                        bush.draw();
                     } else if (obstaclesMap[i][j] == 3) {
-                        tilesMap.add( new IronWall(i,j));
+                        IronWall ironWall = new IronWall( cordinate_x, cordinate_y);
+                        objectHolder.add( ironWall);
+                        ironWall.draw();
                     } else if (obstaclesMap[i][j] == 4) {
-                        tilesMap.add( new Water(i,j));
+                        Water water = new Water(cordinate_x,cordinate_y);
+                        objectHolder.add( water);
+                        water.draw();
                     }
                 }
             }
         }
     }
 
-    public void addObjects(){
-        for( GameObject gameObject: tilesMap){
+    public void addObjects() {
+        for (GameObject gameObject : objectHolder) {
             gameObject.draw();
             mapPane.getChildren().add(gameObject.getView());
         }
     }
 
     public void fire(Tank tank){
-       Bullet fired = tank.fire();
-       mapPane.getChildren().addAll(fired.getView());
-       bullets.add(fired);
+        Bullet fired = tank.fire();
+        mapPane.getChildren().addAll(fired.getView());
+        bullets.add(fired);
     }
 
     public void addObjects(GameObject[][] gameObjects){
@@ -242,25 +254,129 @@ public class Map {
 
     }
 
+
+    public boolean tryNextMove( Tank tank, int dir){
+        ImageView tankView = tank.getView();
+        tank.move(dir);
+        for( GameObject gameObject : objectHolder){
+            tankView.setVisible(true);
+            if( tankView.getBoundsInParent().intersects( gameObject.getView().getBoundsInParent())){
+                if( gameObject.isPassableByTanks()){
+                    if(gameObject.isHideable()){
+                        tankView.setVisible( false);
+                        return true;
+                    }
+                }else{
+                    System.out.println( "Intersect with " + gameObject.getView().getFitWidth());
+                    switch ( dir){
+                        case 0:
+                            tank.setxLoc( gameObject.getxLoc() - tankView.getFitWidth()-1);
+                            break;
+                        case 1:
+                            tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth() + 1);
+                            break;
+                        case 2:
+                            tank.setyLoc( gameObject.getyLoc() - tankView.getFitHeight() -1);
+                            break;
+                        case 3:
+                            tank.setyLoc( gameObject.getyLoc() +gameObject.getView().getFitHeight() + 1);
+                            break;
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+/*
+    public boolean tryNextMove(Tank tank, int dir){
+        double prev_x = tank.getxLoc();
+        double prev_y = tank.getyLoc();
+        switch ( dir){
+            case 0:
+                prev_x -= SHIFT;
+                break;
+            case 1:
+                prev_x += SHIFT;
+                break;
+            case 2:
+                prev_y -= SHIFT;
+                break;
+            case 3:
+                prev_y += SHIFT;
+                break;
+        }
+        tank.move(dir);
+        ImageView tankView = tank.getView();
+        for ( GameObject gameObject : objectHolder){
+            if ( gameObject instanceof  Bush &&
+                    gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
+                tankView.setVisible(false);
+            else
+                tankView.setVisible(true);
+            if( gameObject.getView().getBoundsInParent().intersects(tankView.getBoundsInParent())
+                    && !(gameObject instanceof Tile)) {
+                if(gameObject instanceof Bonus) {
+                    ((Bonus) gameObject).setTaken(true);
+                    return true;
+                }
+                if( gameObject instanceof  Bush)
+                    return true;
+                else{
+                    tank.setxLoc( prev_x);
+                    tank.setyLoc( prev_y);
+                    return false;
+                }
+            }
+
+        }
+        return true;
+    }
+*//*
     public boolean tryNextMove(Tank tank, int dir){
         ImageView tankView = tank.getView();
 
         ImageView mockUp = getMockUp( tank ,dir);
-        for ( GameObject gameObject : tilesMap){
-            if ( gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
+        for ( GameObject gameObject : objectHolder){
+            if ( gameObject instanceof  Bush &&
+                    gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
                 tankView.setVisible(false);
             else
                 tankView.setVisible(true);
-            if( gameObject.getView().getBoundsInParent().intersects(mockUp.getBoundsInParent())
+            if( gameObject.getView().getBoundsInParent().intersects(tankView.getBoundsInParent())
                     && !(gameObject instanceof Tile)) {
-
                if(gameObject instanceof Bonus) {
                     ((Bonus) gameObject).setTaken(true);
                     return true;
-                }
+               }else if( gameObject instanceof  Bush)
+                   return true;
+               else{
+                    switch ( dir) {
+                        case 0:
+                            tank.setxLoc( gameObject.getxLoc()-tank.getVelocity().getX());
+                            //tankView.setTranslateX( gameObject.getView().getTranslateX() - tankView.getFitWidth());
+                            //tank.setxLoc( tankView.getTranslateX() / tankView.getFitWidth());
 
-                mapPane.getChildren().remove(mockUp);
-                return (gameObject instanceof Bush);
+                            break;
+                        case 1:
+                            tank.setxLoc( gameObject.getxLoc()+tank.getVelocity().getX());
+                            //tankView.setTranslateX( gameObject.getView().getTranslateX() + tankView.getFitWidth());
+                            //tank.setxLoc( tankView.getTranslateX() / tankView.getFitWidth());
+                            break;
+                        case 2:
+                            tank.setyLoc( gameObject.getyLoc());
+                            //tankView.setTranslateY( gameObject.getView().getTranslateY() - tankView.getFitHeight());
+                            //tank.setyLoc( tankView.getTranslateY() / tankView.getFitHeight());
+                            break;
+                        case 3:
+                            tank.setyLoc( gameObject.getyLoc();
+                            //tankView.setTranslateY( gameObject.getView().getTranslateY() + tankView.getFitHeight());
+                            //tank.setyLoc( tankView.getTranslateY() / tankView.getFitHeight());
+                            break;
+                    }
+                    return true;
+               }
+
             }
 
         }
@@ -282,13 +398,13 @@ public class Map {
         mockUp.setTranslateY( newY*23);
         mapPane.getChildren().addAll(mockUp);
         return mockUp;
-    }
+    }*/
 
     public boolean bonusTaken( Bonus bonus, Tank tank, int dir) {
         ImageView tankView = tank.getView();
         ImageView bonusView = bonus.getView();
 
-        for( GameObject gameObject : tilesMap) {
+        for( GameObject gameObject : objectHolder) {
             if( tankView.getBoundsInParent().intersects( bonusView.getBoundsInParent())) {
                 bonusView.setVisible(false);
                 bonus.setTaken(true);
@@ -308,7 +424,7 @@ public class Map {
 
 
     public ArrayList<GameObject> getGameObjects() {
-        return tilesMap;
+        return objectHolder;
     }
 
 
@@ -329,20 +445,20 @@ public class Map {
         return bullets;
     }
 
-    private void setLifeBonusCount(int newCount) {
-        lifeBonusCount = newCount;
-    }
-
     private int getLifeBonusCount() {
         return lifeBonusCount;
     }
 
-    private void setSpeedBonusCount(int newCount) {
-        speedBonusCount = newCount;
+    private void setLifeBonusCount(int newCount) {
+        lifeBonusCount = newCount;
     }
 
     private int getSpeedBonusCount() {
         return speedBonusCount;
+    }
+
+    private void setSpeedBonusCount(int newCount) {
+        speedBonusCount = newCount;
     }
 
 

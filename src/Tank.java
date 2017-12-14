@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
  */
 public abstract class Tank extends GameObject {
 
-    protected final int VIEW_WH = 23;
+    protected final int VIEW_WH = 32;
     protected Image rightImage;
     protected Image upImage;
     protected Image leftImage;
@@ -19,26 +19,10 @@ public abstract class Tank extends GameObject {
     private int type;
     private int id;
 
-
-    public Tank(int xLoc, int yLoc) {
-        super(xLoc, yLoc);
-        health = 200;
-        speed = 100;
-        oldSpeed = speed;
-    }
-
-    public Tank() {
-        super(0,0);
-        health = 200;
-        speed = 100;
-    }
-
     @Override
     public void draw() {
-        super.getView().setFitWidth(VIEW_WH);
-        super.getView().setFitHeight(VIEW_WH);
-        super.getView().setTranslateX( super.getxLoc()*VIEW_WH);
-        super.getView().setTranslateY( super.getyLoc()*VIEW_WH);
+        super.getView().setTranslateX( xLoc);
+        super.getView().setTranslateY( yLoc);
     }
 
     public Image getRightImage() {
@@ -75,7 +59,7 @@ public abstract class Tank extends GameObject {
 
     //Methods
     public Bullet fire(){
-        Bullet tankBullet = new Bullet( id, super.getxLoc(), super.getyLoc(), dir);
+        Bullet tankBullet = new Bullet( id, xLoc, yLoc, dir);
         return tankBullet;
     }
 
@@ -91,16 +75,16 @@ public abstract class Tank extends GameObject {
 
     public void move(int dir) {
         if ( dir == 0){
-            super.setxLoc(super.getxLoc() + getVelocity().getX());
+            xLoc =  xLoc + getVelocity().getX();
             super.setImage( rightImage);
         }else if ( dir == 1){
-            super.setxLoc(super.getxLoc() - getVelocity().getX());
+            xLoc = xLoc - getVelocity().getX();
             super.setImage( leftImage);
         }else if ( dir == 2){
-            super.setyLoc( super.getyLoc() + getVelocity().getY());
+            yLoc = yLoc + getVelocity().getY();
             super.setImage( downImage);
         }else{
-            super.setyLoc( super.getyLoc() - getVelocity().getY());
+            yLoc = yLoc - getVelocity().getY();
             super.setImage( upImage);
         }
         updateView();

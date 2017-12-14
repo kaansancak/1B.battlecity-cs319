@@ -43,10 +43,7 @@ public class InputController implements EventHandler<KeyEvent> {
     }
 
     private void movePlayer( Player player, int dir){
-        if( map.tryNextMove( player, dir)){
-            player.setDir(dir);
-            player.move(dir);
-        }
+        map.tryNextMove( player, dir);
     }
 
 }

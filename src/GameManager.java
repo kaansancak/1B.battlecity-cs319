@@ -1,10 +1,5 @@
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.event.EventHandler;
 
 
 public class GameManager  {
@@ -26,11 +21,6 @@ public class GameManager  {
     private Button pauseButton;
     private Stage gameManager;
 
-    public void start (Stage stage) throws Exception{
-        mapManager.start(stage);
-        gameManager = stage;
-    }
-
     GameManager(){}
 
     GameManager(int player_count){
@@ -45,6 +35,11 @@ public class GameManager  {
         }
         gameFinished = false;
         gameCompletedLevels = 0;
+    }
+
+    public void start (Stage stage) throws Exception{
+        mapManager.start(stage);
+        gameManager = stage;
     }
 
     private boolean isGameOver(){

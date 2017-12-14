@@ -1,4 +1,5 @@
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.nio.file.Paths;
 
@@ -9,15 +10,27 @@ public class Water extends Undestructible {
 
     private final String IMG_DIR = "./MediaFiles/image0.png";
     //Constructor
-    public Water( int xLoc, int yLoc){
-        super( xLoc, yLoc);
-        super.setImage( new Image(Paths.get(IMG_DIR).toUri().toString()));
-        super.initView();
-    }
+    public Water( double xLoc, double yLoc){
+        this.xLoc = xLoc;
+        this.yLoc = yLoc;
+        view = new ImageView(new Image(Paths.get(IMG_DIR).toUri().toString()));
+        view.setFitWidth( 32);
+        view.setFitHeight( 32);
+}
 
     @Override
     public boolean isPassableByBullets() {
         return true;
+    }
+
+    @Override
+    public boolean isHideable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPassableByTanks() {
+        return false;
     }
 }
 //

@@ -8,11 +8,6 @@ public abstract class Destructible extends Obstacles{
     private final int BULLET_DAMAGE = 200;
     private int health;
 
-
-    protected Destructible(int xLoc, int yLoc) {
-        super(xLoc, yLoc);
-    }
-
     //Methods
 
     //Setters and Getters
