@@ -50,7 +50,7 @@ public class MapManager {
                 onUpdate();
                 addBot(now);
                 addLifeBonus(now);
-               // addBonus(now, 1);
+                addSpeedBonus(now);
             }
         };
         timer.start();
