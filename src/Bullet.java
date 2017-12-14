@@ -11,7 +11,7 @@ public class Bullet extends GameObject {
 
     //Variables
     //direction of the bullet
-    private final int BULLET_VIEW_DIMENSION = 10;
+    private final int BULLET_VIEW_DIMENSION = 5;
     private final double BULLET_VELOCITY = 4;
     private final int BULLET_WH = 23;
     private final double SHIFT_V = 0.3333;
@@ -25,20 +25,21 @@ public class Bullet extends GameObject {
     public Bullet( int id, double xLoc, double yLoc, int dir) {
         this.xLoc = xLoc;
         this.yLoc = yLoc;
+
         this.id = id;
         this.dir = dir;
         setDirImage();
-        super.setVIEW_H(BULLET_VIEW_DIMENSION);
-        super.setVIEW_V(BULLET_VIEW_DIMENSION);
-        super.setVIEW_WH(BULLET_WH);
+        view = new ImageView();
+        view.setFitHeight(BULLET_VIEW_DIMENSION);
+        view.setFitWidth(BULLET_VIEW_DIMENSION);
+        view.setImage( image);
+
         super.setVelocity( new Point2D.Double(BULLET_VELOCITY,BULLET_VELOCITY));
     }
 
     private void setDirImage() {
         switch (dir){
             case 0: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
-                    //yLoc = ( yLoc + SHIFT_V);
-                    //xLoc = ( xLoc + SHIFT_H);
                     break;
             case 1: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_left.png").toUri().toString()));
                     //yLoc = (yLoc + SHIFT_V);
@@ -53,7 +54,6 @@ public class Bullet extends GameObject {
             default: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
                     break;
         }
-        super.setView( new ImageView(super.getImage()));
     }
 
     //methods
@@ -69,6 +69,7 @@ public class Bullet extends GameObject {
     //This method moves the bullet through the map
     //in given direction
     public void move() {
+        System.out.println(xLoc);
         if (!isCrushed()) {
             if (dir == 0) {
                 xLoc = ( xLoc + super.getVelocity().getX());

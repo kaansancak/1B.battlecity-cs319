@@ -30,8 +30,8 @@ public class Player extends Tank {
         health = 200;
         initImages();
         view = new ImageView( rightImage);
-        view.setFitWidth( 25);
-        view.setFitHeight( 25);
+        view.setFitWidth( 23);
+        view.setFitHeight( 23);
         super.setVelocity( new Point2D.Double(2, 2));
         super.setId(id);
         this.controllerId = controllerId;

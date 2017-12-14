@@ -15,6 +15,8 @@ public abstract class GameObject {
     protected double xLoc;
     protected double yLoc;
     protected ImageView view;
+    //GUI variables
+    protected Image image;
     private int VIEW_H = 40;
     private int VIEW_V = 40;
     private boolean isDamaged = false;
@@ -22,8 +24,6 @@ public abstract class GameObject {
     private Point2D velocity;
     //Structure variables
     private boolean isDestructible;
-    //GUI variables
-    private Image image;
     private int width;
     private int height;
 
