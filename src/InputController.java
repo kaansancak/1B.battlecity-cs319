@@ -2,6 +2,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 /**
  * Created by kaan on 11/12/2017.
@@ -18,7 +19,7 @@ public class InputController implements EventHandler<KeyEvent> {
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
-        pauseMenu = new PauseMenu();
+        pauseMenu = new PauseMenu(mapManager);
         mapScene.setOnKeyPressed( this);
         mapScene.setOnKeyReleased( event -> {
             if(event.getCode() == KeyCode.SPACE){
@@ -45,6 +46,10 @@ public class InputController implements EventHandler<KeyEvent> {
             pauseMenu.showPauseMenu();
         }
 
+    }
+
+    public Stage getMapStage() {
+        return map.getMapStage();
     }
 
     private void movePlayer( Player player, int dir){

@@ -79,6 +79,10 @@ public class Map {
         }
     }
 
+    public Stage getMapStage() {
+        return mapStage;
+    }
+
     public void newBonus( int type) {
         if( type == 0 && lifeBonusCount <= 2) {
             Bonus lifeBonus = new LifeBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
@@ -181,12 +185,12 @@ public class Map {
         return mapPane;
     }
 
-    public void showMap(){
+   /* public void showMap(){
         mapScene = new Scene( mapPane);
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
-    }
+    }*/
 
     private void intToObject(){
         for(int i = 0; i < TILES; i++){

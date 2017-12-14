@@ -32,13 +32,13 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     private Button backToMenu;
 
     private Slider volumeBar;
-    private Menu menu;
     private int volume;
+    private MapManager mapManager;
 
 
-    public PauseMenu() {
+    public PauseMenu(MapManager mapManager) {
+        this.mapManager = mapManager;
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
-        menu = new Menu();
         pauseMenuWindow = new Stage();
         pauseMenuWindow.setTitle( "Pause Menu");
         pauseMenuLabel = new Label("Pause Menu");
@@ -90,6 +90,11 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         backToMenu.setOnAction( event -> {
             pauseMenuWindow.close();
             returnCall = true;
+            try {
+                restart();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         backToMenu.setId("glass-grey");
         backToMenu.setPrefSize(100, 10);
@@ -159,10 +164,17 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     }
 
     public void showPauseMenu() {
-        pauseMenuWindow.showAndWait();
+        pauseMenuWindow.show();
     }
     public void closeSettings(){
         pauseMenuWindow.close();
+    }
+
+    public void restart() throws Exception {
+        Menu newGame = new Menu();
+        Stage newStage = new Stage();
+        newGame.start(newStage);
+        mapManager.getStage().close();
     }
 
 }

@@ -128,6 +128,10 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         }
     }
 
+    public void showMenu() {
+        menuWindow.showAndWait();
+    }
+
     private void startSettings() {
         menuWindow.close();
         settings.showSettings();
