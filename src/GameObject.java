@@ -10,35 +10,16 @@ public abstract class GameObject {
 
     //Variables
     private final int BULLET_DAMAGE = 200;
-    protected int VIEW_WH = 40;
     //Location variables
     protected double xLoc;
     protected double yLoc;
     protected ImageView view;
     //GUI variables
     protected Image image;
-    private int VIEW_H = 40;
-    private int VIEW_V = 40;
-    private boolean isDamaged = false;
-    private boolean isDestructed = false;
-    private Point2D velocity;
-    //Structure variables
-    private boolean isDestructible;
-    private int width;
-    private int height;
 
-
-    public void setVIEW_WH(int VIEW_WH) {
-        this.VIEW_WH = VIEW_WH;
-    }
-
-    public void setVIEW_H(int VIEW_H) {
-        this.VIEW_H = VIEW_H;
-    }
-
-    public void setVIEW_V(int VIEW_V) {
-        this.VIEW_V = VIEW_V;
-    }
+    protected boolean isDamaged = false;
+    protected boolean isDestructed = false;
+    protected Point2D velocity;
 
     public ImageView getView() {
         return view;
@@ -52,19 +33,6 @@ public abstract class GameObject {
         view.setImage(image);
     }
 
-    //methods
-    public void updateLocation(){
-        /* This method will be filled
-        it will update the location of a gameobject
-         */
-    }
-
-    public void updateObject(){
-        /* This method will be filled
-        it will update the current status of a gameobject
-        e.g destroyed or alive
-         */
-    }
 
     //Setters and getters of variables
     public double getyLoc() {
@@ -74,11 +42,6 @@ public abstract class GameObject {
     public void setyLoc(double yLoc) {
         this.yLoc = yLoc;
     }
-
-    public boolean isDestructible() {
-        return isDestructible;
-    }
-
 
     public Image getImage() {
         return image;
@@ -132,11 +95,7 @@ public abstract class GameObject {
     public abstract boolean isHideable();
 
     public void draw() {
-        view.setFitHeight( 32);
-        view.setFitHeight( 32);
         view.setTranslateX( xLoc);
         view.setTranslateY( yLoc);
     }
-
-
 }

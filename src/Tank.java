@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public abstract class Tank extends GameObject {
 
     protected final int VIEW_WH = 32;
-    private final double BULLET_SHIFT = 2;
+    private final double BULLET_SHIFT = 8;
     protected Image rightImage;
     protected Image upImage;
     protected Image leftImage;
@@ -60,20 +60,20 @@ public abstract class Tank extends GameObject {
 
     //Methods
     public Bullet fire(){
-        double bullet_x = getBullet_xLoc( xLoc, dir);
-        double bullet_y = getBullet_yLoc( yLoc, dir);
+        double bullet_x = getBullet_xLoc();
+        double bullet_y = getBullet_yLoc();
         Bullet tankBullet = new Bullet( id, bullet_x, bullet_y, dir);
         return tankBullet;
     }
 
-    private double getBullet_yLoc(double yLoc, int dir) {
-        switch ( dir){
+    private double getBullet_yLoc() {
+        switch ( this.dir){
             case 0:
-                return yLoc - view.getFitHeight() / 2;
+                return yLoc + view.getFitHeight() / 4;
             case 1:
-                return yLoc - view.getFitHeight() / 2;
+                return yLoc + view.getFitHeight() / 4;
             case 2:
-                return yLoc + view.getFitHeight() + BULLET_SHIFT;
+                return yLoc + view.getFitHeight();
             case 3:
                 return yLoc - BULLET_SHIFT;
             default:
@@ -82,16 +82,16 @@ public abstract class Tank extends GameObject {
         return yLoc;
     }
 
-    private double getBullet_xLoc(double xLoc, int dir) {
-        switch ( dir){
+    private double getBullet_xLoc() {
+        switch ( this.dir){
             case 0:
-                return xLoc + view.getFitWidth() + BULLET_SHIFT;
+                return xLoc + view.getFitWidth();
             case 1:
                 return xLoc - BULLET_SHIFT;
             case 2:
-                return xLoc + view.getFitWidth()/2;
+                return xLoc + view.getFitWidth()/4;
             case 3:
-                return xLoc + view.getFitWidth()/2;
+                return xLoc + view.getFitWidth()/4;
             default:
                 break;
         }
