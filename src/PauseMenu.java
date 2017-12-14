@@ -13,10 +13,11 @@ import javafx.stage.Stage;
 public class PauseMenu implements EventHandler<ActionEvent> {
 
     // variables
-    private static final int SETTINGS_WINDOW_WIDTH = 600;
-    private static final int SETTINGS_WINDOWS_HEIGHT = 600;
+    private static final int SETTINGS_WINDOW_WIDTH = 400;
+    private static final int SETTINGS_WINDOWS_HEIGHT = 400;
 
     private VBox vBox;
+    private boolean answer;
 
     private Stage pauseMenuWindow;
     private Scene pauseMenuScene;
@@ -26,12 +27,12 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     private Button backToMenu;
 
     private Slider volumeBar;
-
+    private Menu menu;
     private int volume;
 
 
     public PauseMenu() {
-
+        menu = new Menu();
         pauseMenuWindow = new Stage();
         pauseMenuWindow.setTitle( "Pause Menu");
         StackPane pauseLayout = new StackPane();
@@ -47,17 +48,27 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         });
 
         returnButton = new Button("Return");
-        backToMenu = new Button("Back to Menu");
         returnButton.setOnAction(this);
+        backToMenu = new Button("Back to Menu");
         backToMenu.setOnAction( event -> {
             pauseMenuWindow.close();
             returnCall = true;
         });
 
+
         addSettingsComponents();
         pauseLayout.getChildren().add(vBox);
         pauseMenuScene = new Scene( pauseLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
         pauseMenuWindow.setScene( pauseMenuScene);
+    }
+
+    public boolean isReturnCall() {
+        return returnCall;
+    }
+
+
+    public void showMenu() {
+        pauseMenuWindow.show();
     }
 
     private void changeVolume( int volume) {
@@ -68,7 +79,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == returnButton) {
-            // should return to the game screen
+            pauseMenuWindow.close();
         }
     }
 //

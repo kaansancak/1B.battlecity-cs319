@@ -12,6 +12,8 @@ public abstract class Tank extends GameObject {
     protected Image downImage;
     protected int dir;
     protected int health;
+    protected int speed;
+    protected int oldSpeed;
     //Variables
     private int BULLET_DAMAGE = 200;
     private int type;
@@ -21,11 +23,14 @@ public abstract class Tank extends GameObject {
     public Tank(int xLoc, int yLoc) {
         super(xLoc, yLoc);
         health = 200;
+        speed = 100;
+        oldSpeed = speed;
     }
 
     public Tank() {
         super(0,0);
         health = 200;
+        speed = 100;
     }
 
     @Override
@@ -107,7 +112,6 @@ public abstract class Tank extends GameObject {
     }
 
 
-
     public void getDamaged(){
         health -= BULLET_DAMAGE;
     }
@@ -118,6 +122,22 @@ public abstract class Tank extends GameObject {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getOldSpeed() {
+        return oldSpeed;
+    }
+
+    public void setOldSpeed(int speed) {
+        oldSpeed = speed;
     }
 
     //Setters and Getters

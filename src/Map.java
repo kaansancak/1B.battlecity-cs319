@@ -23,9 +23,11 @@ public class Map {
     private ArrayList<Bullet> bullets;
     private ArrayList<Tank> tanks;
     private ArrayList<Bot> bots;
+    private ArrayList<Bonus> bonuses;
     private ArrayList<GameObject> tilesMap;
     private ArrayList<Destructible> destructibles;
-
+    private int lifeBonusCount;
+    private int speedBonusCount;
     public Map( ){
 
     }
@@ -42,6 +44,8 @@ public class Map {
         intToObject();
         addObjects();
         initPlayers();
+        lifeBonusCount = 0;
+        speedBonusCount = 0;
     }
 
     //Init all objects
@@ -59,6 +63,7 @@ public class Map {
     private void createObjectArrays(){
         bullets = new ArrayList<>();
         bots = new ArrayList<>();
+        bonuses = new ArrayList();
         tilesMap = new ArrayList<GameObject>();
         tanks = new ArrayList<Tank>();
         destructibles = new ArrayList<Destructible>();
@@ -72,6 +77,24 @@ public class Map {
             bots.add(bot);
             tanks.add(bot);
             botCount--;
+        }
+    }
+
+    public void newBonus( int type) {
+        if( type == 0 && lifeBonusCount <= 2) {
+            Bonus lifeBonus = new LifeBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
+            lifeBonus.setReleased(true);
+            mapPane.getChildren().addAll(lifeBonus.getView());
+            lifeBonusCount++;
+            bonuses.add(lifeBonus);
+        }
+        else if( type == 1 && speedBonusCount <= 2) {
+            Bonus speedBonus = new SpeedBonus(300, 300);
+            speedBonus.setReleased(true);
+            mapPane.getChildren().addAll(speedBonus.getView());
+            setSpeedBonusCount(getSpeedBonusCount() + 1);
+            speedBonus.setTaken(false);
+            bonuses.add(speedBonus);
         }
     }
 
@@ -134,7 +157,18 @@ public class Map {
         }
     }
 
+    public void updateBonuses() {
 
+        for( Bonus bonus : bonuses) {
+            if( bonus.isTaken()) {
+                mapPane.getChildren().remove(bonus.getView());
+                //bonus.getView().setVisible(false);
+            }
+            else
+                bonus.draw();
+        }
+        bonuses.removeIf(Bonus::isTaken);
+    }
 
     public Player getPlayer( int index){
         try {
@@ -210,6 +244,7 @@ public class Map {
 
     public boolean tryNextMove(Tank tank, int dir){
         ImageView tankView = tank.getView();
+
         ImageView mockUp = getMockUp( tank ,dir);
         for ( GameObject gameObject : tilesMap){
             if ( gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
@@ -218,6 +253,12 @@ public class Map {
                 tankView.setVisible(true);
             if( gameObject.getView().getBoundsInParent().intersects(mockUp.getBoundsInParent())
                     && !(gameObject instanceof Tile)) {
+
+               if(gameObject instanceof Bonus) {
+                    ((Bonus) gameObject).setTaken(true);
+                    return true;
+                }
+
                 mapPane.getChildren().remove(mockUp);
                 return (gameObject instanceof Bush);
             }
@@ -241,6 +282,19 @@ public class Map {
         mockUp.setTranslateY( newY*23);
         mapPane.getChildren().addAll(mockUp);
         return mockUp;
+    }
+
+    public boolean bonusTaken( Bonus bonus, Tank tank, int dir) {
+        ImageView tankView = tank.getView();
+        ImageView bonusView = bonus.getView();
+
+        for( GameObject gameObject : tilesMap) {
+            if( tankView.getBoundsInParent().intersects( bonusView.getBoundsInParent())) {
+                bonusView.setVisible(false);
+                bonus.setTaken(true);
+            }
+        }
+        return true;
     }
 
     // getters and setters
@@ -274,5 +328,22 @@ public class Map {
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
+
+    private void setLifeBonusCount(int newCount) {
+        lifeBonusCount = newCount;
+    }
+
+    private int getLifeBonusCount() {
+        return lifeBonusCount;
+    }
+
+    private void setSpeedBonusCount(int newCount) {
+        speedBonusCount = newCount;
+    }
+
+    private int getSpeedBonusCount() {
+        return speedBonusCount;
+    }
+
 
 }
