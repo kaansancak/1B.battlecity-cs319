@@ -33,9 +33,5 @@ public class IronWall extends Undestructible{
     public boolean isHideable() {
         return false;
     }
-
-    public boolean isMovableTile(){
-        return false;
-    }
 }
 //

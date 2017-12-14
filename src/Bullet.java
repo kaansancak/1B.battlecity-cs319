@@ -80,16 +80,8 @@ public class Bullet extends GameObject {
         return dir;
     }
 
-    public void setDir(int dir) {
-        this.dir = dir;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public boolean isCrushed() {
@@ -97,11 +89,6 @@ public class Bullet extends GameObject {
     }
     public void setCrushed(boolean crushed) {
         isCrushed = crushed;
-    }
-
-
-    public boolean isMovableTile(){
-        return true;
     }
 
     @Override

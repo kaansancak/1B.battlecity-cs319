@@ -33,8 +33,4 @@ public class Bush extends Undestructible {
     public boolean isHideable() {
         return true;
     }
-
-    public boolean isMovableTile(){
-        return true;
-    }
 }
