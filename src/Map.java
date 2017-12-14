@@ -70,14 +70,12 @@ public class Map {
 
     //Decide how to spawn a bot
     public void spawnBot(){
-        if( botCount > 0){
-            Bot bot = new Bot( 5, 3);
+            Bot bot = new Bot( 100, 30);
             mapPane.getChildren().addAll(bot.getView());
             bots.add(bot);
             tanks.add(bot);
             objectHolder.add(bot);
-            botCount--;
-        }
+            remainingBots--;
     }
 
     public Stage getMapStage() {

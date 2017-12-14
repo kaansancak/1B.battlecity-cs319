@@ -87,15 +87,15 @@ public class MapManager {
         map.updateBonuses();
     }
 
-    public void handleBots(){/*
+    public void handleBots(){
         for( Bot bot: map.getBots()){
             bot.runBot( map.tryNextMove(bot,bot.getDir()));
         }
-*/
+
     }
 
     private void addBot( long time){
-        if( time % 100 == 0){
+        if( time % 100 == 0 && map.getRemainingBots() > 0){
             map.spawnBot();
         }
     }
@@ -132,11 +132,10 @@ public class MapManager {
         }
         return obstaclesMap;
     }
+
     private void manageObjects(){
         for(int i = 0; i < map.getBullets().size() ; i++){
-            {
-                    collisionManager.checkCollision();
-                }
+                collisionManager.checkCollision();
             }
     }
 
