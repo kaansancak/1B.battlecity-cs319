@@ -22,6 +22,7 @@ public class ConfirmBox{
     public boolean display( String title, String message){
 
         Stage answerWindow = new Stage();
+        answerWindow.setResizable(false);
         answerWindow.initModality(Modality.APPLICATION_MODAL);
         answerWindow.setTitle(title);
         answerWindow.setMinHeight(250);

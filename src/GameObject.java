@@ -6,30 +6,27 @@ import java.awt.geom.Point2D;
 /**
  * Created by kaan on 10/28/2017.
  */
-public class GameObject {
+public abstract class GameObject {
 
     //Variables
     private final int BULLET_DAMAGE = 200;
-    protected int VIEW_WH = 32;
+    protected int VIEW_WH = 40;
     //Location variables
     protected double xLoc;
     protected double yLoc;
-    private int VIEW_H = 30;
-    private int VIEW_V = 30;
+    protected ImageView view;
+    //GUI variables
+    protected Image image;
+    private int VIEW_H = 40;
+    private int VIEW_V = 40;
     private boolean isDamaged = false;
     private boolean isDestructed = false;
-    private ImageView view;
     private Point2D velocity;
     //Structure variables
     private boolean isDestructible;
-    //GUI variables
-    private Image image;
     private int width;
     private int height;
-    public GameObject(double xLoc, double yLoc){
-        this.xLoc = xLoc;
-        this.yLoc = yLoc;
-    }
+
 
     public void setVIEW_WH(int VIEW_WH) {
         this.VIEW_WH = VIEW_WH;
@@ -147,11 +144,17 @@ public class GameObject {
         isDestructed = destructed;
     }
 
-    public void draw(){
-        view.setFitHeight(VIEW_H);
-        view.setFitWidth(VIEW_V);
-        view.setTranslateX( xLoc*VIEW_WH);
-        view.setTranslateY( yLoc*VIEW_WH);
+    public abstract boolean isPassableByTanks();
+
+    public abstract boolean isPassableByBullets();
+
+    public abstract boolean isHideable();
+
+    public void draw() {
+        view.setFitHeight( 32);
+        view.setFitHeight( 32);
+        view.setTranslateX( xLoc);
+        view.setTranslateY( yLoc);
     }
 
 

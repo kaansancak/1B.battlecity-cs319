@@ -28,6 +28,13 @@
    -fx-text-fill: #fffaf0;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
+
+#pausemenu-text {
+    -fx-font-size: 40px;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: #fffaf0;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
 .label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;

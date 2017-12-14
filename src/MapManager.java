@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MapManager {
+
     private final int TILES = 20;
     Stage stage = new Stage();
     AnimationTimer timer;
@@ -21,6 +22,8 @@ public class MapManager {
     private CollisionManager collisionManager;
     private ArrayList<Bot> bots;
     private InputController inputController;
+    private boolean paused = false;
+
 
 
     MapManager(int playerCount, int level) throws Exception {
@@ -42,15 +45,32 @@ public class MapManager {
     public void start(Stage stage) throws Exception{
         this.stage = stage;
         stage.setScene(new Scene(map.getMapPane()));
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                onUpdate();
-                addBot(now);
-            }
-        };
-        timer.start();
 
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    onUpdate();
+                    addBot(now);
+                    addLifeBonus(now);
+                    addSpeedBonus(now);
+                }
+            };
+            timer.start();
+
+    }
+    /*
+        boolean should be send to move method
+        of bots so that it could not move at that moment
+        and the bonus releases should stop
+     */
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+        if( paused == true)
+            timer.stop();
+        timer.start();
+    }
+    public boolean isPaused() {
+        return paused;
     }
 
     private void onUpdate(){
@@ -64,13 +84,14 @@ public class MapManager {
         map.updateTanks();
         map.updateBullets();
         map.updateDestructibles();
+        map.updateBonuses();
     }
 
-    public void handleBots(){
+    public void handleBots(){/*
         for( Bot bot: map.getBots()){
             bot.runBot( map.tryNextMove(bot,bot.getDir()));
         }
-
+*/
     }
 
     private void addBot( long time){
@@ -79,14 +100,25 @@ public class MapManager {
         }
     }
 
+    private void addLifeBonus(long time) {
+        int type = 0;
+        // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
+        if (time % 150 == 0)
+            map.newBonus(type);
+    }
+    private void addSpeedBonus(long time) {
+        int type = 1;
+        if( time % 200 == 0)
+            map.newBonus(type);
+    }
+
     public Stage getStage() {
         return stage;
     }
 
-
-public Pane getMapPane(){
+    public Pane getMapPane() {
         return map.getMapPane();
-}
+    }
 
     /* NEW METHOD TO CREATE OBJECT
        // obstacle id: 0 = Ground, 1 = Brick, 2 = Bush, 3 = IronWall,4 = Water
@@ -142,15 +174,11 @@ public Pane getMapPane(){
     }
 
     // getter and setters
-
     public Map getMap() {
         return map;
     }
-
-
     public boolean isMapFinished() {
         return mapFinished;
     }
-
 
 }

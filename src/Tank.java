@@ -5,35 +5,25 @@ import javafx.scene.image.Image;
  */
 public abstract class Tank extends GameObject {
 
-    protected final int VIEW_WH = 23;
+    protected final int VIEW_WH = 32;
+    private final double BULLET_SHIFT = 2;
     protected Image rightImage;
     protected Image upImage;
     protected Image leftImage;
     protected Image downImage;
     protected int dir;
     protected int health;
+    protected int speed;
+    protected int oldSpeed;
     //Variables
     private int BULLET_DAMAGE = 200;
     private int type;
     private int id;
 
-
-    public Tank(int xLoc, int yLoc) {
-        super(xLoc, yLoc);
-        health = 200;
-    }
-
-    public Tank() {
-        super(0,0);
-        health = 200;
-    }
-
     @Override
     public void draw() {
-        super.getView().setFitWidth(VIEW_WH);
-        super.getView().setFitHeight(VIEW_WH);
-        super.getView().setTranslateX( super.getxLoc()*VIEW_WH);
-        super.getView().setTranslateY( super.getyLoc()*VIEW_WH);
+        super.getView().setTranslateX( xLoc);
+        super.getView().setTranslateY( yLoc);
     }
 
     public Image getRightImage() {
@@ -70,8 +60,42 @@ public abstract class Tank extends GameObject {
 
     //Methods
     public Bullet fire(){
-        Bullet tankBullet = new Bullet( id, super.getxLoc(), super.getyLoc(), dir);
+        double bullet_x = getBullet_xLoc( xLoc, dir);
+        double bullet_y = getBullet_yLoc( yLoc, dir);
+        Bullet tankBullet = new Bullet( id, bullet_x, bullet_y, dir);
         return tankBullet;
+    }
+
+    private double getBullet_yLoc(double yLoc, int dir) {
+        switch ( dir){
+            case 0:
+                return yLoc - view.getFitHeight() / 2;
+            case 1:
+                return yLoc - view.getFitHeight() / 2;
+            case 2:
+                return yLoc + view.getFitHeight() + BULLET_SHIFT;
+            case 3:
+                return yLoc - BULLET_SHIFT;
+            default:
+                break;
+        }
+        return yLoc;
+    }
+
+    private double getBullet_xLoc(double xLoc, int dir) {
+        switch ( dir){
+            case 0:
+                return xLoc + view.getFitWidth() + BULLET_SHIFT;
+            case 1:
+                return xLoc - BULLET_SHIFT;
+            case 2:
+                return xLoc + view.getFitWidth()/2;
+            case 3:
+                return xLoc + view.getFitWidth()/2;
+            default:
+                break;
+        }
+        return xLoc;
     }
 
     public boolean isAlive(){
@@ -85,17 +109,18 @@ public abstract class Tank extends GameObject {
      */
 
     public void move(int dir) {
+        this.dir = dir;
         if ( dir == 0){
-            super.setxLoc(super.getxLoc() + getVelocity().getX());
+            xLoc =  xLoc + getVelocity().getX();
             super.setImage( rightImage);
         }else if ( dir == 1){
-            super.setxLoc(super.getxLoc() - getVelocity().getX());
+            xLoc = xLoc - getVelocity().getX();
             super.setImage( leftImage);
         }else if ( dir == 2){
-            super.setyLoc( super.getyLoc() + getVelocity().getY());
+            yLoc = yLoc + getVelocity().getY();
             super.setImage( downImage);
-        }else{
-            super.setyLoc( super.getyLoc() - getVelocity().getY());
+        }else if( dir == 3){
+            yLoc = yLoc - getVelocity().getY();
             super.setImage( upImage);
         }
         updateView();
@@ -105,7 +130,6 @@ public abstract class Tank extends GameObject {
     public void updateView(){
         super.setViewImage(super.getImage());
     }
-
 
 
     public void getDamaged(){
@@ -118,6 +142,22 @@ public abstract class Tank extends GameObject {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getOldSpeed() {
+        return oldSpeed;
+    }
+
+    public void setOldSpeed(int speed) {
+        oldSpeed = speed;
     }
 
     //Setters and Getters

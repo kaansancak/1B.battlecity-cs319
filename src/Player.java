@@ -20,20 +20,28 @@ public class Player extends Tank {
     private ArrayList<String> controller;
 
     public Player(int id, int controllerId) {
+        if( id == 1){
+            this.xLoc = 4*30;
+            this.yLoc = 4*30;
+        }else{
+            this.xLoc = 5*28;
+            this.yLoc = 5*28;
+        }
         health = 200;
         initImages();
-        super.setImage( super.getRightImage() );
-        super.setView( new ImageView(super.getImage()));
-        super.setVelocity( new Point2D.Double(0.1, 0.1));
+        view = new ImageView( rightImage);
+        view.setFitWidth( 23);
+        view.setFitHeight( 23);
+        super.setVelocity( new Point2D.Double(2, 2));
         super.setId(id);
         this.controllerId = controllerId;
     }
 
     protected void initImages() {
-        super.setRightImage( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_right.png").toUri().toString()));
-        super.setLeftImage( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_left.png").toUri().toString()));
-        super.setUpImage( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_up.png").toUri().toString()));
-        super.setDownImage( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_down.png").toUri().toString()));
+        rightImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_right.png").toUri().toString()));
+        leftImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_left.png").toUri().toString()));
+        upImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_up.png").toUri().toString()));
+        downImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_down.png").toUri().toString()));
     }
     
     private void incrementScore() {
@@ -48,5 +56,19 @@ public class Player extends Tank {
         this.controller = controller;
     }
 
+    @Override
+    public boolean isPassableByTanks() {
+        return false;
+    }
+
+    @Override
+    public boolean isPassableByBullets() {
+        return false;
+    }
+
+    @Override
+    public boolean isHideable() {
+        return false;
+    }
 }
 

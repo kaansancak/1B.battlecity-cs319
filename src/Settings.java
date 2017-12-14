@@ -76,6 +76,7 @@ public class Settings implements EventHandler<ActionEvent> {
         media = file.getScannedAudios();
         settingsWindow = new Stage();
         settingsWindow.setTitle( "Settings");
+        settingsWindow.setResizable(false);
         settings = new Label("Settings");
         settings.setId("welcome-text");
 
@@ -146,7 +147,7 @@ public class Settings implements EventHandler<ActionEvent> {
 
     private void initCheckBox() {
         mute = new CheckBox( "Mute");
-        mute.setSelected( true);
+        mute.setSelected( false);
         mute.setId("labels");
 
         // setting listener for the checkboxes
