@@ -71,11 +71,11 @@ public class MapManager {
         map.updateBonuses();
     }
 
-    public void handleBots(){
+    public void handleBots(){/*
         for( Bot bot: map.getBots()){
             bot.runBot( map.tryNextMove(bot,bot.getDir()));
         }
-
+*/
     }
 
     private void addBot( long time){

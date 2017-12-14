@@ -15,7 +15,6 @@ public class CollisionManager {
 
     public void checkCollision() {
         checkObstacleCollision();
-        checkTankCollision();
     }
 
     public void updateRemovals() {
@@ -29,11 +28,14 @@ public class CollisionManager {
             for (GameObject gameObject : gameObjects) {
                 if (bullet.getView().getBoundsInParent().intersects(
                         gameObject.getView().getBoundsInParent())) {
-                    if (gameObject instanceof Destructible) {
+                    if( gameObject instanceof Tank){
+                        damageTank((Tank)gameObject);
+                        bullet.setCrushed(true);
+                    }else if (gameObject instanceof Destructible) {
                         damage(gameObject, bullet.getDir());
                         bullet.setCrushed(true);
                     } else if (gameObject instanceof Undestructible) {
-                        if (!(((Undestructible) gameObject).isPassableByBullets()))
+                        if (!(gameObject.isPassableByBullets()))
                             bullet.setCrushed(true);
                     }
                 }
@@ -41,12 +43,14 @@ public class CollisionManager {
         }
     }
 
+
     public void checkTankCollision() {
         for (Bullet bullet : bullets) {
             for (Tank tank : tanks) {
                 if (bullet.getView().getBoundsInParent().
                         intersects(tank.getView().getBoundsInParent())) {
-                    // damage( tank);
+                    System.out.print("col");
+                    damageTank(tank);
                     bullet.setCrushed(true);
                 }
             }
@@ -85,6 +89,9 @@ public class CollisionManager {
                 ( gameObject2).setDestructed(true);
             }
         }
+    }
 
+    public  void damageTank( Tank tank){
+        tank.getDamaged();
     }
 }

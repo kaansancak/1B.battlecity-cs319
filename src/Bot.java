@@ -3,20 +3,23 @@ import javafx.scene.image.ImageView;
 
 import java.awt.geom.Point2D;
 import java.nio.file.Paths;
+import java.util.Random;
 
 /**
  * Created by kaan on 10/28/2017.
  */
 public class Bot extends Tank {
+    Random rand = new Random();
 
-    public Bot( int xLoc, int yLoc){
-        super( xLoc, yLoc);
+    public Bot( double xLoc, double yLoc){
+        this.xLoc = xLoc;
+        this.yLoc = yLoc;
         super.setImage( super.getRightImage() );
         super.setView( new ImageView(super.getImage()));
         super.setVelocity( new Point2D.Double(0.1,0.1));
         health = 200;
         initImages();
-        getRandomDir();
+        dir = 0;
     }
 
     public boolean isStuck(){
@@ -27,12 +30,14 @@ public class Bot extends Tank {
     in the design report.
      */
     public void runBot( boolean changeDirStatus){
-        if( !changeDirStatus) {
+        if( changeDirStatus)
+            super.move( dir);
+        else if( !changeDirStatus) {
             getRandomDir();
         }
     }
     private void getRandomDir(){
-        dir = (int)( Math.random()%4);
+        dir = rand.nextInt( 4);
     }
 
     public boolean isMovableTile(){
@@ -47,4 +52,18 @@ public class Bot extends Tank {
         super.setDownImage( new Image(Paths.get("."+"/MediaFiles/resources/enemy_down.png").toUri().toString()));
     }
 
+    @Override
+    public boolean isPassableByTanks() {
+        return false;
+    }
+
+    @Override
+    public boolean isPassableByBullets() {
+        return false;
+    }
+
+    @Override
+    public boolean isHideable() {
+        return false;
+    }
 }
