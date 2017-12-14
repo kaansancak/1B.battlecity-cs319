@@ -88,11 +88,10 @@ public class Map {
             bonuses.add(lifeBonus);
         }
         else if( type == 1 && speedBonusCount <= 2) {
-            Bonus speedBonus = new SpeedBonus(300, 300);
+            Bonus speedBonus = new SpeedBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
             speedBonus.setReleased(true);
             mapPane.getChildren().addAll(speedBonus.getView());
-            setSpeedBonusCount(getSpeedBonusCount() + 1);
-            speedBonus.setTaken(false);
+            speedBonusCount++;
             bonuses.add(speedBonus);
         }
     }
