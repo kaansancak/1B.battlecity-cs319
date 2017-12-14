@@ -10,7 +10,7 @@ public class Map {
 
     private final int TILES = 20;
     private final int MAP_DIMENSION = 32;
-    private final double SHIFT = 0.09;
+    private final double SHIFT = 0.33;
     private Scene mapScene;
     private Stage mapStage;
     private int playerCount;
@@ -29,9 +29,6 @@ public class Map {
     private ArrayList<Destructible> destructibles;
     private int lifeBonusCount;
     private int speedBonusCount;
-    public Map( ){
-
-    }
 
     /* GameObject File Decode
     * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
@@ -162,7 +159,6 @@ public class Map {
     }
 
     public void updateBonuses() {
-
         for( Bonus bonus : bonuses) {
             if( bonus.isTaken()) {
                 mapPane.getChildren().remove(bonus.getView());
@@ -254,10 +250,8 @@ public class Map {
 
     }
 
-
     public boolean tryNextMove( Tank tank, int dir){
         ImageView tankView = tank.getView();
-        tank.move(dir);
         for( GameObject gameObject : objectHolder){
             tankView.setVisible(true);
             if( tankView.getBoundsInParent().intersects( gameObject.getView().getBoundsInParent())){
@@ -267,19 +261,18 @@ public class Map {
                         return true;
                     }
                 }else{
-                    System.out.println( "Intersect with " + gameObject.getView().getFitWidth());
                     switch ( dir){
                         case 0:
-                            tank.setxLoc( gameObject.getxLoc() - tankView.getFitWidth()-1);
+                            tank.setxLoc( gameObject.getxLoc() - tankView.getFitWidth()-SHIFT);
                             break;
                         case 1:
-                            tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth() + 1);
+                            tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth()+SHIFT);
                             break;
                         case 2:
-                            tank.setyLoc( gameObject.getyLoc() - tankView.getFitHeight() -1);
+                            tank.setyLoc( gameObject.getyLoc() - gameObject.getView().getFitHeight()+SHIFT);
                             break;
                         case 3:
-                            tank.setyLoc( gameObject.getyLoc() +gameObject.getView().getFitHeight() + 1);
+                            tank.setyLoc( gameObject.getyLoc() + gameObject.getView().getFitHeight()  +SHIFT);
                             break;
                     }
                     return false;
@@ -288,117 +281,6 @@ public class Map {
         }
         return true;
     }
-/*
-    public boolean tryNextMove(Tank tank, int dir){
-        double prev_x = tank.getxLoc();
-        double prev_y = tank.getyLoc();
-        switch ( dir){
-            case 0:
-                prev_x -= SHIFT;
-                break;
-            case 1:
-                prev_x += SHIFT;
-                break;
-            case 2:
-                prev_y -= SHIFT;
-                break;
-            case 3:
-                prev_y += SHIFT;
-                break;
-        }
-        tank.move(dir);
-        ImageView tankView = tank.getView();
-        for ( GameObject gameObject : objectHolder){
-            if ( gameObject instanceof  Bush &&
-                    gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
-                tankView.setVisible(false);
-            else
-                tankView.setVisible(true);
-            if( gameObject.getView().getBoundsInParent().intersects(tankView.getBoundsInParent())
-                    && !(gameObject instanceof Tile)) {
-                if(gameObject instanceof Bonus) {
-                    ((Bonus) gameObject).setTaken(true);
-                    return true;
-                }
-                if( gameObject instanceof  Bush)
-                    return true;
-                else{
-                    tank.setxLoc( prev_x);
-                    tank.setyLoc( prev_y);
-                    return false;
-                }
-            }
-
-        }
-        return true;
-    }
-*//*
-    public boolean tryNextMove(Tank tank, int dir){
-        ImageView tankView = tank.getView();
-
-        ImageView mockUp = getMockUp( tank ,dir);
-        for ( GameObject gameObject : objectHolder){
-            if ( gameObject instanceof  Bush &&
-                    gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
-                tankView.setVisible(false);
-            else
-                tankView.setVisible(true);
-            if( gameObject.getView().getBoundsInParent().intersects(tankView.getBoundsInParent())
-                    && !(gameObject instanceof Tile)) {
-               if(gameObject instanceof Bonus) {
-                    ((Bonus) gameObject).setTaken(true);
-                    return true;
-               }else if( gameObject instanceof  Bush)
-                   return true;
-               else{
-                    switch ( dir) {
-                        case 0:
-                            tank.setxLoc( gameObject.getxLoc()-tank.getVelocity().getX());
-                            //tankView.setTranslateX( gameObject.getView().getTranslateX() - tankView.getFitWidth());
-                            //tank.setxLoc( tankView.getTranslateX() / tankView.getFitWidth());
-
-                            break;
-                        case 1:
-                            tank.setxLoc( gameObject.getxLoc()+tank.getVelocity().getX());
-                            //tankView.setTranslateX( gameObject.getView().getTranslateX() + tankView.getFitWidth());
-                            //tank.setxLoc( tankView.getTranslateX() / tankView.getFitWidth());
-                            break;
-                        case 2:
-                            tank.setyLoc( gameObject.getyLoc());
-                            //tankView.setTranslateY( gameObject.getView().getTranslateY() - tankView.getFitHeight());
-                            //tank.setyLoc( tankView.getTranslateY() / tankView.getFitHeight());
-                            break;
-                        case 3:
-                            tank.setyLoc( gameObject.getyLoc();
-                            //tankView.setTranslateY( gameObject.getView().getTranslateY() + tankView.getFitHeight());
-                            //tank.setyLoc( tankView.getTranslateY() / tankView.getFitHeight());
-                            break;
-                    }
-                    return true;
-               }
-
-            }
-
-        }
-        return true;
-    }
-
-    private ImageView getMockUp(Tank tank, int dir) {
-        double newX = tank.getxLoc();
-        double newY = tank.getyLoc();
-        switch ( dir){
-            case 0: newX += tank.getVelocity().getX();
-            case 1: newX -= tank.getVelocity().getX();
-            case 2: newY += tank.getVelocity().getY();
-            case 3: newY -= tank.getVelocity().getY();
-        }
-        ImageView mockUp = new ImageView( tank.getImage());
-        mockUp.setVisible(false);
-        mockUp.setTranslateX( newX*23);
-        mockUp.setTranslateY( newY*23);
-        mapPane.getChildren().addAll(mockUp);
-        return mockUp;
-    }*/
 
     public boolean bonusTaken( Bonus bonus, Tank tank, int dir) {
         ImageView tankView = tank.getView();

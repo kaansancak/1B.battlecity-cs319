@@ -30,7 +30,7 @@ public class CollisionManager {
                         gameObject.getView().getBoundsInParent())) {
                     if( gameObject instanceof Tank){
                         damageTank((Tank)gameObject);
-                        bullet.setCrushed(true);
+                        //bullet.setCrushed(true);
                     }else if (gameObject instanceof Destructible) {
                         damage(gameObject, bullet.getDir());
                         bullet.setCrushed(true);
