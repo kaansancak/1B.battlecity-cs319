@@ -58,6 +58,11 @@ public class MapManager {
             timer.start();
 
     }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
     /*
         boolean should be send to move method
         of bots so that it could not move at that moment
@@ -68,9 +73,6 @@ public class MapManager {
         if( paused == true)
             timer.stop();
         timer.start();
-    }
-    public boolean isPaused() {
-        return paused;
     }
 
     private void onUpdate(){

@@ -208,6 +208,7 @@ public class Map {
                     if (obstaclesMap[i][j] == 1) {
                         Brick brick = new Brick(cordinate_x,cordinate_y, 0);
                         objectHolder.add( brick);
+                        destructibles.add( brick);
                         brick.draw();
                     } else if (obstaclesMap[i][j] == 2) {
                         Bush bush = new Bush( cordinate_x, cordinate_y);
@@ -225,11 +226,13 @@ public class Map {
                     else if (obstaclesMap[i][j] == 5) {
                         Brick brick = new Brick(cordinate_x,cordinate_y, 1);
                         objectHolder.add( brick);
+                        destructibles.add( brick);
                         brick.draw();
                     }
                     else if (obstaclesMap[i][j] == 6) {
                         Brick brick = new Brick(cordinate_x,cordinate_y, 2);
                         objectHolder.add( brick);
+                        destructibles.add( brick);
                         brick.draw();
                     }
                 }
@@ -248,6 +251,7 @@ public class Map {
         Bullet fired = tank.fire();
         mapPane.getChildren().addAll(fired.getView());
         bullets.add(fired);
+        System.out.println( bullets.toString());
     }
 
     public void addObjects(GameObject[][] gameObjects){

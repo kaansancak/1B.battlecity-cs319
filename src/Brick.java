@@ -11,11 +11,9 @@ public class Brick extends Destructible {
     private final String IMG_DIR_BRICK = "./MediaFiles/image1.png";
     private final String IMG_DIR_MINI_BRICK = "./MediaFiles/image1.png";
     private final String IMG_DIR_SMALL_BRICK = "./MediaFiles/image1.png";
-    private final double center_shift = 0.5;//center shifts 0.25 when brick gets damaged.
-    private final int NORMAL_DIMENSION = 40;
-    private final int DAMAGED_DIMENSION = 20;
-    //Variables
-    private Image damagedImage;
+    private final double center_shift = 16;//center shifts 0.25 when brick gets damaged.
+    private final int NORMAL_DIMENSION = 32;
+    private final int DAMAGED_DIMENSION = 16;
 
     //Constructor
     public Brick( double xLoc, double yLoc, int imageNum){
@@ -28,15 +26,8 @@ public class Brick extends Destructible {
 
         this.xLoc = xLoc;
         this.yLoc = yLoc;
-        view.setFitWidth( 32);
-        view.setFitHeight( 32);
-    }
-
-    //Methods
-    public void getDestructed(){
-        if( super.isDestructed()){
-            //if destructed clear the object
-        }
+        view.setFitWidth( NORMAL_DIMENSION);
+        view.setFitHeight( NORMAL_DIMENSION);
     }
 
     public void getDamaged( int dir){
@@ -47,40 +38,38 @@ public class Brick extends Destructible {
 
 
     public void setDamagedImage(int dir) {
-
         super.setDamaged( true);
         switch ( dir){
             case 0: {
-                super.setxLoc( super.getxLoc() + center_shift);
-                super.setVIEW_H(NORMAL_DIMENSION);
-                super.setVIEW_V(DAMAGED_DIMENSION);
+                xLoc = ( xLoc + center_shift);
+                view.setFitHeight( NORMAL_DIMENSION);
+                view.setFitWidth(DAMAGED_DIMENSION);
                 break;
             }
             case 1: {
-                super.setxLoc( super.getxLoc());
-                super.setVIEW_H(NORMAL_DIMENSION);
-                super.setVIEW_V(DAMAGED_DIMENSION);
+                view.setFitHeight( NORMAL_DIMENSION);
+                view.setFitWidth(DAMAGED_DIMENSION);
                 break;
             }
             case 2: {
-                super.setyLoc( super.getyLoc() + center_shift);
-                super.setVIEW_H(DAMAGED_DIMENSION);
-                super.setVIEW_V(NORMAL_DIMENSION);
+                yLoc = ( yLoc + center_shift);
+                view.setFitHeight( DAMAGED_DIMENSION);
+                view.setFitWidth(NORMAL_DIMENSION);
                 break;
             }
             case 3: {
-                super.setVIEW_H(DAMAGED_DIMENSION);
-                super.setVIEW_V(NORMAL_DIMENSION);
+                view.setFitHeight( DAMAGED_DIMENSION);
+                view.setFitWidth(NORMAL_DIMENSION);
                 break;
             }
-            default: super.getView().setRotate( super.getView().getRotate() - 90);
-                     break;
+            default: break;
         }
-        super.setViewImage(super.getImage());
-
-
+        super.draw();
     }
 
+    public void getDestructed(){
+        isDestructed = true;
+    }
 
     @Override
     public boolean isPassableByTanks() {
