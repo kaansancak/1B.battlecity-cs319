@@ -21,11 +21,11 @@ public class Player extends Tank {
 
     public Player(int id, int controllerId) {
         if( id == 1){
-            this.xLoc = 0;
-            this.yLoc = 0;
+            this.xLoc = 4*30;
+            this.yLoc = 4*30;
         }else{
-            this.xLoc = 5;
-            this.yLoc = 5;
+            this.xLoc = 5*28;
+            this.yLoc = 5*28;
         }
         health = 200;
         initImages();

@@ -80,8 +80,12 @@ public class Map {
         }
     }
 
+    public Stage getMapStage() {
+        return mapStage;
+    }
+
     public void newBonus( int type) {
-        if( type == 0 && lifeBonusCount <= 2) {
+        if( type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
             Bonus lifeBonus = new LifeBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
             lifeBonus.setReleased(true);
             mapPane.getChildren().addAll(lifeBonus.getView());
@@ -89,12 +93,11 @@ public class Map {
             bonuses.add(lifeBonus);
             objectHolder.add(lifeBonus);
         }
-        else if( type == 1 && speedBonusCount <= 2) {
-            Bonus speedBonus = new SpeedBonus(300, 300);
+        else if( type == 1 && speedBonusCount < 2) {
+            Bonus speedBonus = new SpeedBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
             speedBonus.setReleased(true);
             mapPane.getChildren().addAll(speedBonus.getView());
-            setSpeedBonusCount(getSpeedBonusCount() + 1);
-            speedBonus.setTaken(false);
+            speedBonusCount++;
             bonuses.add(speedBonus);
         }
     }
@@ -183,12 +186,12 @@ public class Map {
         return mapPane;
     }
 
-    public void showMap(){
+   /* public void showMap(){
         mapScene = new Scene( mapPane);
         mapStage = new Stage();
         mapStage.setScene(mapScene);
         mapStage.show();
-    }
+    }*/
 
     private void intToObject(){
         for(int i = 0; i < TILES; i++){
@@ -203,7 +206,7 @@ public class Map {
                 }
                 else {
                     if (obstaclesMap[i][j] == 1) {
-                        Brick brick = new Brick(cordinate_x,cordinate_y);
+                        Brick brick = new Brick(cordinate_x,cordinate_y, 0);
                         objectHolder.add( brick);
                         brick.draw();
                     } else if (obstaclesMap[i][j] == 2) {
@@ -218,6 +221,16 @@ public class Map {
                         Water water = new Water(cordinate_x,cordinate_y);
                         objectHolder.add( water);
                         water.draw();
+                    }
+                    else if (obstaclesMap[i][j] == 5) {
+                        Brick brick = new Brick(cordinate_x,cordinate_y, 1);
+                        objectHolder.add( brick);
+                        brick.draw();
+                    }
+                    else if (obstaclesMap[i][j] == 6) {
+                        Brick brick = new Brick(cordinate_x,cordinate_y, 2);
+                        objectHolder.add( brick);
+                        brick.draw();
                     }
                 }
             }
