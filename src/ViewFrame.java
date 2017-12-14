@@ -7,11 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -20,12 +18,13 @@ import java.util.ArrayList;
  */
 public class ViewFrame {
 
-    private boolean returnCall = false;
     FileManager f;
+    private boolean returnCall = false;
 
     public ViewFrame( String title, ArrayList<String> message){
         f = new FileManager();
         Stage viewFrame = new Stage();
+        viewFrame.setResizable(false);
         StackPane pane = new StackPane();
         viewFrame.initModality(Modality.APPLICATION_MODAL);
         viewFrame.setTitle(title);
