@@ -61,7 +61,6 @@ public class MapManager {
         this.stage = stage;
         text.setTranslateY(660);
         map.getMapPane().getChildren().addAll(text);
-
         stage.setScene(new Scene(map.getMapPane()));
             timer = new AnimationTimer() {
                 @Override

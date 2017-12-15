@@ -149,6 +149,13 @@ public class Map {
             objectHolder.add( player);
             mapPane.getChildren().addAll(player.getView());
         }
+        ArrayList<String> a = new ArrayList<>();
+        a.add("D");
+        a.add("A");
+        a.add("W");
+        a.add("S");
+        a.add(" ");
+        players[0].setController(a);
     }
 
     //Update Methods

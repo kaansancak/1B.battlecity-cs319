@@ -77,11 +77,11 @@ public class Player extends Tank {
         score++;
     }
 
-    private ArrayList<String> getController() {
+    public ArrayList<String> getController() {
         return controller;
     }
 
-    private void setController(ArrayList<String> controller) {
+    public void setController(ArrayList<String> controller) {
         this.controller = controller;
     }
 
