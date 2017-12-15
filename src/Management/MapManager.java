@@ -209,7 +209,8 @@ public class MapManager {
         startsLevel();
         stage.setScene(new Scene(map.getMapPane()));
         System.out.println("updated: " + mapLevel);
-
+        inputController = new InputController( this, map.getPlayers());
+        gameLoop();
     }
     private void startsLevel(){
         readObstaclesMap(mapLevel);
