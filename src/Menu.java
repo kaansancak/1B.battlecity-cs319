@@ -66,7 +66,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
                 player.seek(Duration.ZERO);
             }
         });
-      //  player.play();
+        //player.play();
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");
