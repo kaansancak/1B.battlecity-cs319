@@ -1,5 +1,6 @@
 package GameObject.TankObjects;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -14,12 +15,12 @@ import java.util.ArrayList;
  */
 public class Player extends Tank {
 
+    public double oldSpeed;
+    AnimationTimer timer;
     // variables
-    private final double PLAYER_NORMAL_VELOCITY = 3.0;
+    private double PLAYER_NORMAL_VELOCITY = 3.0;
     private int score;
     private int controllerId;
-
-
     private ArrayList<String> controller;
 
     public Player(int id, int controllerId) {
@@ -33,8 +34,8 @@ public class Player extends Tank {
         health = 200;
         initImages();
         view = new ImageView( rightImage);
-        view.setFitWidth( 23);
-        view.setFitHeight( 23);
+        view.setFitWidth( 28);
+        view.setFitHeight( 28);
         super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
         super.setId(id);
         this.controllerId = controllerId;
@@ -46,7 +47,30 @@ public class Player extends Tank {
         upImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_up.png").toUri().toString()));
         downImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_down.png").toUri().toString()));
     }
-    
+
+    public void incrementHealth() {
+        health += 200;
+    }
+    public void incrementSpeed() {
+        oldSpeed = PLAYER_NORMAL_VELOCITY;
+        PLAYER_NORMAL_VELOCITY = PLAYER_NORMAL_VELOCITY + 2.0;
+        super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
+
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                normalizeTheSpeed( now, oldSpeed);
+            }
+        };
+        timer.start();
+        PLAYER_NORMAL_VELOCITY = oldSpeed;
+    }
+    private void normalizeTheSpeed(long now, double oldSpeed) {
+        if( now % 500 == 0) {
+            super.setVelocity( new Point2D.Double(oldSpeed, oldSpeed));
+            PLAYER_NORMAL_VELOCITY = oldSpeed;
+        }
+    }
     private void incrementScore() {
         score++;
     }

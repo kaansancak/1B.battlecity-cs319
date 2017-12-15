@@ -21,14 +21,14 @@ public class ConfirmBox{
 
     private boolean answer;
 
-    public boolean display( String title, String message){
+    public boolean display( String title, String message, int width, int height){
 
         Stage answerWindow = new Stage();
         answerWindow.setResizable(false);
         answerWindow.initModality(Modality.APPLICATION_MODAL);
         answerWindow.setTitle(title);
-        answerWindow.setMinHeight(250);
-        answerWindow.setMinWidth(250);
+        answerWindow.setMinHeight(width);
+        answerWindow.setMinWidth(height);
         Label answerLabel = new Label(message);
         answerLabel.setId("confirm-text");
 
@@ -53,7 +53,7 @@ public class ConfirmBox{
         pane.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         pane.getChildren().add( answerBoxes);
         Scene answerScene = new Scene( pane, 600, 200);
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         answerScene.getStylesheets().add(style);
 
         answerWindow.setScene(answerScene);

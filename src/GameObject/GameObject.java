@@ -11,7 +11,7 @@ import java.awt.geom.Point2D;
 public abstract class GameObject {
 
     //Variables
-    private final int BULLET_DAMAGE = 200;
+    private final int BULLET_DAMAGE = 1;
     //Location variables
     protected double xLoc;
     protected double yLoc;

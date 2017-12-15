@@ -1,5 +1,6 @@
 package UserInterface.MenuPackage;
 
+import Management.GameStatus;
 import Management.MapManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,8 +46,8 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
         pauseMenuWindow = new Stage();
         pauseMenuWindow.setResizable(false);
-        pauseMenuWindow.setTitle( "Pause UserInterface.MenuPackage.Menu");
-        pauseMenuLabel = new Label("Pause UserInterface.MenuPackage.Menu");
+        pauseMenuWindow.setTitle( "Pause Menu");
+        pauseMenuLabel = new Label("Pause Menu");
         pauseMenuLabel.setId("pausemenu-text");
         StackPane pauseLayout = new StackPane();
 
@@ -58,7 +59,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         pauseLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         pauseLayout.getChildren().add(vBox);
         pauseMenuScene = new Scene( pauseLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         pauseMenuScene.getStylesheets().add(style);
         pauseMenuWindow.setScene( pauseMenuScene);
     }
@@ -91,7 +92,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
                         "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
             }
         });
-        backToMenu = new Button("UserInterface.MenuPackage.Menu");
+        backToMenu = new Button("Menu");
         backToMenu.setOnAction( event -> {
             pauseMenuWindow.close();
             returnCall = true;
@@ -136,6 +137,8 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if( event.getSource() == returnButton) {
             pauseMenuWindow.close();
+            mapManager.setGameStatus( GameStatus.GAME_PAUSE_RETURN);
+            mapManager.startLoop();
         }
     }
 //
@@ -169,7 +172,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
 
     public void showPauseMenu() {
         pauseMenuWindow.show();
-        mapManager.setPaused(true);
     }
     public void closeSettings(){
         pauseMenuWindow.close();
@@ -181,5 +183,4 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         newGame.start(newStage);
         mapManager.getStage().close();
     }
-
 }

@@ -1,6 +1,8 @@
 package Management;
 
+import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Bot;
+import UserInterface.MenuPackage.PauseMenu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -12,12 +14,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapManager {
-
     private final int TILES = 20;
     Stage stage = new Stage();
     AnimationTimer timer;
     private int tileX, tileY;
-    private boolean gameStatus;
     private int playerCount;
     private int mapLevel;
     private Map map;
@@ -28,7 +28,10 @@ public class MapManager {
     private ArrayList<Bot> bots;
     private InputController inputController;
     private boolean paused = false;
+    private GameStatus gameStatus;
     private Random rand = new Random();
+    private PauseMenu pauseMenu;
+    private boolean pauseCheck = false;
     private Text text;
 
 
@@ -39,18 +42,19 @@ public class MapManager {
         bots = new ArrayList<>();
         this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
-        readObstaclesMap();
+        readObstaclesMap(level);
         map = new Map(playerCount, level, obstaclesMap);
         text = new Text("Remaining Bots: " + map.getRemainingBots()
                 + "\tLevel: " + level + "\nRemaining Health: "
-                + map.getPlayer(0).health + "\tScore: (dir?)"
-                + map.getPlayer(0).dir);
-        gameStatus = true;
+                + map.getPlayer(0).getHealth() + "\tScore: (dir?)"
+                + map.getPlayer(0).getHealth());
+        gameStatus = GameStatus.GAME_RUNNING;
         mapFinished = false;
         startsLevel();
         start(stage);
         gameLoop();
-        inputController = new InputController( this, map.getPlayer(0));
+        pauseMenu = new PauseMenu(this);
+        inputController = new InputController( this, map.getPlayers());
     }
 
     public void start(Stage stage) throws Exception{
@@ -63,7 +67,7 @@ public class MapManager {
                 @Override
                 public void handle(long now) {
                     onUpdate();
-                    addBot(now);
+                    addBot();
                     addLifeBonus(now);
                     addSpeedBonus(now);
                 }
@@ -81,21 +85,54 @@ public class MapManager {
         of bots so that it could not move at that moment
         and the bonus releases should stop
      */
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-        if( paused == true)
-            timer.stop();
-        timer.start();
-    }
-
     private void onUpdate(){
         collisionManager.checkCollision();
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
+        updateStatText();
+        if( map.isPaused()){
+            System.out.println( map.isPaused());
+            timer.stop();
+            if( !pauseCheck) {
+                pauseMenu.showPauseMenu();
+                pauseCheck = true;
+                gameStatus = GameStatus.GAME_PAUSED;
+            }
+            if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
+                gameStatus = GameStatus.GAME_RUNNING;
+                pauseCheck = false;
+            }
+
+        }
+        if( map.isGameOver()){
+            System.out.print("Game over");
+            timer.stop();
+            gameStatus = GameStatus.GAME_OVER;
+            stage.close();
+        }
+        if(map.isMapFinished()){
+            System.out.print( "Level finished ");
+            timer.stop();
+            gameStatus = GameStatus.LEVEL_FINISHED;
+            stage.close();
+        }
+    }
+
+    private void onGameOver(){
+
+    }
+
+
+    public void startLoop(){
+        map.setPaused(false);
+        timer.start();
+    }
+
+    private void updateStatText(){
         text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).health
-                + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).dir);
+                this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).getHealth()
+                + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
     }
 
     public void updateAllObjects(){
@@ -109,18 +146,21 @@ public class MapManager {
         boolean changeDirStatus = false;
         for( Bot bot: map.getBots()){
             int prev_dir = bot.getDir();
-            bot.runBot( changeDirStatus);
-            changeDirStatus = map.tryNextMove( bot, prev_dir)
-                    && map.checkBoundaries(bot);
-           // if( !changeDirStatus)
-            //bot.setDir( (prev_dir + 1) /4 );
-            //System.out.print( prev_dir);
+            changeDirStatus = map.tryNextMove( bot, prev_dir);
+            if( changeDirStatus){
+                if( Math.random() < 0.008)
+                    bot.setRandomDir();
+                if( Math.random() < 0.005)
+                    map.fire(bot);
+                bot.move( bot.getDir());
+            }else{
+                bot.setRandomDir();
+            }
         }
-
     }
 
-    private void addBot( long time){
-        if( Math.random() < 0.008 && map.getRemainingBots() > 0){
+    private void addBot(){
+        if( Math.random() < 0.002 && map.getRemainingBots() > 0){
             map.spawnBot();
         }
     }
@@ -128,13 +168,13 @@ public class MapManager {
     private void addLifeBonus(long time) {
         int type = 0;
         // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
-        if (time % 150 == 0)
-            map.newBonus(type);
+        if (time % 2000 == 0)
+            map.createBonus(type);
     }
     private void addSpeedBonus(long time) {
         int type = 1;
-        if( time % 200 == 0)
-            map.newBonus(type);
+        if( time % 5000 == 0)
+            map.createBonus(type);
     }
 
     public Stage getStage() {
@@ -149,9 +189,9 @@ public class MapManager {
        // obstacle id: 0 = Ground, 1 = GameObject.GameObject.MapPackage.ObstaclesObjects.Brick, 2 = GameObject.GameObject.MapPackage.ObstaclesObjects.Bush, 3 = GameObject.GameObject.MapPackage.ObstaclesObjects.IronWall,4 = GameObject.MapPackage.ObstaclesObjects.Water
     */
 
-    private int[][] readObstaclesMap(){
+    private int[][] readObstaclesMap(int level){
         try {
-            obstaclesMap = mapManagerFileManager.getMapLevelData(1);
+            obstaclesMap = mapManagerFileManager.getMapLevelData(level);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -167,14 +207,8 @@ public class MapManager {
     private void updateMapObjects(){
 
     }
-
-    private void updateMap(){
-        mapLevel++;
-        map = new Map(playerCount, mapLevel, readObstaclesMap());
-        startsLevel();
-    }
     private void startsLevel(){
-        readObstaclesMap();
+        readObstaclesMap(mapLevel);
         collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
         map.addObjects(map.getGameObjectsArray());
     }
@@ -197,6 +231,14 @@ public class MapManager {
         map.finishMap();
     }
 
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+
+    public void setGameStatus( GameStatus gameStatus){
+        this.gameStatus = gameStatus;
+    }
     // getter and setters
     public Map getMap() {
         return map;

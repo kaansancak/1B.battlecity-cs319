@@ -1,10 +1,13 @@
 package GameObject.MapPackage;
 
 import GameObject.GameObject;
-import GameObject.MapPackage.ObstaclesObjects.Brick;
-import GameObject.MapPackage.ObstaclesObjects.Bush;
-import GameObject.MapPackage.ObstaclesObjects.Destructible;
-import GameObject.MapPackage.ObstaclesObjects.IronWall;
+import GameObject.MapPackage.BonusPackage.Bonus;
+import GameObject.MapPackage.BonusPackage.LifeBonus;
+import GameObject.MapPackage.BonusPackage.SpeedBonus;
+import GameObject.MapPackage.ObstaclesObjects.*;
+import GameObject.TankObjects.Bot;
+import GameObject.TankObjects.Bullet;
+import GameObject.TankObjects.Player;
 import GameObject.TankObjects.Tank;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -21,6 +24,8 @@ public class Map {
     private final double SHIFT = 0.33;
     private final int FRAME_UPPER_BOUND = 640;
     private final int FRAME_LOWER_BOUND = 0;
+    private boolean isGameOver = false;
+    private boolean isPaused = false;
     private Scene mapScene;
     private Stage mapStage;
     private int playerCount;
@@ -30,11 +35,11 @@ public class Map {
     private GameObject[][] gameObjects;
     private int[][] obstaclesMap;
     private Pane mapPane;
-    private Tank.Player players[];
-    private ArrayList<GameObject.Bullet> bullets;
+    private Player players[];
+    private ArrayList<Bullet> bullets;
     private ArrayList<Tank> tanks;
-    private ArrayList<Tank.Bot> bots;
-    private ArrayList<GameObject.Bonus> bonuses;
+    private ArrayList<Bot> bots;
+    private ArrayList<Bonus> bonuses;
     private ArrayList<GameObject> objectHolder;
     private ArrayList<Destructible> destructibles;
     private int lifeBonusCount;
@@ -63,10 +68,10 @@ public class Map {
     private void initMapObjects(){
         mapPane = new Pane();
         gameObjects = new GameObject[TILES][TILES];
-        players = new Tank.Player[playerCount];
+        players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
         mapPane.setPrefHeight(FRAME_UPPER_BOUND);
-        botCount = 10 + 2 * level; // WOW lol
+        botCount = 1 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -96,7 +101,7 @@ public class Map {
             }
         }while(!found_empty);
 
-        Tank.Bot bot = new Tank.Bot( x_loc, y_loc);
+        Bot bot = new Bot( x_loc, y_loc);
         mapPane.getChildren().add( bot.getView());
         bots.add( bot);
         tanks.add( bot);
@@ -104,32 +109,29 @@ public class Map {
         remainingBots--;
     }
 
-
-
-    public void newBonus( int type) {
+    public void createBonus( int type) {
         double x_loc = 0.0;
         double y_loc = 0.0;
         boolean found_empty = true;
-        do{
+        do {
             found_empty = true;
-            x_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - MAP_DIMENSION);
-            y_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - MAP_DIMENSION);
-            for( GameObject object : objectHolder){
-                if( object.getView().getBoundsInParent().intersects( x_loc, y_loc,MAP_DIMENSION, MAP_DIMENSION)){
+            x_loc = rand.nextDouble() * (FRAME_UPPER_BOUND - MAP_DIMENSION);
+            y_loc = rand.nextDouble() * (FRAME_UPPER_BOUND - MAP_DIMENSION);
+            for (GameObject object : objectHolder) {
+                if (object.getView().getBoundsInParent().intersects(x_loc, y_loc, MAP_DIMENSION, MAP_DIMENSION)) {
                     found_empty = false;
                 }
             }
-        }while(!found_empty);
-        if( type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
-            GameObject.Bonus lifeBonus = new GameObject.LifeBonus(x_loc, y_loc);
+        } while (!found_empty);
+        if (type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
+            Bonus lifeBonus = new LifeBonus(x_loc, y_loc);
             lifeBonus.setReleased(true);
             mapPane.getChildren().addAll(lifeBonus.getView());
             lifeBonusCount++;
             bonuses.add(lifeBonus);
             objectHolder.add(lifeBonus);
-        }
-        else if( type == 1 && speedBonusCount < 2) {
-            GameObject.Bonus speedBonus = new GameObject.SpeedBonus( x_loc, y_loc);
+        } else if (type == 1 && speedBonusCount < 2) {
+            Bonus speedBonus = new SpeedBonus(x_loc, y_loc);
             speedBonus.setReleased(true);
             mapPane.getChildren().addAll(speedBonus.getView());
             speedBonusCount++;
@@ -140,10 +142,11 @@ public class Map {
 
     private void initPlayers(){
         for(int i = 0; i < playerCount; i++){
-            players[i] = new Tank.Player(2, 2);
+            players[i] = new Player(i, i);
         }
-        for( Tank.Player player : players){
+        for( Player player : players){
             tanks.add(player);
+            objectHolder.add( player);
             mapPane.getChildren().addAll(player.getView());
         }
     }
@@ -153,33 +156,48 @@ public class Map {
     public void updateTanks(){
         updatePlayer();
         updateBots();
+        tanks.removeIf( Tank::isDead);
+        objectHolder.removeIf(GameObject::isDestructed);
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
     }
 
     private void updatePlayer(){
-        for ( Tank.Player player : players){
-            if ( player.getHealth() >= 0)
+        boolean isAllPlayersDead = true;
+        for ( Player player : players){
+            if ( !player.isDead()){
                 player.draw();
+                isAllPlayersDead = false;
+            }
             else{
                 mapPane.getChildren().remove(player.getView());
+                player.setDestructed(true);
             }
+        }
+        if( isAllPlayersDead){
+            isGameOver = true;
         }
     }
 
     private void updateBots() {
-        for ( Tank.Bot bot : bots){
-            if ( bot.getHealth() > 0)
+        for ( Bot bot : bots){
+            if ( !bot.isDead())
                 bot.draw();
             else{
                 bot.setDestructed( true);
                 mapPane.getChildren().remove(bot.getView());
             }
         }
+        bots.removeIf(Tank::isDead);
     }
 
     //Update of Bullets
     public void updateBullets(){
-        for( GameObject.Bullet bullet : bullets) {
+        for( Bullet bullet : bullets) {
             if (bullet.isCrushed()) {
+                bullet.setDestructed(true);
                 mapPane.getChildren().remove(bullet.getView());
             } else {
                 bullet.move();
@@ -198,8 +216,8 @@ public class Map {
     }
 
     public void updateBonuses() {
-        for( GameObject.Bonus bonus : bonuses) {
-            for( Tank.Player player: players){
+        for( Bonus bonus : bonuses) {
+            for( Player player: players){
                 if( player.getView().getBoundsInParent().intersects(
                         bonus.getView().getBoundsInParent()
                 )){
@@ -207,23 +225,37 @@ public class Map {
                     bonus.setTaken(true);
                 }
             }
-            if( bonus.isTaken()) {
+            if( bonus.isTaken() && bonus instanceof LifeBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
+                for( Player player: players) {
+                    player.incrementHealth();
+                }
+            }
+            else if( bonus.isTaken() && bonus instanceof SpeedBonus) {
+                mapPane.getChildren().remove(bonus.getView());
+                objectHolder.remove(bonus);
+                for( Player player: players) {
+                    player.incrementSpeed();
+                }
             }
             else
                 bonus.draw();
         }
-        bonuses.removeIf(GameObject.Bonus::isTaken);
+        bonuses.removeIf(Bonus::isTaken);
     }
 
-    public Tank.Player getPlayer(int index){
+    public Player getPlayer(int index){
         try {
             return players[index];
         }catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Player[] getPlayers(){
+        return players;
     }
 
     public Pane getMapPane() {
@@ -256,7 +288,7 @@ public class Map {
                         objectHolder.add( ironWall);
                         ironWall.draw();
                     } else if (obstaclesMap[i][j] == 4) {
-                        GameObject.Water water = new GameObject.Water(cordinate_x,cordinate_y);
+                        Water water = new Water(cordinate_x,cordinate_y);
                         objectHolder.add( water);
                         water.draw();
                     }
@@ -285,9 +317,12 @@ public class Map {
     }
 
     public void fire(Tank tank){
-        GameObject.Bullet fired = tank.fire();
+        Bullet fired = tank.fire();
         mapPane.getChildren().addAll(fired.getView());
         bullets.add(fired);
+    }
+    public int getLevel() {
+        return level;
     }
 
     public void addObjects(GameObject[][] gameObjects){
@@ -299,12 +334,14 @@ public class Map {
         }
     }
 
+
     public void finishMap(){
 
     }
 
     public boolean tryNextMove( Tank tank, int dir){
-        checkBoundaries( tank);
+        if( !checkBoundaries( tank))
+            return false;
         ImageView tankView = tank.getView();
         for( GameObject gameObject : objectHolder){
             tankView.setVisible(true);
@@ -325,14 +362,12 @@ public class Map {
                             tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth()+SHIFT);
                             break;
                         case 2:
-                            tank.setyLoc( gameObject.getyLoc() - gameObject.getView().getFitHeight()+SHIFT);
+                            tank.setyLoc( gameObject.getyLoc() - tankView.getFitHeight()-SHIFT);
                             break;
                         case 3:
                             tank.setyLoc( gameObject.getyLoc() + gameObject.getView().getFitHeight()  +SHIFT);
                             break;
                     }
-                    if ( gameObject instanceof Tank.Bot)
-                        tank.setDir( rand.nextInt(4));
                     return false;
                 }
             }
@@ -340,7 +375,11 @@ public class Map {
         return true;
     }
 
-    public boolean checkBoundaries( Tank tank) {
+    public boolean isMapFinished(){
+        return (remainingBots == 0 && getAliveBots() == 0);
+    }
+
+    private boolean checkBoundaries( Tank tank) {
         if( tank.getxLoc() < FRAME_LOWER_BOUND){
             tank.setxLoc( FRAME_LOWER_BOUND);
             return false;
@@ -361,7 +400,7 @@ public class Map {
 
 
 
-    public boolean bonusTaken(GameObject.Bonus bonus, Tank tank, int dir) {
+    public boolean bonusTaken(Bonus bonus, Tank tank, int dir) {
         ImageView tankView = tank.getView();
         ImageView bonusView = bonus.getView();
 
@@ -398,15 +437,22 @@ public class Map {
         return gameObjects;
     }
 
-    public ArrayList<Tank.Bot> getBots() {
+    public ArrayList<Bot> getBots() {
         return bots;
     }
 
-    public ArrayList<GameObject.Bullet> getBullets() {
+    public ArrayList<Bullet> getBullets() {
         return bullets;
     }
     public Stage getMapStage() {
         return mapStage;
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
 }

@@ -5,6 +5,7 @@ import GameObject.MapPackage.ObstaclesObjects.Brick;
 import GameObject.MapPackage.ObstaclesObjects.Destructible;
 import GameObject.MapPackage.ObstaclesObjects.IronWall;
 import GameObject.MapPackage.ObstaclesObjects.Undestructible;
+import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
 import GameObject.TankObjects.Tank;
 
@@ -28,7 +29,7 @@ public class CollisionManager {
     }
 
     public void updateRemovals() {
-        tanks.removeIf(Tank::isAlive);
+        tanks.removeIf(Tank::isDead);
         bullets.removeIf(Bullet::isCrushed);
         gameObjects.removeIf(GameObject::isDestructed);
     }
@@ -38,6 +39,10 @@ public class CollisionManager {
             for (GameObject gameObject : gameObjects) {
                 if (bullet.getView().getBoundsInParent().intersects(gameObject.getView().getBoundsInParent())) {
                     if( gameObject instanceof Tank){
+                        if ( gameObject instanceof Bot &&
+                                bullet.getId() == 99){
+                            continue;
+                        }
                         damageTank( (Tank)gameObject);
                         bullet.setCrushed( true);
                     }

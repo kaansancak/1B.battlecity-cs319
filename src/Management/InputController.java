@@ -1,7 +1,7 @@
 package Management;
 
+import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Player;
-import UserInterface.MenuPackage.PauseMenu;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -13,21 +13,22 @@ import javafx.stage.Stage;
  */
 public class InputController implements EventHandler<KeyEvent> {
 
-    private Player player;
+    private Player player[];
     private Scene mapScene;
     private Map map;
-    private PauseMenu pauseMenu;
 
 
-    public InputController(MapManager mapManager, Player player){
+    public InputController(MapManager mapManager, Player[] player){
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
-        pauseMenu = new PauseMenu(mapManager);
         mapScene.setOnKeyPressed( this);
         mapScene.setOnKeyReleased( event -> {
             if(event.getCode() == KeyCode.SPACE){
-                map.fire(player); //player 0 direction 0
+                map.fire(player[0]); //player 0 direction 0
+            }
+            if(event.getCode() == KeyCode.SHIFT && player.length == 2){
+                map.fire(player[1]); //player 0 direction 0
             }
         });
     }
@@ -35,21 +36,35 @@ public class InputController implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent e) {
         if(e.getCode() == KeyCode.D){
-            movePlayer(player,0); //player 0 direction 0
+            movePlayer(player[0],0); //player 0 direction 0
         }
         else if(e.getCode() == KeyCode.A){
-            movePlayer(player,1); //player 0 direction 0
+            movePlayer(player[0],1); //player 0 direction 0
         }
         else if(e.getCode() == KeyCode.S){
-            movePlayer(player,2); //player 0 direction 0
+            movePlayer(player[0],2); //player 0 direction 0
         }
         else if(e.getCode() == KeyCode.W){
-            movePlayer(player,3); //player 0 direction 0
+            movePlayer(player[0],3); //player 0 direction 0
         }
         else if(e.getCode() == KeyCode.P) {
-            pauseMenu.showPauseMenu();
+            map.setPaused( true);
         }
+        if(player.length == 2){
+            if(e.getCode() == KeyCode.RIGHT){
+                movePlayer(player[1],0); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.LEFT){
+                movePlayer(player[1],1); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.DOWN){
+                movePlayer(player[1],2); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.UP){
+                movePlayer(player[1],3); //player 0 direction 0
+            }
 
+        }
     }
 
     public Stage getMapStage() {
@@ -58,8 +73,9 @@ public class InputController implements EventHandler<KeyEvent> {
 
     private void movePlayer(Player player, int dir){
         int oldDir = player.getDir();
-        player.move(dir);
         map.tryNextMove( player, oldDir);
+        player.move(dir);
+
     }
 
 }

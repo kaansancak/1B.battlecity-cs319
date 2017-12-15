@@ -73,7 +73,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
                 player.seek(Duration.ZERO);
             }
         });
-      //  player.play();
+        //  player.play();
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");
@@ -110,7 +110,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
 
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         menuScene.getStylesheets().add(style);
         menuWindow.setScene(menuScene);
         menuWindow.show();
@@ -191,7 +191,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void exitBattleCity() {
         ConfirmBox confirmBox = new ConfirmBox();
-        boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?");
+        boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?",
+                250, 250);
         if(answer)
             menuWindow.close();
     }
@@ -331,9 +332,9 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             }
         });
         //Set the titles of UserInterface.MenuPackage.Menu Buttons
-        menuButtons[0].setText("Single GameObject.GameObject.TankObjects.Player");
+        menuButtons[0].setText("Player");
         menuButtons[1].setText("Multiplayer");
-        menuButtons[2].setText("UserInterface.SettingsPackage.Settings");
+        menuButtons[2].setText("Settings");
         menuButtons[3].setText("How to Play");
         menuButtons[4].setText("Credits");
         menuButtons[5].setText("Exit");
@@ -347,4 +348,3 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         this.playerCount = playerCount;
     }
 }
- 
