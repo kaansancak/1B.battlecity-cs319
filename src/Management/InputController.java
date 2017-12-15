@@ -2,7 +2,6 @@ package Management;
 
 import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Player;
-import UserInterface.MenuPackage.PauseMenu;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -17,14 +16,12 @@ public class InputController implements EventHandler<KeyEvent> {
     private Player player[];
     private Scene mapScene;
     private Map map;
-    private PauseMenu pauseMenu;
 
 
     public InputController(MapManager mapManager, Player[] player){
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
-        pauseMenu = new PauseMenu(mapManager);
         mapScene.setOnKeyPressed( this);
         mapScene.setOnKeyReleased( event -> {
             if(event.getCode() == KeyCode.SPACE){
@@ -51,7 +48,7 @@ public class InputController implements EventHandler<KeyEvent> {
             movePlayer(player[0],3); //player 0 direction 0
         }
         else if(e.getCode() == KeyCode.P) {
-            pauseMenu.showPauseMenu();
+            map.setPaused( true);
         }
         if(player.length == 2){
             if(e.getCode() == KeyCode.RIGHT){

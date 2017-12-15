@@ -7,4 +7,6 @@ public enum GameStatus{
     GAME_RUNNING,
     GAME_OVER,
     LEVEL_FINISHED,
+    GAME_PAUSED,
+    GAME_PAUSE_RETURN
 }
