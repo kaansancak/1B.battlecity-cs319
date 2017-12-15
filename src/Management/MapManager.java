@@ -53,8 +53,8 @@ public class MapManager {
         startsLevel();
         start(stage);
         gameLoop();
-        inputController = new InputController( this, map.getPlayer(0));
         pauseMenu = new PauseMenu(this);
+        inputController = new InputController( this, map.getPlayers());
     }
 
     public void start(Stage stage) throws Exception{
