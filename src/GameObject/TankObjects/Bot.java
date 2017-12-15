@@ -18,14 +18,22 @@ public class Bot extends Tank {
         this.yLoc = yLoc;
         initImages();
         this.dir = 1;
+        id = 99;
         view = new ImageView( rightImage);
-        view.setFitWidth( 23);
-        view.setFitHeight( 23);
+        view.setFitWidth( 28);
+        view.setFitHeight( 28);
         super.setVelocity( new Point2D.Double(2, 2));
         health = 1;
 
     }
 
+    public void setRandomDir(){
+        int new_dir = dir;
+        do{
+            new_dir = rand.nextInt(4);
+        }while( new_dir == dir);
+        dir = new_dir;
+    }
     public boolean isStuck(){
         return false;
     }
@@ -38,7 +46,11 @@ public class Bot extends Tank {
             super.move( dir );
         }
         else if( !changeDirStatus) {
-            dir = (int)(Math.random() * 4);
+            int random_dir = dir;
+            do{
+                random_dir = rand.nextInt(4);
+            }while( random_dir != dir);
+            dir = random_dir;
         }
     }
     private void getRandomDir(){
@@ -47,10 +59,10 @@ public class Bot extends Tank {
 
     @Override
     protected void initImages() {
-        super.setRightImage( new Image(Paths.get("."+"/MediaFiles/enemy_right.png").toUri().toString()));
-        super.setLeftImage( new Image(Paths.get("."+"/MediaFiles/resources/enemy_left.png").toUri().toString()));
-        super.setUpImage( new Image(Paths.get("."+"/MediaFiles/resources/enemy_up.png").toUri().toString()));
-        super.setDownImage( new Image(Paths.get("."+"/MediaFiles/resources/enemy_down.png").toUri().toString()));
+        super.setRightImage( new Image(Paths.get("./MediaFiles/enemy_right.png").toUri().toString()));
+        super.setLeftImage( new Image(Paths.get("./MediaFiles/enemy_left.png").toUri().toString()));
+        super.setUpImage( new Image(Paths.get("./MediaFiles/enemy_up.png").toUri().toString()));
+        super.setDownImage( new Image(Paths.get("./MediaFiles/enemy_down.png").toUri().toString()));
     }
 
     @Override

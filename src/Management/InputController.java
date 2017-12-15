@@ -99,8 +99,9 @@ public class InputController implements EventHandler<KeyEvent> {
 
     private void movePlayer(Player player, int dir){
         int oldDir = player.getDir();
-        player.move(dir);
         map.tryNextMove( player, oldDir);
+        player.move(dir);
+
     }
 
 }
