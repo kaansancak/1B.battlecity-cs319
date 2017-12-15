@@ -73,7 +73,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
                 player.seek(Duration.ZERO);
             }
         });
-      //  player.play();
+        //  player.play();
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");
@@ -191,7 +191,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
     private void exitBattleCity() {
         ConfirmBox confirmBox = new ConfirmBox();
-        boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?");
+        boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?",
+                250, 250);
         if(answer)
             menuWindow.close();
     }
@@ -347,4 +348,3 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         this.playerCount = playerCount;
     }
 }
- 

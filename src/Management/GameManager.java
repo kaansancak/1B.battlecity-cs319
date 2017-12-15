@@ -1,6 +1,7 @@
 package Management;
 
 import GameObject.TankObjects.Player;
+import UserInterface.Frame.GameViewFrame;
 import UserInterface.SettingsPackage.Settings;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ public class GameManager  {
     private final int GAME_START_LEVEL = 1;
     private final int GAME_FINAL_LEVEL = 2;
     private MapManager mapManager;
+    private GameViewFrame gameViewFrame;
     private FileManager gameManagerFileManager;
     private Settings inputController;
     private int highestScore;
@@ -34,6 +36,7 @@ public class GameManager  {
         players = new Player[player_count];
         currentScores = new int[player_count];
         gameManagerFileManager = new FileManager();
+
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
@@ -52,18 +55,28 @@ public class GameManager  {
 
     private void onUpdate() {
         if( currentGameLevel > GAME_FINAL_LEVEL){
-            timer.stop();
+            gameViewFrame = new GameViewFrame(this, 1);
+            gameViewFrame.showGameView();
             //Show game finished view
         }
         else if( mapManager.getGameStatus() == GameStatus.GAME_OVER){
-            timer.stop();
+            gameViewFrame = new GameViewFrame(this, 0);
+            gameViewFrame.showGameView();
             //Show game over view
-
         }else if( mapManager.getGameStatus() == GameStatus.LEVEL_FINISHED){
-            currentGameLevel++;
-            try{mapManager = new MapManager(player_count, currentGameLevel);} catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            /*
+            if( isContinue) {
+                currentGameLevel++;
+                try {
+                    mapManager = new MapManager(player_count, currentGameLevel);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                timer.start();
+            }else{
+
+            }*/
         }
     }
 
@@ -95,6 +108,18 @@ public class GameManager  {
     private void continueGame(){
         gamePaused = false;
         gameRunning = true;
+    }
+
+    public int getLevel(){
+        return currentGameLevel;
+    }
+
+    public void closeActiveMapManager(){
+        mapManager.getStage().close();
+    }
+
+    public void stopLoop(){
+        timer.stop();
     }
 
     private void quitGame(){}
