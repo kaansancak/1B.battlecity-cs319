@@ -144,13 +144,13 @@ public class MapManager {
     private void addLifeBonus(long time) {
         int type = 0;
         // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
-        if (time % 150 == 0)
-            map.newBonus(type);
+        if (time % 2000 == 0)
+            map.createBonus(type);
     }
     private void addSpeedBonus(long time) {
         int type = 1;
-        if( time % 200 == 0)
-            map.newBonus(type);
+        if( time % 5000 == 0)
+            map.createBonus(type);
     }
 
     public Stage getStage() {

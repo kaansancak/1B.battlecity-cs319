@@ -22,7 +22,7 @@ public class Map {
     private final int TILES = 20;
     private final int MAP_DIMENSION = 32;
     private final double SHIFT = 0.33;
-    private final int FRAME_UPPER_BOUND = 680;
+    private final int FRAME_UPPER_BOUND = 640;
     private final int FRAME_LOWER_BOUND = 0;
     private Scene mapScene;
     private Stage mapStage;
@@ -40,6 +40,7 @@ public class Map {
     private ArrayList<Bonus> bonuses;
     private ArrayList<GameObject> objectHolder;
     private ArrayList<Destructible> destructibles;
+    private boolean isGameOver = false;
     private int lifeBonusCount;
     private int speedBonusCount;
     private Random rand;
@@ -149,6 +150,7 @@ public class Map {
         }
         for( Player player : players){
             tanks.add(player);
+            objectHolder.add( player);
             mapPane.getChildren().addAll(player.getView());
         }
     }
@@ -158,33 +160,45 @@ public class Map {
     public void updateTanks(){
         updatePlayer();
         updateBots();
+        tanks.removeIf( Tank::isDead);
+        objectHolder.removeIf(GameObject::isDestructed);
     }
 
     private void updatePlayer(){
+        boolean isAllPlayersDead = true;
         for ( Player player : players){
-            if ( player.getHealth() >= 0)
+            if ( !player.isDead()){
                 player.draw();
+                isAllPlayersDead = false;
+            }
             else{
                 mapPane.getChildren().remove(player.getView());
+                player.setDestructed(true);
             }
+        }
+        if( isAllPlayersDead){
+            isGameOver = true;
         }
     }
 
+
     private void updateBots() {
         for ( Bot bot : bots){
-            if ( bot.getHealth() > 0)
+            if ( !bot.isDead())
                 bot.draw();
             else{
                 bot.setDestructed( true);
                 mapPane.getChildren().remove(bot.getView());
             }
         }
+        bots.removeIf(Tank::isDead);
     }
 
     //Update of Bullets
     public void updateBullets(){
         for( Bullet bullet : bullets) {
             if (bullet.isCrushed()) {
+                bullet.setDestructed(true);
                 mapPane.getChildren().remove(bullet.getView());
             } else {
                 bullet.move();
@@ -346,8 +360,8 @@ public class Map {
                             tank.setyLoc( gameObject.getyLoc() + gameObject.getView().getFitHeight()  +SHIFT);
                             break;
                     }
-                    if ( gameObject instanceof Bot)
-                        tank.setDir( rand.nextInt(4));
+                    /*if ( gameObject instanceof Bot)
+                        tank.setDir( rand.nextInt(4));*/
                     return false;
                 }
             }
@@ -415,6 +429,9 @@ public class Map {
 
     public ArrayList<Bot> getBots() {
         return bots;
+    }
+    public boolean isGameOver() {
+        return isGameOver;
     }
 
     public ArrayList<Bullet> getBullets() {
