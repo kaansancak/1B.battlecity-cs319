@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -149,13 +150,6 @@ public class Map {
             objectHolder.add( player);
             mapPane.getChildren().addAll(player.getView());
         }
-        ArrayList<String> a = new ArrayList<>();
-        a.add("D");
-        a.add("A");
-        a.add("W");
-        a.add("S");
-        a.add(" ");
-        players[0].setController(a);
     }
 
     //Update Methods
@@ -215,8 +209,12 @@ public class Map {
     //Update Methods
     public void updateDestructibles() {
         for( Destructible destructible: destructibles) {
-            if (destructible.isDestructed())
+            if (destructible.isDestructed()) {
                 mapPane.getChildren().remove(destructible.getView());
+                if(destructible instanceof Statue){
+                    isGameOver = true;
+                }
+            }
             else
                 destructible.draw();
         }
@@ -310,6 +308,12 @@ public class Map {
                         objectHolder.add( brick);
                         destructibles.add( brick);
                         brick.draw();
+                    }
+                    else if (obstaclesMap[i][j] == 7) { // Statue
+                        Statue statue = new Statue(cordinate_x,cordinate_y);
+                        objectHolder.add( statue);
+                        destructibles.add( statue);
+                        statue.draw();
                     }
                 }
             }
