@@ -1,13 +1,12 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MapManager {
 
@@ -26,6 +25,7 @@ public class MapManager {
     private ArrayList<Bot> bots;
     private InputController inputController;
     private boolean paused = false;
+    private Random rand = new Random();
     private Text text;
 
 
@@ -38,7 +38,10 @@ public class MapManager {
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
         map = new Map(playerCount, level, obstaclesMap);
-        text = new Text("Remaining Bots: " + map.getRemainingBots() + "\tLevel: " + level + "\nRemaining Health: " + map.getPlayer(0).health + "\tScore: (dir?)" + map.getPlayer(0).dir);
+        text = new Text("Remaining Bots: " + map.getRemainingBots()
+                + "\tLevel: " + level + "\nRemaining Health: "
+                + map.getPlayer(0).health + "\tScore: (dir?)"
+                + map.getPlayer(0).dir);
         gameStatus = true;
         mapFinished = false;
         startsLevel();
@@ -87,7 +90,9 @@ public class MapManager {
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
-        text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " + this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).health + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).dir);
+        text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
+                this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).health
+                + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).dir);
     }
 
     public void updateAllObjects(){
@@ -98,14 +103,21 @@ public class MapManager {
     }
 
     public void handleBots(){
+        boolean changeDirStatus = false;
         for( Bot bot: map.getBots()){
-            bot.runBot( map.tryNextMove(bot,bot.getDir()));
+            int prev_dir = bot.getDir();
+            bot.runBot( changeDirStatus);
+            changeDirStatus = map.tryNextMove( bot, prev_dir)
+                    && map.checkBoundaries(bot);
+           // if( !changeDirStatus)
+            //bot.setDir( (prev_dir + 1) /4 );
+            //System.out.print( prev_dir);
         }
 
     }
 
     private void addBot( long time){
-        if( time % 100 == 0 && map.getRemainingBots() > 0){
+        if( Math.random() < 0.008 && map.getRemainingBots() > 0){
             map.spawnBot();
         }
     }

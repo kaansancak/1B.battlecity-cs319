@@ -15,7 +15,7 @@ public class Bot extends Tank {
         this.xLoc = xLoc;
         this.yLoc = yLoc;
         initImages();
-        dir = 0;
+        this.dir = 1;
         view = new ImageView( rightImage);
         view.setFitWidth( 23);
         view.setFitHeight( 23);
@@ -32,10 +32,11 @@ public class Bot extends Tank {
     in the design report.
      */
     public void runBot( boolean changeDirStatus){
-        if( changeDirStatus)
-            super.move( dir);
+        if( changeDirStatus) {
+            super.move( dir );
+        }
         else if( !changeDirStatus) {
-            getRandomDir();
+            dir = (int)(Math.random() * 4);
         }
     }
     private void getRandomDir(){

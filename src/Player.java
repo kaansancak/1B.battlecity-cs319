@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Player extends Tank {
 
     // variables
+    private final double PLAYER_NORMAL_VELOCITY = 3.0;
     private int score;
     private int controllerId;
 
@@ -32,7 +33,7 @@ public class Player extends Tank {
         view = new ImageView( rightImage);
         view.setFitWidth( 23);
         view.setFitHeight( 23);
-        super.setVelocity( new Point2D.Double(2, 2));
+        super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
         super.setId(id);
         this.controllerId = controllerId;
     }
