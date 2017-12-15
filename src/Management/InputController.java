@@ -27,7 +27,7 @@ public class InputController implements EventHandler<KeyEvent> {
             if(event.getCode() == KeyCode.SPACE){
                 map.fire(player[0]); //player 0 direction 0
             }
-            if(event.getCode() == KeyCode.SHIFT && player.length == 2){
+            if(player.length == 2 && (event.getCode() == KeyCode.SHIFT)){
                 map.fire(player[1]); //player 0 direction 0
             }
         });
