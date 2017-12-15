@@ -205,26 +205,6 @@ public class MapManager {
         return obstaclesMap;
     }
 
-    private void manageObjects(){
-        for(int i = 0; i < map.getBullets().size() ; i++){
-                collisionManager.checkCollision();
-            }
-    }
-
-    private void updateMapObjects(){
-
-    }
-
-    private void updateMap(){
-        mapLevel++;
-        map = new Map(playerCount, mapLevel, readObstaclesMap(mapLevel));
-        startsLevel();
-        stage.setScene(new Scene(map.getMapPane()));
-        System.out.println("updated: " + mapLevel);
-        inputController = new InputController( this, map.getPlayers());
-        map.getMapPane().getChildren().addAll(text);
-        gameLoop();
-    }
     private void startsLevel(){
         readObstaclesMap(mapLevel);
         collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
@@ -256,6 +236,7 @@ public class MapManager {
     public void setGameStatus( GameStatus gameStatus){
         this.gameStatus = gameStatus;
     }
+
     // getter and setters
     public Map getMap() {
         return map;

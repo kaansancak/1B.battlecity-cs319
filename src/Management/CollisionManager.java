@@ -1,10 +1,7 @@
 package Management;
 
 import GameObject.GameObject;
-import GameObject.MapPackage.ObstaclesObjects.Brick;
-import GameObject.MapPackage.ObstaclesObjects.Destructible;
-import GameObject.MapPackage.ObstaclesObjects.IronWall;
-import GameObject.MapPackage.ObstaclesObjects.Undestructible;
+import GameObject.MapPackage.ObstaclesObjects.*;
 import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
 import GameObject.TankObjects.Tank;
@@ -99,7 +96,9 @@ public class CollisionManager {
             ((Tank) gameObject2).getDamaged();
             //If destructible object damage
         } else if (gameObject2 instanceof Destructible) {
-            if (gameObject2.isDamaged() == false) {
+            if( gameObject2 instanceof Statue){
+                ((Statue) gameObject2).getDamaged();
+            }else if (gameObject2.isDamaged() == false) {
                 ((Destructible) gameObject2).getDamaged(dir);
                 (gameObject2).setDamaged(true);
             }else{

@@ -4,10 +4,6 @@ import GameObject.MapPackage.Map;
 import Management.GameManager;
 import UserInterface.MenuPackage.Menu;
 import javafx.event.EventHandler;
-import Management.MapManager;
-import UserInterface.MenuPackage.Menu;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +15,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class GameViewFrame {
 

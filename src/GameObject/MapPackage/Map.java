@@ -14,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.Random;
 

@@ -8,16 +8,24 @@ import java.nio.file.Paths;
 public class Statue extends Destructible {
 
     private final String IMG_DIR = "./MediaFiles/image14.png";
-
     //Constructor
     public Statue( double xLoc, double yLoc){
+        health = 1000;
         this.xLoc = xLoc;
         this.yLoc = yLoc;
         view = new ImageView(new Image(Paths.get(IMG_DIR).toUri().toString()));
-        setHealth(1000);
         view.setFitWidth(32);
         view.setFitHeight(32);
     }
+
+    public boolean isDestructed(){
+        return health <= 0;
+    }
+
+    public void getDamaged(){
+        health = health - 200;
+    }
+
     @Override
     public boolean isPassableByTanks() {
         return false;

@@ -8,7 +8,7 @@ public abstract class Destructible extends Obstacles {
     private static final int INITIAL_HEALTH = 600; //600 wil be changed
     //Variables
     private final int BULLET_DAMAGE = 200;
-    private int health;
+    protected int health;
 
     //Methods
 
