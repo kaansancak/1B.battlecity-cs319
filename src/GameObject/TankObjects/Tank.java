@@ -18,10 +18,10 @@ public abstract class Tank extends GameObject {
     protected int health;
     protected int speed;
     protected int oldSpeed;
+    protected int id;
     //Variables
     private int BULLET_DAMAGE = 200;
     private int type;
-    private int id;
 
     @Override
     public void draw() {
@@ -72,13 +72,13 @@ public abstract class Tank extends GameObject {
     private double getBullet_yLoc() {
         switch ( this.dir){
             case 0:
-                return yLoc + view.getFitHeight() / 4;
+                return yLoc + view.getFitHeight()/2 - 5;
             case 1:
-                return yLoc + view.getFitHeight() / 4;
+                return yLoc + view.getFitHeight()/2 - 5;
             case 2:
-                return yLoc + view.getFitHeight();
+                return yLoc + view.getFitHeight() + 1;
             case 3:
-                return yLoc - BULLET_SHIFT;
+                return yLoc - 11;
             default:
                 break;
         }
@@ -88,21 +88,21 @@ public abstract class Tank extends GameObject {
     private double getBullet_xLoc() {
         switch ( this.dir){
             case 0:
-                return xLoc + view.getFitWidth();
+                return xLoc + view.getFitWidth() + 1;
             case 1:
-                return xLoc - BULLET_SHIFT;
+                return xLoc - 11;
             case 2:
-                return xLoc + view.getFitWidth()/4;
+                return xLoc + view.getFitWidth()/2 - 5;
             case 3:
-                return xLoc + view.getFitWidth()/4;
+                return xLoc + view.getFitWidth()/2 - 5;
             default:
                 break;
         }
         return xLoc;
     }
 
-    public boolean isAlive(){
-        return ( health >= 0);
+    public boolean isDead(){
+        return ( health <= 0);
     }
 
     /* This method must be modified

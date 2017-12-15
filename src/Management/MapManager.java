@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapManager {
-
     private final int TILES = 20;
     Stage stage = new Stage();
     AnimationTimer timer;
     private int tileX, tileY;
-    private boolean gameStatus;
     private int playerCount;
     private int mapLevel;
     private Map map;
@@ -29,6 +27,7 @@ public class MapManager {
     private ArrayList<Bot> bots;
     private InputController inputController;
     private boolean paused = false;
+    private GameStatus gameStatus;
     private Random rand = new Random();
     private Text text;
 
@@ -46,7 +45,7 @@ public class MapManager {
                 + "\tLevel: " + level + "\nRemaining Health: "
                 + map.getPlayer(0).getHealth() + "\tScore: (dir?)"
                 + map.getPlayer(0).getHealth());
-        gameStatus = true;
+        gameStatus = GameStatus.GAME_RUNNING;
         mapFinished = false;
         startsLevel();
         start(stage);
@@ -64,7 +63,7 @@ public class MapManager {
                 @Override
                 public void handle(long now) {
                     onUpdate();
-                    addBot(now);
+                    addBot();
                     addLifeBonus(now);
                     addSpeedBonus(now);
                 }
@@ -94,6 +93,19 @@ public class MapManager {
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
+        updateStatText();
+        if( map.isGameOver()){
+            timer.stop();
+            gameStatus = GameStatus.GAME_OVER;
+            stage.close();
+        }
+    }
+
+    private void onGameOver(){
+
+    }
+
+    private void updateStatText(){
         text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
                 this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).getHealth()
                 + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
@@ -110,18 +122,21 @@ public class MapManager {
         boolean changeDirStatus = false;
         for( Bot bot: map.getBots()){
             int prev_dir = bot.getDir();
-            bot.runBot( changeDirStatus);
-            changeDirStatus = map.tryNextMove( bot, prev_dir)
-                    && map.checkBoundaries(bot);
-           // if( !changeDirStatus)
-            //bot.setDir( (prev_dir + 1) /4 );
-            //System.out.print( prev_dir);
+            changeDirStatus = map.tryNextMove( bot, prev_dir);
+            if( changeDirStatus){
+                if( Math.random() < 0.008)
+                    bot.setRandomDir();
+                if( Math.random() < 0.005)
+                    map.fire(bot);
+                bot.move( bot.getDir());
+            }else{
+                bot.setRandomDir();
+            }
         }
-
     }
 
-    private void addBot( long time){
-        if( Math.random() < 0.008 && map.getRemainingBots() > 0){
+    private void addBot(){
+        if( Math.random() < 0.002 && map.getRemainingBots() > 0){
             map.spawnBot();
         }
     }
@@ -196,6 +211,10 @@ public class MapManager {
     }
     private void finishLevel(){
         map.finishMap();
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 
     // getter and setters

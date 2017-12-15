@@ -2,6 +2,7 @@ package Management;
 
 import GameObject.TankObjects.Player;
 import UserInterface.SettingsPackage.Settings;
+import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -23,21 +24,53 @@ public class GameManager  {
     private int gameCompletedLevels;
     private Button pauseButton;
     private Stage gameManager;
+    private int player_count;
+    private AnimationTimer timer;
 
     GameManager(){}
 
     public GameManager(int player_count){
+        this.player_count = player_count;
         players = new Player[player_count];
         currentScores = new int[player_count];
         gameManagerFileManager = new FileManager();
         gameRunning = true;
         gamePaused = false;
         currentGameLevel = GAME_START_LEVEL;
+        startMapManager();
+        gameFinished = false;
+        gameCompletedLevels = 0;
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                onUpdate();
+            }
+        };
+
+        timer.start();
+    }
+
+    private void onUpdate() {
+        if( currentGameLevel > GAME_FINAL_LEVEL){
+            timer.stop();
+            //Show game finished view
+        }
+        else if( mapManager.getGameStatus() == GameStatus.GAME_OVER){
+            timer.stop();
+            //Show game over view
+
+        }else if( mapManager.getGameStatus() == GameStatus.LEVEL_FINISHED){
+            currentGameLevel++;
+            try{mapManager = new MapManager(player_count, currentGameLevel);} catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void startMapManager() {
         try{mapManager = new MapManager(player_count, currentGameLevel);} catch (Exception e) {
             e.printStackTrace();
         }
-        gameFinished = false;
-        gameCompletedLevels = 0;
     }
 
     public void start (Stage stage) throws Exception{
