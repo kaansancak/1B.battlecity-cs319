@@ -205,16 +205,16 @@ public class MapManager {
 
     private void updateMap(){
         mapLevel++;
-        System.out.println("new level " + mapLevel);
         map = new Map(playerCount, mapLevel, readObstaclesMap(mapLevel));
         startsLevel();
+        stage.setScene(new Scene(map.getMapPane()));
+        System.out.println("updated: " + mapLevel);
+
     }
     private void startsLevel(){
-        System.out.println("Starting level " + mapLevel);
         readObstaclesMap(mapLevel);
         collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
         map.addObjects(map.getGameObjectsArray());
-        System.out.println("Started");
     }
     private boolean stopGameLoop(){
         return isMapFinished();
