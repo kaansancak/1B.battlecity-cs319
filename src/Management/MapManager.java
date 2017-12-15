@@ -123,10 +123,19 @@ public class MapManager {
         timer.start();
     }
 
-    private void updateStatText(){
-        text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).getHealth()
-                + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
+    private void updateStatText() {
+        if (map.getPlayers().length == 1) {
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
+                    this.mapLevel + "\nPlayer 1 Remaining Health: " + map.getPlayer(0).getHealth()
+                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
+        } else {
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
+                    this.mapLevel + "\nPlayer 1 Remaining Health: " + map.getPlayer(0).getHealth()
+                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir()
+                    + "\nPlayer 2 Remaining Health: " + map.getPlayer(1).getHealth()
+                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(1).getDir());
+
+        }
     }
 
     public void updateAllObjects(){
@@ -209,6 +218,7 @@ public class MapManager {
         stage.setScene(new Scene(map.getMapPane()));
         System.out.println("updated: " + mapLevel);
         inputController = new InputController( this, map.getPlayers());
+        map.getMapPane().getChildren().addAll(text);
         gameLoop();
     }
     private void startsLevel(){
