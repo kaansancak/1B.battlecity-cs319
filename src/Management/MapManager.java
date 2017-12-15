@@ -2,6 +2,7 @@ package Management;
 
 import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Bot;
+import UserInterface.MenuPackage.PauseMenu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -29,6 +30,8 @@ public class MapManager {
     private boolean paused = false;
     private GameStatus gameStatus;
     private Random rand = new Random();
+    private PauseMenu pauseMenu;
+    private boolean pauseCheck = false;
     private Text text;
 
 
@@ -39,7 +42,7 @@ public class MapManager {
         bots = new ArrayList<>();
         this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
-        readObstaclesMap();
+        readObstaclesMap(level);
         map = new Map(playerCount, level, obstaclesMap);
         text = new Text("Remaining Bots: " + map.getRemainingBots()
                 + "\tLevel: " + level + "\nRemaining Health: "
@@ -50,7 +53,8 @@ public class MapManager {
         startsLevel();
         start(stage);
         gameLoop();
-        inputController = new InputController( this, map.getPlayer(0));
+        pauseMenu = new PauseMenu(this);
+        inputController = new InputController( this, map.getPlayers());
     }
 
     public void start(Stage stage) throws Exception{
@@ -81,28 +85,43 @@ public class MapManager {
         of bots so that it could not move at that moment
         and the bonus releases should stop
      */
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-        if( paused == true)
-            timer.stop();
-        timer.start();
-    }
-
     private void onUpdate(){
         collisionManager.checkCollision();
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
         updateStatText();
+        if( map.isPaused()){
+            System.out.println( map.isPaused());
+            timer.stop();
+            if( !pauseCheck) {
+                pauseMenu.showPauseMenu();
+                pauseCheck = true;
+                gameStatus = GameStatus.GAME_PAUSED;
+            }
+            if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
+                gameStatus = GameStatus.GAME_RUNNING;
+                pauseCheck = false;
+            }
+
+        }
         if( map.isGameOver()){
             timer.stop();
             gameStatus = GameStatus.GAME_OVER;
             stage.close();
         }
+        if(map.isMapFinished()){
+            updateMap();
+        }
     }
 
     private void onGameOver(){
 
+    }
+
+    public void startLoop(){
+        map.setPaused(false);
+        timer.start();
     }
 
     private void updateStatText(){
@@ -165,9 +184,9 @@ public class MapManager {
        // obstacle id: 0 = Ground, 1 = GameObject.GameObject.MapPackage.ObstaclesObjects.Brick, 2 = GameObject.GameObject.MapPackage.ObstaclesObjects.Bush, 3 = GameObject.GameObject.MapPackage.ObstaclesObjects.IronWall,4 = GameObject.MapPackage.ObstaclesObjects.Water
     */
 
-    private int[][] readObstaclesMap(){
+    private int[][] readObstaclesMap(int level){
         try {
-            obstaclesMap = mapManagerFileManager.getMapLevelData(1);
+            obstaclesMap = mapManagerFileManager.getMapLevelData(level);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -186,13 +205,16 @@ public class MapManager {
 
     private void updateMap(){
         mapLevel++;
-        map = new Map(playerCount, mapLevel, readObstaclesMap());
+        System.out.println("new level " + mapLevel);
+        map = new Map(playerCount, mapLevel, readObstaclesMap(mapLevel));
         startsLevel();
     }
     private void startsLevel(){
-        readObstaclesMap();
+        System.out.println("Starting level " + mapLevel);
+        readObstaclesMap(mapLevel);
         collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
         map.addObjects(map.getGameObjectsArray());
+        System.out.println("Started");
     }
     private boolean stopGameLoop(){
         return isMapFinished();
@@ -217,6 +239,9 @@ public class MapManager {
         return gameStatus;
     }
 
+    public void setGameStatus( GameStatus gameStatus){
+        this.gameStatus = gameStatus;
+    }
     // getter and setters
     public Map getMap() {
         return map;
