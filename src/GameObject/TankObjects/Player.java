@@ -31,7 +31,8 @@ public class Player extends Tank {
             this.xLoc = 5*28;
             this.yLoc = 5*28;
         }
-        health = 200;
+        health = 600;
+        score = 0;
         initImages();
         view = new ImageView( rightImage);
         view.setFitWidth( 28);
@@ -71,8 +72,16 @@ public class Player extends Tank {
             PLAYER_NORMAL_VELOCITY = oldSpeed;
         }
     }
-    private void incrementScore() {
-        score++;
+    public void incrementScore() {
+        score += 100;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     private ArrayList<String> getController() {
