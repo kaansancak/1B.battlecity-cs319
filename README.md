@@ -16,7 +16,7 @@ The game is going to be implemented by using JAVAFX( can be changed in future)
 Description of the Battlecity
 
 General:
-It is a multiplayer game, where each user has control of their one tank. Player's objection is surviving until all other tanks are destroyed
+It is a multiplayer game, where each user has control of their one tank. GameObject.GameObject.TankObjects.Player's objection is surviving until all other tanks are destroyed
 
 Maps:
 The edges (outer boundaries) of the maps are built by unbreakable square objects. In addition, there might be breakable squares inside the map.
