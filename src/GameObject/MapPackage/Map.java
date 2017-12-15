@@ -142,7 +142,7 @@ public class Map {
 
     private void initPlayers(){
         for(int i = 0; i < playerCount; i++){
-            players[i] = new Player(2, 2);
+            players[i] = new Player(i, i);
         }
         for( Player player : players){
             tanks.add(player);
@@ -242,6 +242,10 @@ public class Map {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Player[] getPlayers(){
+        return players;
     }
 
     public Pane getMapPane() {
