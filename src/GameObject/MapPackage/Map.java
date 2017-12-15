@@ -221,30 +221,26 @@ public class Map {
     }
 
     public void updateBonuses() {
-        for( Bonus bonus : bonuses) {
-            for( Player player: players){
-                if( player.getView().getBoundsInParent().intersects(
+        Player temp = new Player(3, 3);
+        for (Bonus bonus : bonuses) {
+            for (Player player : players) {
+                if (player.getView().getBoundsInParent().intersects(
                         bonus.getView().getBoundsInParent()
-                )){
-                    //Write bonus taken codes
+                )) {
+                    temp = player;
                     bonus.setTaken(true);
                 }
             }
-            if( bonus.isTaken() && bonus instanceof LifeBonus) {
+
+            if (bonus.isTaken() && bonus instanceof LifeBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
-                for( Player player: players) {
-                    player.incrementHealth();
-                }
-            }
-            else if( bonus.isTaken() && bonus instanceof SpeedBonus) {
+                temp.incrementHealth();
+            } else if (bonus.isTaken() && bonus instanceof SpeedBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
-                for( Player player: players) {
-                    player.incrementSpeed();
-                }
-            }
-            else
+                temp.incrementSpeed();
+            } else
                 bonus.draw();
         }
         bonuses.removeIf(Bonus::isTaken);
@@ -410,20 +406,6 @@ public class Map {
     }
 
 
-
-    public boolean bonusTaken(Bonus bonus, Tank tank, int dir) {
-        ImageView tankView = tank.getView();
-        ImageView bonusView = bonus.getView();
-
-        for( GameObject gameObject : objectHolder) {
-            if( tankView.getBoundsInParent().intersects( bonusView.getBoundsInParent())) {
-                bonusView.setVisible(false);
-                bonus.setTaken(true);
-            }
-        }
-        return true;
-    }
-
     // getters and setters
 
     public int getRemainingBots() {
@@ -465,5 +447,12 @@ public class Map {
 
     public void setPaused(boolean paused) {
         isPaused = paused;
+    }
+
+    public int[] getScores() {
+        int[] scores = new int[2];
+        scores[0] = getPlayer(0).getScore();
+        scores[1] = getPlayer(1).getScore();
+        return scores;
     }
 }

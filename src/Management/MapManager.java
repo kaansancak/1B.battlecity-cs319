@@ -127,19 +127,18 @@ public class MapManager {
         timer.start();
     }
 
-    private void updateStatText() {
-        if (map.getPlayers().length == 1) {
-            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                    this.mapLevel + "\nPlayer 1 Remaining Health: " + map.getPlayer(0).getHealth()
-                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
-        } else {
-            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                    this.mapLevel + "\nPlayer 1 Remaining Health: " + map.getPlayer(0).getHealth()
-                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir()
-                    + "\nPlayer 2 Remaining Health: " + map.getPlayer(1).getHealth()
-                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(1).getDir());
+    private void updateStatText(){
+        if( playerCount == 2)
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\tPlayer1 Health: " +
+                    map.getPlayer(0).getHealth() + "\t\t\t\t\t\tPlayer1 Score: " +
+                    map.getPlayer(0).getScore() +  "\nLevel: " + this.mapLevel
+                    + "\t\t\t\t\t\t\t\tPlayer2 Health: " + map.getPlayer(1).getHealth() + "\t\t\t\t\t\tPlayer2 Score: " +
+                    map.getPlayer(1).getScore());
+        else if( playerCount == 1)
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tPlayer1 Health: " +
+                    map.getPlayer(0).getHealth() + "\nLevel: " + this.mapLevel
+                    + "\t\t\t\t\t\t\t\t\t\tPlayer1 Score: " + map.getPlayer(0).getScore());
 
-        }
     }
 
     public void updateAllObjects(){
@@ -207,7 +206,7 @@ public class MapManager {
 
     private void startsLevel(){
         readObstaclesMap(mapLevel);
-        collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
+        collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks(), map);
         map.addObjects(map.getGameObjectsArray());
     }
     private boolean stopGameLoop(){
