@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -70,8 +71,8 @@ public class Map {
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
-        mapPane.setPrefHeight(FRAME_UPPER_BOUND);
-        botCount = 1 + 2 * level; // WOW lol
+        mapPane.setPrefHeight(FRAME_UPPER_BOUND+60);
+        botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -196,10 +197,11 @@ public class Map {
     //Update of Bullets
     public void updateBullets(){
         for( Bullet bullet : bullets) {
-            if (bullet.isCrushed()) {
+            if (bullet.isCrushed() || bullet.getyLoc() > FRAME_UPPER_BOUND) {
                 bullet.setDestructed(true);
                 mapPane.getChildren().remove(bullet.getView());
-            } else {
+            }
+            else {
                 bullet.move();
             }
         }
@@ -208,8 +210,12 @@ public class Map {
     //Update Methods
     public void updateDestructibles() {
         for( Destructible destructible: destructibles) {
-            if (destructible.isDestructed())
+            if (destructible.isDestructed()) {
                 mapPane.getChildren().remove(destructible.getView());
+                if(destructible instanceof Statue){
+                    isGameOver = true;
+                }
+            }
             else
                 destructible.draw();
         }
@@ -303,6 +309,12 @@ public class Map {
                         objectHolder.add( brick);
                         destructibles.add( brick);
                         brick.draw();
+                    }
+                    else if (obstaclesMap[i][j] == 7) { // Statue
+                        Statue statue = new Statue(cordinate_x,cordinate_y);
+                        objectHolder.add( statue);
+                        destructibles.add( statue);
+                        statue.draw();
                     }
                 }
             }
