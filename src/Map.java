@@ -288,7 +288,7 @@ public class Map {
                             tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth()+SHIFT);
                             break;
                         case 2:
-                            tank.setyLoc( gameObject.getyLoc() - tankView.getFitHeight() - SHIFT);
+                            tank.setyLoc( gameObject.getyLoc() - gameObject.getView().getFitHeight()+SHIFT);
                             break;
                         case 3:
                             tank.setyLoc( gameObject.getyLoc() + gameObject.getView().getFitHeight()  +SHIFT);
