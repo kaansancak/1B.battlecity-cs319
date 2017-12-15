@@ -25,6 +25,7 @@ public class Map {
     private final int FRAME_UPPER_BOUND = 640;
     private final int FRAME_LOWER_BOUND = 0;
     private boolean isGameOver = false;
+    private boolean isPaused = false;
     private Scene mapScene;
     private Stage mapStage;
     private int playerCount;
@@ -317,6 +318,7 @@ public class Map {
         }
     }
 
+
     public void finishMap(){
 
     }
@@ -426,4 +428,11 @@ public class Map {
         return mapStage;
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
 }

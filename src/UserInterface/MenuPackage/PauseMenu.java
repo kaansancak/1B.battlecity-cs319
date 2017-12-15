@@ -1,5 +1,6 @@
 package UserInterface.MenuPackage;
 
+import Management.GameStatus;
 import Management.MapManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -136,6 +137,8 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if( event.getSource() == returnButton) {
             pauseMenuWindow.close();
+            mapManager.setGameStatus( GameStatus.GAME_PAUSE_RETURN);
+            mapManager.startLoop();
         }
     }
 //
@@ -169,7 +172,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
 
     public void showPauseMenu() {
         pauseMenuWindow.show();
-        mapManager.setPaused(true);
     }
     public void closeSettings(){
         pauseMenuWindow.close();

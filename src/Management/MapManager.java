@@ -2,6 +2,7 @@ package Management;
 
 import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Bot;
+import UserInterface.MenuPackage.PauseMenu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -29,6 +30,8 @@ public class MapManager {
     private boolean paused = false;
     private GameStatus gameStatus;
     private Random rand = new Random();
+    private PauseMenu pauseMenu;
+    private boolean pauseCheck = false;
     private Text text;
 
 
@@ -51,6 +54,7 @@ public class MapManager {
         start(stage);
         gameLoop();
         inputController = new InputController( this, map.getPlayer(0));
+        pauseMenu = new PauseMenu(this);
     }
 
     public void start(Stage stage) throws Exception{
@@ -81,19 +85,26 @@ public class MapManager {
         of bots so that it could not move at that moment
         and the bonus releases should stop
      */
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-        if( paused == true)
-            timer.stop();
-        timer.start();
-    }
-
     private void onUpdate(){
         collisionManager.checkCollision();
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
         updateStatText();
+        if( map.isPaused()){
+            System.out.println( map.isPaused());
+            timer.stop();
+            if( !pauseCheck) {
+                pauseMenu.showPauseMenu();
+                pauseCheck = true;
+                gameStatus = GameStatus.GAME_PAUSED;
+            }
+            if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
+                gameStatus = GameStatus.GAME_RUNNING;
+                pauseCheck = false;
+            }
+
+        }
         if( map.isGameOver()){
             timer.stop();
             gameStatus = GameStatus.GAME_OVER;
@@ -103,6 +114,11 @@ public class MapManager {
 
     private void onGameOver(){
 
+    }
+
+    public void startLoop(){
+        map.setPaused(false);
+        timer.start();
     }
 
     private void updateStatText(){
@@ -217,6 +233,9 @@ public class MapManager {
         return gameStatus;
     }
 
+    public void setGameStatus( GameStatus gameStatus){
+        this.gameStatus = gameStatus;
+    }
     // getter and setters
     public Map getMap() {
         return map;
