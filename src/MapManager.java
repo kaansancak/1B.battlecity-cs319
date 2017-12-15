@@ -1,7 +1,10 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ public class MapManager {
     private ArrayList<Bot> bots;
     private InputController inputController;
     private boolean paused = false;
+    private Text text;
 
 
 
@@ -34,6 +38,7 @@ public class MapManager {
         obstaclesMap = new int[TILES][TILES];
         readObstaclesMap();
         map = new Map(playerCount, level, obstaclesMap);
+        text = new Text("Remaining Bots: " + map.getRemainingBots() + "\tLevel: " + level + "\nRemaining Health: " + map.getPlayer(0).health + "\tScore: (dir?)" + map.getPlayer(0).dir);
         gameStatus = true;
         mapFinished = false;
         startsLevel();
@@ -44,8 +49,10 @@ public class MapManager {
 
     public void start(Stage stage) throws Exception{
         this.stage = stage;
-        stage.setScene(new Scene(map.getMapPane()));
+        text.setTranslateY(660);
+        map.getMapPane().getChildren().addAll(text);
 
+        stage.setScene(new Scene(map.getMapPane()));
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
@@ -58,6 +65,11 @@ public class MapManager {
             timer.start();
 
     }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
     /*
         boolean should be send to move method
         of bots so that it could not move at that moment
@@ -69,15 +81,13 @@ public class MapManager {
             timer.stop();
         timer.start();
     }
-    public boolean isPaused() {
-        return paused;
-    }
 
     private void onUpdate(){
         collisionManager.checkCollision();
         updateAllObjects();
         collisionManager.updateRemovals();
         handleBots();
+        text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " + this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).health + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).dir);
     }
 
     public void updateAllObjects(){
@@ -87,15 +97,15 @@ public class MapManager {
         map.updateBonuses();
     }
 
-    public void handleBots(){/*
+    public void handleBots(){
         for( Bot bot: map.getBots()){
             bot.runBot( map.tryNextMove(bot,bot.getDir()));
         }
-*/
+
     }
 
     private void addBot( long time){
-        if( time % 100 == 0){
+        if( time % 100 == 0 && map.getRemainingBots() > 0){
             map.spawnBot();
         }
     }
@@ -132,11 +142,10 @@ public class MapManager {
         }
         return obstaclesMap;
     }
+
     private void manageObjects(){
         for(int i = 0; i < map.getBullets().size() ; i++){
-            {
-                    collisionManager.checkCollision();
-                }
+                collisionManager.checkCollision();
             }
     }
 
