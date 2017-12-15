@@ -39,7 +39,7 @@ public class MapManager {
         bots = new ArrayList<>();
         this.playerCount = playerCount;
         obstaclesMap = new int[TILES][TILES];
-        readObstaclesMap();
+        readObstaclesMap(level);
         map = new Map(playerCount, level, obstaclesMap);
         text = new Text("Remaining Bots: " + map.getRemainingBots()
                 + "\tLevel: " + level + "\nRemaining Health: "
@@ -98,6 +98,9 @@ public class MapManager {
             timer.stop();
             gameStatus = GameStatus.GAME_OVER;
             stage.close();
+        }
+        if(map.isMapFinished()){
+            updateMap();
         }
     }
 
@@ -165,9 +168,9 @@ public class MapManager {
        // obstacle id: 0 = Ground, 1 = GameObject.GameObject.MapPackage.ObstaclesObjects.Brick, 2 = GameObject.GameObject.MapPackage.ObstaclesObjects.Bush, 3 = GameObject.GameObject.MapPackage.ObstaclesObjects.IronWall,4 = GameObject.MapPackage.ObstaclesObjects.Water
     */
 
-    private int[][] readObstaclesMap(){
+    private int[][] readObstaclesMap(int level){
         try {
-            obstaclesMap = mapManagerFileManager.getMapLevelData(1);
+            obstaclesMap = mapManagerFileManager.getMapLevelData(level);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -186,13 +189,16 @@ public class MapManager {
 
     private void updateMap(){
         mapLevel++;
-        map = new Map(playerCount, mapLevel, readObstaclesMap());
+        System.out.println("new level " + mapLevel);
+        map = new Map(playerCount, mapLevel, readObstaclesMap(mapLevel));
         startsLevel();
     }
     private void startsLevel(){
-        readObstaclesMap();
+        System.out.println("Starting level " + mapLevel);
+        readObstaclesMap(mapLevel);
         collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
         map.addObjects(map.getGameObjectsArray());
+        System.out.println("Started");
     }
     private boolean stopGameLoop(){
         return isMapFinished();

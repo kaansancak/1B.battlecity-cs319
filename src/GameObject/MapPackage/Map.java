@@ -70,7 +70,7 @@ public class Map {
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
         mapPane.setPrefHeight(FRAME_UPPER_BOUND);
-        botCount = 10 + 2 * level; // WOW lol
+        botCount = 1 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -359,6 +359,10 @@ public class Map {
             }
         }
         return true;
+    }
+
+    public boolean isMapFinished(){
+        return (remainingBots == 0 && getAliveBots() == 0);
     }
 
     private boolean checkBoundaries( Tank tank) {
