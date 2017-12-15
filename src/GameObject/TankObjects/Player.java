@@ -51,7 +51,7 @@ public class Player extends Tank {
     }
 
     public void incrementHealth() {
-        health++;
+        health += 200;
     }
     public void incrementSpeed() {
         oldSpeed = PLAYER_NORMAL_VELOCITY;

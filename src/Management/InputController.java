@@ -2,7 +2,6 @@ package Management;
 
 import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Player;
-import UserInterface.MenuPackage.PauseMenu;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -14,83 +13,58 @@ import javafx.stage.Stage;
  */
 public class InputController implements EventHandler<KeyEvent> {
 
-    private Player player;
+    private Player player[];
     private Scene mapScene;
     private Map map;
-    private PauseMenu pauseMenu;
-    private KeyCode left;
-    private KeyCode up;
-    private KeyCode right;
-    private KeyCode down;
-    private KeyCode fire;
 
 
-    public InputController(MapManager mapManager, Player player){
+    public InputController(MapManager mapManager, Player[] player){
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
-        pauseMenu = new PauseMenu(mapManager);
         mapScene.setOnKeyPressed( this);
         mapScene.setOnKeyReleased( event -> {
-            if(event.getCode() == getFire()){
-                map.fire(player); //player 0 direction 0
+            if(event.getCode() == KeyCode.SPACE){
+                map.fire(player[0]); //player 0 direction 0
+            }
+            if(event.getCode() == KeyCode.SHIFT && player.length == 2){
+                map.fire(player[1]); //player 0 direction 0
             }
         });
-        left = KeyCode.A;
-        up = KeyCode.W;
-        right = KeyCode.D;
-        down = KeyCode.S;
-        fire = KeyCode.SPACE;
     }
 
     @Override
     public void handle(KeyEvent e) {
-        if(e.getCode() == getRight()){
-            movePlayer(player,0); //player 0 direction 0
+        if(e.getCode() == KeyCode.D){
+            movePlayer(player[0],0); //player 0 direction 0
         }
-        else if(e.getCode() == getLeft()){
-            movePlayer(player,1); //player 0 direction 0
+        else if(e.getCode() == KeyCode.A){
+            movePlayer(player[0],1); //player 0 direction 0
         }
-        else if(e.getCode() == getDown()){
-            movePlayer(player,2); //player 0 direction 0
+        else if(e.getCode() == KeyCode.S){
+            movePlayer(player[0],2); //player 0 direction 0
         }
-        else if(e.getCode() == getUp()){
-            movePlayer(player,3); //player 0 direction 0
+        else if(e.getCode() == KeyCode.W){
+            movePlayer(player[0],3); //player 0 direction 0
         }
         else if(e.getCode() == KeyCode.P) {
-            pauseMenu.showPauseMenu();
+            map.setPaused( true);
         }
-    }
+        if(player.length == 2){
+            if(e.getCode() == KeyCode.RIGHT){
+                movePlayer(player[1],0); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.LEFT){
+                movePlayer(player[1],1); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.DOWN){
+                movePlayer(player[1],2); //player 0 direction 0
+            }
+            else if(e.getCode() == KeyCode.UP){
+                movePlayer(player[1],3); //player 0 direction 0
+            }
 
-    public void setLeft( KeyCode left) {
-        this.left = left;
-    }
-    public void setUp( KeyCode up) {
-        this.up = up;
-    }
-    public void setRight( KeyCode right) {
-        this.right = right;
-    }
-    public void setDown( KeyCode down) {
-        this.down = down;
-    }
-    public void setFire( KeyCode fire) {
-        this.fire = fire;
-    }
-    public KeyCode getLeft() {
-        return left;
-    }
-    public KeyCode getUp() {
-        return up;
-    }
-    public KeyCode getRight() {
-        return right;
-    }
-    public KeyCode getDown() {
-        return down;
-    }
-    public KeyCode getFire() {
-        return fire;
+        }
     }
 
     public Stage getMapStage() {

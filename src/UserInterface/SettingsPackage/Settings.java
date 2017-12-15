@@ -339,7 +339,7 @@ public class Settings implements EventHandler<ActionEvent> {
     }
     private void changeKeyList( String newKeyList, int type){
 
-        if( type == 0) {
+        /*if( type == 0) {
             if( newKeyList.charAt(0) == '4') {
                 controller.setLeft(KeyCode.NUMPAD4);
                 controller.setUp(KeyCode.NUMPAD8);
@@ -370,7 +370,7 @@ public class Settings implements EventHandler<ActionEvent> {
                 controller.setDown(KeyCode.F);
                 controller.setFire(KeyCode.CONTROL);
             }
-        }
+        }*/
 
         int player_id;
         if( newKeyList.charAt(0) == '4' || newKeyList.charAt(0) == '1')
