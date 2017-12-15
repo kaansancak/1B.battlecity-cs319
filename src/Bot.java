@@ -14,12 +14,14 @@ public class Bot extends Tank {
     public Bot( double xLoc, double yLoc){
         this.xLoc = xLoc;
         this.yLoc = yLoc;
-        super.setImage( super.getRightImage() );
-        super.setView( new ImageView(super.getImage()));
-        super.setVelocity( new Point2D.Double(0.1,0.1));
-        health = 200;
         initImages();
-        dir = 0;
+        this.dir = 1;
+        view = new ImageView( rightImage);
+        view.setFitWidth( 23);
+        view.setFitHeight( 23);
+        super.setVelocity( new Point2D.Double(2, 2));
+        health = 200;
+
     }
 
     public boolean isStuck(){
@@ -30,18 +32,15 @@ public class Bot extends Tank {
     in the design report.
      */
     public void runBot( boolean changeDirStatus){
-        if( changeDirStatus)
-            super.move( dir);
+        if( changeDirStatus) {
+            super.move( dir );
+        }
         else if( !changeDirStatus) {
-            getRandomDir();
+            dir = (int)(Math.random() * 4);
         }
     }
     private void getRandomDir(){
         dir = rand.nextInt( 4);
-    }
-
-    public boolean isMovableTile(){
-        return false;
     }
 
     @Override

@@ -1,5 +1,6 @@
-public class Bonus extends GameObject {
+public abstract  class Bonus extends GameObject {
 
+    protected final int BONUS_VIEW_DIMENSION = 32;
     private int typeID; // 0 = lifeBonus, 1 = speedBonus
     private int releaseTime;
     private int effectDuration;
@@ -7,10 +8,6 @@ public class Bonus extends GameObject {
     private boolean taken = false;
     private boolean timeOut;
 
-    public Bonus( double xLoc, double yLoc) {
-        this.xLoc = xLoc;
-        this.yLoc = yLoc;
-    }
 
     private boolean isReleased() {
         return released;

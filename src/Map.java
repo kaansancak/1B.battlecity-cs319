@@ -4,13 +4,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Map {
 
-
     private final int TILES = 20;
     private final int MAP_DIMENSION = 32;
-    private final double SHIFT = 0.09;
+    private final double SHIFT = 0.33;
+    private final int FRAME_UPPER_BOUND = 640;
+    private final int FRAME_LOWER_BOUND = 0;
     private Scene mapScene;
     private Stage mapStage;
     private int playerCount;
@@ -29,9 +31,7 @@ public class Map {
     private ArrayList<Destructible> destructibles;
     private int lifeBonusCount;
     private int speedBonusCount;
-    public Map( ){
-
-    }
+    private Random rand;
 
     /* GameObject File Decode
     * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
@@ -48,6 +48,7 @@ public class Map {
         initPlayers();
         lifeBonusCount = 0;
         speedBonusCount = 0;
+        rand = new Random();
     }
 
     //Init all objects
@@ -55,8 +56,8 @@ public class Map {
         mapPane = new Pane();
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
-        mapPane.setPrefWidth(640);
-        mapPane.setPrefHeight(640);
+        mapPane.setPrefWidth(FRAME_UPPER_BOUND);
+        mapPane.setPrefHeight(FRAME_UPPER_BOUND);
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
@@ -73,23 +74,46 @@ public class Map {
 
     //Decide how to spawn a bot
     public void spawnBot(){
-        if( botCount > 0){
-            Bot bot = new Bot( 5, 3);
-            mapPane.getChildren().addAll(bot.getView());
-            bots.add(bot);
-            tanks.add(bot);
-            objectHolder.add(bot);
-            botCount--;
-        }
+        double x_loc = 0.0;
+        double y_loc = 0.0;
+        boolean found_empty = true;
+        do{
+            found_empty = true;
+            x_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - 23);
+            y_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - 23);
+            for( GameObject object : objectHolder){
+                if( object.getView().getBoundsInParent().intersects( x_loc, y_loc,23, 23)){
+                    found_empty = false;
+                }
+            }
+        }while(!found_empty);
+
+        Bot bot = new Bot( x_loc, y_loc);
+        mapPane.getChildren().add( bot.getView());
+        bots.add( bot);
+        tanks.add( bot);
+        objectHolder.add( bot);
+        remainingBots--;
     }
 
-    public Stage getMapStage() {
-        return mapStage;
-    }
+
 
     public void newBonus( int type) {
+        double x_loc = 0.0;
+        double y_loc = 0.0;
+        boolean found_empty = true;
+        do{
+            found_empty = true;
+            x_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - MAP_DIMENSION);
+            y_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - MAP_DIMENSION);
+            for( GameObject object : objectHolder){
+                if( object.getView().getBoundsInParent().intersects( x_loc, y_loc,MAP_DIMENSION, MAP_DIMENSION)){
+                    found_empty = false;
+                }
+            }
+        }while(!found_empty);
         if( type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
-            Bonus lifeBonus = new LifeBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
+            Bonus lifeBonus = new LifeBonus(x_loc, y_loc);
             lifeBonus.setReleased(true);
             mapPane.getChildren().addAll(lifeBonus.getView());
             lifeBonusCount++;
@@ -97,7 +121,7 @@ public class Map {
             objectHolder.add(lifeBonus);
         }
         else if( type == 1 && speedBonusCount < 2) {
-            Bonus speedBonus = new SpeedBonus((int)(Math.random()*30) + 1, (int)(Math.random()*30) + 1);
+            Bonus speedBonus = new SpeedBonus( x_loc, y_loc);
             speedBonus.setReleased(true);
             mapPane.getChildren().addAll(speedBonus.getView());
             speedBonusCount++;
@@ -135,9 +159,10 @@ public class Map {
 
     private void updateBots() {
         for ( Bot bot : bots){
-            if ( bot.getHealth() >= 0)
+            if ( bot.getHealth() > 0)
                 bot.draw();
             else{
+                bot.setDestructed( true);
                 mapPane.getChildren().remove(bot.getView());
             }
         }
@@ -165,8 +190,15 @@ public class Map {
     }
 
     public void updateBonuses() {
-
         for( Bonus bonus : bonuses) {
+            for( Player player: players){
+                if( player.getView().getBoundsInParent().intersects(
+                        bonus.getView().getBoundsInParent()
+                )){
+                    //Write bonus taken codes
+                    bonus.setTaken(true);
+                }
+            }
             if( bonus.isTaken()) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
@@ -190,13 +222,6 @@ public class Map {
         return mapPane;
     }
 
-   /* public void showMap(){
-        mapScene = new Scene( mapPane);
-        mapStage = new Stage();
-        mapStage.setScene(mapScene);
-        mapStage.show();
-    }*/
-
     private void intToObject(){
         for(int i = 0; i < TILES; i++){
             for(int j = 0; j < TILES; j++) {
@@ -212,6 +237,7 @@ public class Map {
                     if (obstaclesMap[i][j] == 1) {
                         Brick brick = new Brick(cordinate_x,cordinate_y, 0);
                         objectHolder.add( brick);
+                        destructibles.add( brick);
                         brick.draw();
                     } else if (obstaclesMap[i][j] == 2) {
                         Bush bush = new Bush( cordinate_x, cordinate_y);
@@ -229,11 +255,13 @@ public class Map {
                     else if (obstaclesMap[i][j] == 5) {
                         Brick brick = new Brick(cordinate_x,cordinate_y, 1);
                         objectHolder.add( brick);
+                        destructibles.add( brick);
                         brick.draw();
                     }
                     else if (obstaclesMap[i][j] == 6) {
                         Brick brick = new Brick(cordinate_x,cordinate_y, 2);
                         objectHolder.add( brick);
+                        destructibles.add( brick);
                         brick.draw();
                     }
                 }
@@ -267,10 +295,9 @@ public class Map {
 
     }
 
-
     public boolean tryNextMove( Tank tank, int dir){
+        checkBoundaries( tank);
         ImageView tankView = tank.getView();
-        tank.move(dir);
         for( GameObject gameObject : objectHolder){
             tankView.setVisible(true);
             if( tankView.getBoundsInParent().intersects( gameObject.getView().getBoundsInParent())){
@@ -280,138 +307,51 @@ public class Map {
                         return true;
                     }
                 }else{
-                    System.out.println( "Intersect with " + gameObject.getView().getFitWidth());
+                    if( gameObject == tank)
+                        continue;
                     switch ( dir){
                         case 0:
-                            tank.setxLoc( gameObject.getxLoc() - tankView.getFitWidth()-1);
+                            tank.setxLoc( gameObject.getxLoc() - tankView.getFitWidth()-SHIFT);
                             break;
                         case 1:
-                            tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth() + 1);
+                            tank.setxLoc(gameObject.getxLoc() + gameObject.getView().getFitWidth()+SHIFT);
                             break;
                         case 2:
-                            tank.setyLoc( gameObject.getyLoc() - tankView.getFitHeight() -1);
+                            tank.setyLoc( gameObject.getyLoc() - gameObject.getView().getFitHeight()+SHIFT);
                             break;
                         case 3:
-                            tank.setyLoc( gameObject.getyLoc() +gameObject.getView().getFitHeight() + 1);
+                            tank.setyLoc( gameObject.getyLoc() + gameObject.getView().getFitHeight()  +SHIFT);
                             break;
                     }
+                    if ( gameObject instanceof Bot)
+                        tank.setDir( rand.nextInt(4));
                     return false;
                 }
             }
         }
         return true;
     }
-/*
-    public boolean tryNextMove(Tank tank, int dir){
-        double prev_x = tank.getxLoc();
-        double prev_y = tank.getyLoc();
-        switch ( dir){
-            case 0:
-                prev_x -= SHIFT;
-                break;
-            case 1:
-                prev_x += SHIFT;
-                break;
-            case 2:
-                prev_y -= SHIFT;
-                break;
-            case 3:
-                prev_y += SHIFT;
-                break;
+
+    public boolean checkBoundaries( Tank tank) {
+        if( tank.getxLoc() < FRAME_LOWER_BOUND){
+            tank.setxLoc( FRAME_LOWER_BOUND);
+            return false;
+        }else if( tank.getxLoc() > FRAME_UPPER_BOUND - tank.getView().getFitWidth()) {
+            tank.setxLoc(FRAME_UPPER_BOUND - tank.getView().getFitWidth());
+            return false;
         }
-        tank.move(dir);
-        ImageView tankView = tank.getView();
-        for ( GameObject gameObject : objectHolder){
-            if ( gameObject instanceof  Bush &&
-                    gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
-                tankView.setVisible(false);
-            else
-                tankView.setVisible(true);
-            if( gameObject.getView().getBoundsInParent().intersects(tankView.getBoundsInParent())
-                    && !(gameObject instanceof Tile)) {
-                if(gameObject instanceof Bonus) {
-                    ((Bonus) gameObject).setTaken(true);
-                    return true;
-                }
-                if( gameObject instanceof  Bush)
-                    return true;
-                else{
-                    tank.setxLoc( prev_x);
-                    tank.setyLoc( prev_y);
-                    return false;
-                }
-            }
-
+        if( tank.getyLoc() < FRAME_LOWER_BOUND) {
+            tank.setyLoc(FRAME_LOWER_BOUND);
+            return false;
         }
-        return true;
-    }
-*//*
-    public boolean tryNextMove(Tank tank, int dir){
-        ImageView tankView = tank.getView();
-
-        ImageView mockUp = getMockUp( tank ,dir);
-        for ( GameObject gameObject : objectHolder){
-            if ( gameObject instanceof  Bush &&
-                    gameObject.getView().getBoundsInParent().intersects( tankView.getBoundsInParent()))
-                tankView.setVisible(false);
-            else
-                tankView.setVisible(true);
-            if( gameObject.getView().getBoundsInParent().intersects(tankView.getBoundsInParent())
-                    && !(gameObject instanceof Tile)) {
-               if(gameObject instanceof Bonus) {
-                    ((Bonus) gameObject).setTaken(true);
-                    return true;
-               }else if( gameObject instanceof  Bush)
-                   return true;
-               else{
-                    switch ( dir) {
-                        case 0:
-                            tank.setxLoc( gameObject.getxLoc()-tank.getVelocity().getX());
-                            //tankView.setTranslateX( gameObject.getView().getTranslateX() - tankView.getFitWidth());
-                            //tank.setxLoc( tankView.getTranslateX() / tankView.getFitWidth());
-
-                            break;
-                        case 1:
-                            tank.setxLoc( gameObject.getxLoc()+tank.getVelocity().getX());
-                            //tankView.setTranslateX( gameObject.getView().getTranslateX() + tankView.getFitWidth());
-                            //tank.setxLoc( tankView.getTranslateX() / tankView.getFitWidth());
-                            break;
-                        case 2:
-                            tank.setyLoc( gameObject.getyLoc());
-                            //tankView.setTranslateY( gameObject.getView().getTranslateY() - tankView.getFitHeight());
-                            //tank.setyLoc( tankView.getTranslateY() / tankView.getFitHeight());
-                            break;
-                        case 3:
-                            tank.setyLoc( gameObject.getyLoc();
-                            //tankView.setTranslateY( gameObject.getView().getTranslateY() + tankView.getFitHeight());
-                            //tank.setyLoc( tankView.getTranslateY() / tankView.getFitHeight());
-                            break;
-                    }
-                    return true;
-               }
-
-            }
-
+        else if( tank.getyLoc() > FRAME_UPPER_BOUND - tank.getView().getFitHeight()) {
+            tank.setyLoc(FRAME_UPPER_BOUND - tank.getView().getFitHeight());
+            return false;
         }
         return true;
     }
 
-    private ImageView getMockUp(Tank tank, int dir) {
-        double newX = tank.getxLoc();
-        double newY = tank.getyLoc();
-        switch ( dir){
-            case 0: newX += tank.getVelocity().getX();
-            case 1: newX -= tank.getVelocity().getX();
-            case 2: newY += tank.getVelocity().getY();
-            case 3: newY -= tank.getVelocity().getY();
-        }
-        ImageView mockUp = new ImageView( tank.getImage());
-        mockUp.setVisible(false);
-        mockUp.setTranslateX( newX*23);
-        mockUp.setTranslateY( newY*23);
-        mapPane.getChildren().addAll(mockUp);
-        return mockUp;
-    }*/
+
 
     public boolean bonusTaken( Bonus bonus, Tank tank, int dir) {
         ImageView tankView = tank.getView();
@@ -457,22 +397,8 @@ public class Map {
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
-
-    private int getLifeBonusCount() {
-        return lifeBonusCount;
+    public Stage getMapStage() {
+        return mapStage;
     }
-
-    private void setLifeBonusCount(int newCount) {
-        lifeBonusCount = newCount;
-    }
-
-    private int getSpeedBonusCount() {
-        return speedBonusCount;
-    }
-
-    private void setSpeedBonusCount(int newCount) {
-        speedBonusCount = newCount;
-    }
-
 
 }

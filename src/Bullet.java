@@ -13,9 +13,6 @@ public class Bullet extends GameObject {
     //direction of the bullet
     private final int BULLET_VIEW_DIMENSION = 10;
     private final double BULLET_VELOCITY = 4;
-    private final int BULLET_WH = 23;
-    private final double SHIFT_V = 0.3333;
-    private final double SHIFT_H = 0.6666;
     private boolean isCrushed = false;
     private int dir;
     private int id;
@@ -28,32 +25,26 @@ public class Bullet extends GameObject {
         this.id = id;
         this.dir = dir;
         setDirImage();
-        super.setVIEW_H(BULLET_VIEW_DIMENSION);
-        super.setVIEW_V(BULLET_VIEW_DIMENSION);
-        super.setVIEW_WH(BULLET_WH);
+        view = new ImageView( image);
+        view.setFitHeight(BULLET_VIEW_DIMENSION);
+        view.setFitWidth(BULLET_VIEW_DIMENSION);
+        super.draw();
         super.setVelocity( new Point2D.Double(BULLET_VELOCITY,BULLET_VELOCITY));
     }
 
     private void setDirImage() {
         switch (dir){
             case 0: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
-                    //yLoc = ( yLoc + SHIFT_V);
-                    //xLoc = ( xLoc + SHIFT_H);
                     break;
             case 1: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_left.png").toUri().toString()));
-                    //yLoc = (yLoc + SHIFT_V);
                     break;
             case 2: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_down.png").toUri().toString()));
-                    //xLoc = ( xLoc + SHIFT_V);
-                    //yLoc =( yLoc + SHIFT_H);
                     break;
             case 3: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_up.png").toUri().toString()));
-                    //xLoc = ( xLoc + SHIFT_V);
                     break;
             default: super.setImage(new Image(Paths.get("."+"/MediaFiles/bullet_right.png").toUri().toString()));
                     break;
         }
-        super.setView( new ImageView(super.getImage()));
     }
 
     //methods
@@ -79,7 +70,7 @@ public class Bullet extends GameObject {
             }else if(dir == 3) {
                 yLoc = (yLoc - super.getVelocity().getY());
             }
-            draw();
+            super.draw();
         }
     }
 
@@ -89,16 +80,8 @@ public class Bullet extends GameObject {
         return dir;
     }
 
-    public void setDir(int dir) {
-        this.dir = dir;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public boolean isCrushed() {
@@ -106,11 +89,6 @@ public class Bullet extends GameObject {
     }
     public void setCrushed(boolean crushed) {
         isCrushed = crushed;
-    }
-
-
-    public boolean isMovableTile(){
-        return true;
     }
 
     @Override

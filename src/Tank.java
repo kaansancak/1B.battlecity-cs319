@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 public abstract class Tank extends GameObject {
 
     protected final int VIEW_WH = 32;
+    private final double BULLET_SHIFT = 8;
     protected Image rightImage;
     protected Image upImage;
     protected Image leftImage;
@@ -59,8 +60,42 @@ public abstract class Tank extends GameObject {
 
     //Methods
     public Bullet fire(){
-        Bullet tankBullet = new Bullet( id, xLoc, yLoc, dir);
+        double bullet_x = getBullet_xLoc();
+        double bullet_y = getBullet_yLoc();
+        Bullet tankBullet = new Bullet( id, bullet_x, bullet_y, dir);
         return tankBullet;
+    }
+
+    private double getBullet_yLoc() {
+        switch ( this.dir){
+            case 0:
+                return yLoc + view.getFitHeight() / 4;
+            case 1:
+                return yLoc + view.getFitHeight() / 4;
+            case 2:
+                return yLoc + view.getFitHeight();
+            case 3:
+                return yLoc - BULLET_SHIFT;
+            default:
+                break;
+        }
+        return yLoc;
+    }
+
+    private double getBullet_xLoc() {
+        switch ( this.dir){
+            case 0:
+                return xLoc + view.getFitWidth();
+            case 1:
+                return xLoc - BULLET_SHIFT;
+            case 2:
+                return xLoc + view.getFitWidth()/4;
+            case 3:
+                return xLoc + view.getFitWidth()/4;
+            default:
+                break;
+        }
+        return xLoc;
     }
 
     public boolean isAlive(){
@@ -74,6 +109,7 @@ public abstract class Tank extends GameObject {
      */
 
     public void move(int dir) {
+        this.dir = dir;
         if ( dir == 0){
             xLoc =  xLoc + getVelocity().getX();
             super.setImage( rightImage);
@@ -83,7 +119,7 @@ public abstract class Tank extends GameObject {
         }else if ( dir == 2){
             yLoc = yLoc + getVelocity().getY();
             super.setImage( downImage);
-        }else{
+        }else if( dir == 3){
             yLoc = yLoc - getVelocity().getY();
             super.setImage( upImage);
         }
@@ -150,9 +186,5 @@ public abstract class Tank extends GameObject {
 
     public void setDir(int dir) {
         this.dir = dir;
-    }
-
-    public boolean isMovableTile(){
-        return false;
     }
 }
