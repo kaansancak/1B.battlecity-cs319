@@ -45,8 +45,8 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
         pauseMenuWindow = new Stage();
         pauseMenuWindow.setResizable(false);
-        pauseMenuWindow.setTitle( "Pause UserInterface.MenuPackage.Menu");
-        pauseMenuLabel = new Label("Pause UserInterface.MenuPackage.Menu");
+        pauseMenuWindow.setTitle( "Pause Menu");
+        pauseMenuLabel = new Label("Pause Menu");
         pauseMenuLabel.setId("pausemenu-text");
         StackPane pauseLayout = new StackPane();
 
@@ -91,7 +91,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
                         "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
             }
         });
-        backToMenu = new Button("UserInterface.MenuPackage.Menu");
+        backToMenu = new Button("Menu");
         backToMenu.setOnAction( event -> {
             pauseMenuWindow.close();
             returnCall = true;
@@ -181,5 +181,4 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         newGame.start(newStage);
         mapManager.getStage().close();
     }
-
 }

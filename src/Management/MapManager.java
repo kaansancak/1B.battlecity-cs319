@@ -58,18 +58,17 @@ public class MapManager {
         this.stage = stage;
         text.setTranslateY(660);
         map.getMapPane().getChildren().addAll(text);
-
         stage.setScene(new Scene(map.getMapPane()));
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    onUpdate();
-                    addBot(now);
-                    addLifeBonus(now);
-                    addSpeedBonus(now);
-                }
-            };
-            timer.start();
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                onUpdate();
+                addBot(now);
+                addLifeBonus(now);
+                addSpeedBonus(now);
+            }
+        };
+        timer.start();
 
     }
 
@@ -113,7 +112,7 @@ public class MapManager {
             bot.runBot( changeDirStatus);
             changeDirStatus = map.tryNextMove( bot, prev_dir)
                     && map.checkBoundaries(bot);
-           // if( !changeDirStatus)
+            // if( !changeDirStatus)
             //bot.setDir( (prev_dir + 1) /4 );
             //System.out.print( prev_dir);
         }
@@ -129,13 +128,17 @@ public class MapManager {
     private void addLifeBonus(long time) {
         int type = 0;
         // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
-        if (time % 150 == 0)
-            map.newBonus(type);
+        if (time % 2000 == 0)
+            map.createBonus(type);
+       /* if (time % 7000 == 0)
+            map.createBonus(0);*/
     }
     private void addSpeedBonus(long time) {
         int type = 1;
-        if( time % 200 == 0)
-            map.newBonus(type);
+        if( time % 5000 == 0)
+            map.createBonus(type);
+        /*if (time % 8000 == 0)
+            map.createBonus(1);*/
     }
 
     public Stage getStage() {
@@ -161,8 +164,8 @@ public class MapManager {
 
     private void manageObjects(){
         for(int i = 0; i < map.getBullets().size() ; i++){
-                collisionManager.checkCollision();
-            }
+            collisionManager.checkCollision();
+        }
     }
 
     private void updateMapObjects(){

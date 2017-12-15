@@ -1,5 +1,6 @@
 package GameObject.TankObjects;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 public class Player extends Tank {
 
     // variables
-    private final double PLAYER_NORMAL_VELOCITY = 3.0;
+    private double PLAYER_NORMAL_VELOCITY = 3.0;
+    public double oldSpeed;
     private int score;
     private int controllerId;
+    AnimationTimer timer;
 
 
     private ArrayList<String> controller;
@@ -30,7 +33,7 @@ public class Player extends Tank {
             this.xLoc = 5*28;
             this.yLoc = 5*28;
         }
-        health = 200;
+        health = 3;
         initImages();
         view = new ImageView( rightImage);
         view.setFitWidth( 23);
@@ -46,7 +49,30 @@ public class Player extends Tank {
         upImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_up.png").toUri().toString()));
         downImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_down.png").toUri().toString()));
     }
-    
+
+    public void incrementHealth() {
+        health++;
+    }
+    public void incrementSpeed() {
+        oldSpeed = PLAYER_NORMAL_VELOCITY;
+        PLAYER_NORMAL_VELOCITY = PLAYER_NORMAL_VELOCITY + 2.0;
+        super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
+
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                normalizeTheSpeed( now, oldSpeed);
+            }
+        };
+        timer.start();
+        PLAYER_NORMAL_VELOCITY = oldSpeed;
+    }
+    private void normalizeTheSpeed(long now, double oldSpeed) {
+        if( now % 500 == 0) {
+            super.setVelocity( new Point2D.Double(oldSpeed, oldSpeed));
+            PLAYER_NORMAL_VELOCITY = oldSpeed;
+        }
+    }
     private void incrementScore() {
         score++;
     }

@@ -22,7 +22,7 @@ public class Bot extends Tank {
         view.setFitWidth( 23);
         view.setFitHeight( 23);
         super.setVelocity( new Point2D.Double(2, 2));
-        health = 200;
+        health = 1;
 
     }
 

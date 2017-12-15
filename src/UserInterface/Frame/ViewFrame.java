@@ -50,7 +50,7 @@ public class ViewFrame {
         answerBoxes.setAlignment(Pos.CENTER);
         pane.getChildren().add( answerBoxes);
         Scene frameScene = new Scene(pane, 600, 600);
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         frameScene.getStylesheets().add(style);
         viewFrame.setScene(frameScene);
         viewFrame.showAndWait();

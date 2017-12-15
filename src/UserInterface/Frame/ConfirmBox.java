@@ -53,7 +53,7 @@ public class ConfirmBox{
         pane.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         pane.getChildren().add( answerBoxes);
         Scene answerScene = new Scene( pane, 600, 200);
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         answerScene.getStylesheets().add(style);
 
         answerWindow.setScene(answerScene);

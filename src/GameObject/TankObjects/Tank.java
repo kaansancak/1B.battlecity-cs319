@@ -19,7 +19,7 @@ public abstract class Tank extends GameObject {
     protected int speed;
     protected int oldSpeed;
     //Variables
-    private int BULLET_DAMAGE = 200;
+    private int BULLET_DAMAGE = 1;
     private int type;
     private int id;
 

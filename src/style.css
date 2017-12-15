@@ -62,6 +62,12 @@
    -fx-font-weight: bold;
    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
  }
+#texts {
+    -fx-font: 14px Tahoma;
+    -fx-fill: FIREBRICK;
+    -fx-stroke: white;
+    -fx-stroke-width: 1;
+}
 
 #actiontarget1 {
   -fx-font-size: 20px;

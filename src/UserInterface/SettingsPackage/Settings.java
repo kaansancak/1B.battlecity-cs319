@@ -5,6 +5,7 @@ package UserInterface.SettingsPackage;
  */
 
 import Management.FileManager;
+import Management.InputController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,13 +15,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.nio.file.Paths;
+import java.security.Key;
 import java.util.ArrayList;
 
 public class Settings implements EventHandler<ActionEvent> {
@@ -31,13 +35,13 @@ public class Settings implements EventHandler<ActionEvent> {
     BorderPane border;
     UserInterface.MenuPackage.Menu menu;
     // GameObject.GameObject.TankObjects.Player 1 Items
-    Label player1Label;
+    Text player1Label;
     ArrayList<String> player1_keyList;
     ComboBox player1_settings;
-    Label player1l;
-    Label player2l;
+    Text player1l;
+    Text player2l;
     // GameObject.GameObject.TankObjects.Player 2 Items
-    Label player2Label;
+    Text player2Label;
     ArrayList<String> player2_keyList;
     ComboBox player2_settings;
     // Buttons
@@ -59,7 +63,7 @@ public class Settings implements EventHandler<ActionEvent> {
     private ComboBox<String> musicBox;
     private ArrayList<Media> media;
     private int latestVolume;
-
+    private InputController controller;
 
     public Settings(){
         menu = new UserInterface.MenuPackage.Menu();
@@ -76,9 +80,9 @@ public class Settings implements EventHandler<ActionEvent> {
         file = new FileManager();
         media = file.getScannedAudios();
         settingsWindow = new Stage();
-        settingsWindow.setTitle( "UserInterface.SettingsPackage.Settings");
+        settingsWindow.setTitle( "Settings");
         settingsWindow.setResizable(false);
-        settings = new Label("UserInterface.SettingsPackage.Settings");
+        settings = new Label("Settings");
         settings.setId("welcome-text");
 
         StackPane settingsLayout = new StackPane();
@@ -238,8 +242,8 @@ public class Settings implements EventHandler<ActionEvent> {
     private void initComboboxes() {
         // player 1 combobox//
         player1_settings = new ComboBox();
-        player1_settings.setPromptText("GameObject.GameObject.TankObjects.Player 1");
-        player1_settings.setEditable(true);
+        player1_settings.setPromptText("Player 1");
+        player1_settings.setEditable(false);
         player1_settings.getItems().addAll(
                 "4, 8, 6, 5, ENTER",
                 "1, 5, 3, 2, SHIFT"
@@ -248,7 +252,7 @@ public class Settings implements EventHandler<ActionEvent> {
         player1_settings.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observable, String oldValue, String newValue) {
-                changeKeyList( newValue);
+                changeKeyList( newValue, 0);
             }
         });
 
@@ -256,8 +260,8 @@ public class Settings implements EventHandler<ActionEvent> {
 
         // player 2 combobox
         player2_settings = new ComboBox();
-        player2_settings.setPromptText("GameObject.GameObject.TankObjects.Player 1");
-        player2_settings.setEditable(true);
+        player2_settings.setPromptText("Player 2");
+        player2_settings.setEditable(false);
         player2_settings.getItems().addAll(
                 "S, E, F, D, SPACE",
                 "D, R, G, F, CNTRL"
@@ -265,7 +269,7 @@ public class Settings implements EventHandler<ActionEvent> {
         player2_settings.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observable, String oldValue, String newValue) {
-                changeKeyList( newValue);
+                changeKeyList( newValue, 1);
             }
         });
         // add style
@@ -291,26 +295,26 @@ public class Settings implements EventHandler<ActionEvent> {
 
     private void initPlayerLabels() {
         // player 1 items
-        player1_keyList.add( "LEFT");
-        player1_keyList.add( "UP");
-        player1_keyList.add( "RIGHT");
-        player1_keyList.add( "DOWN");
-        player1_keyList.add( "SPACEBAR");
-        player1Label = new Label( "GameObject.GameObject.TankObjects.Player 1 keys\n");
-        player1l = new Label(player1_keyList.toString());
-        player1Label.setId("labels");
-        player1l.setId("labels");
+        player1_keyList.add( "A");
+        player1_keyList.add( "W");
+        player1_keyList.add( "D");
+        player1_keyList.add( "S");
+        player1_keyList.add( "SPACE");
+        player1Label = new Text( "Default Player 1 keys\n");
+        player1l = new Text(player1_keyList.toString());
+        player1Label.setId("texts");
+        player1l.setId("texts");
 
         // player 2 items
-        player2_keyList.add( "A");
-        player2_keyList.add( "W");
-        player2_keyList.add( "D");
-        player2_keyList.add( "S");
-        player2_keyList.add( "Z");
-        player2Label = new Label("GameObject.GameObject.TankObjects.Player 2 keys\n");
-        player2Label.setId("labels");
-        player2l = new Label(player2_keyList.toString());
-        player2l.setId("labels");
+        player2_keyList.add( "LEFT");
+        player2_keyList.add( "UP");
+        player2_keyList.add( "RIGHT");
+        player2_keyList.add( "DOWN");
+        player2_keyList.add( "ENTER");
+        player2Label = new Text("Default Player 2 keys\n");
+        player2Label.setId("texts");
+        player2l = new Text(player2_keyList.toString());
+        player2l.setId("texts");
     }
 
     private void mute() {
@@ -333,22 +337,57 @@ public class Settings implements EventHandler<ActionEvent> {
     private int getVolume() {
         return volume;
     }
-    private void changeKeyList( String newKeyList){
+    private void changeKeyList( String newKeyList, int type){
+
+        if( type == 0) {
+            if( newKeyList.charAt(0) == '4') {
+                controller.setLeft(KeyCode.NUMPAD4);
+                controller.setUp(KeyCode.NUMPAD8);
+                controller.setRight(KeyCode.NUMPAD6);
+                controller.setDown(KeyCode.NUMPAD5);
+                controller.setFire(KeyCode.ENTER);
+            }
+            else if( newKeyList.charAt(0) == '1') {
+                controller.setLeft(KeyCode.NUMPAD1);
+                controller.setUp(KeyCode.NUMPAD5);
+                controller.setRight(KeyCode.NUMPAD3);
+                controller.setDown(KeyCode.NUMPAD2);
+                controller.setFire(KeyCode.SHIFT);
+            }
+        }
+        else if( type == 1) {
+            if( newKeyList.charAt(0) == 'S') {
+                controller.setLeft(KeyCode.S);
+                controller.setUp(KeyCode.E);
+                controller.setRight(KeyCode.F);
+                controller.setDown(KeyCode.D);
+                controller.setFire(KeyCode.SPACE);
+            }
+            else if( newKeyList.charAt(0) == 'D') {
+                controller.setLeft(KeyCode.D);
+                controller.setUp(KeyCode.R);
+                controller.setRight(KeyCode.G);
+                controller.setDown(KeyCode.F);
+                controller.setFire(KeyCode.CONTROL);
+            }
+        }
 
         int player_id;
         if( newKeyList.charAt(0) == '4' || newKeyList.charAt(0) == '1')
         {
             player_id = 1;
-            player1_keyList.set(0, Character.toString(newKeyList.charAt(0)));
+            player1l.setText(newKeyList.toString());
+           /* player1_keyList.set(0, Character.toString(newKeyList.charAt(0)));
             player1_keyList.set(1, Character.toString(newKeyList.charAt(0)));
             player1_keyList.set(2, Character.toString(newKeyList.charAt(3)));
             player1_keyList.set(3, Character.toString(newKeyList.charAt(6)));
             player1_keyList.set(4, Character.toString(newKeyList.charAt(9)));
-            player1_keyList.set(5, newKeyList.substring( 12, 16));
+            player1_keyList.set(5, newKeyList.substring( 12, 16));*/
         }
         else
         {
             player_id = 2;
+            player2l.setText(newKeyList.toString());
             player2_keyList.set(0, Character.toString(newKeyList.charAt(0)));
             player2_keyList.set(1, Character.toString(newKeyList.charAt(0)));
             player2_keyList.set(2, Character.toString(newKeyList.charAt(3)));
@@ -356,15 +395,14 @@ public class Settings implements EventHandler<ActionEvent> {
             player2_keyList.set(4, Character.toString(newKeyList.charAt(9)));
             player2_keyList.set(5, newKeyList.substring( 12, 16));
         }
-        updateUI( player_id);
     }
 
     private void updateUI( int player_id) {
 
         if( player_id == 1)
-            player1Label = new Label( "GameObject.GameObject.TankObjects.Player 1 keys\n" + player1_keyList.toString());
+            player1Label = new Text( "Player 1 keys\n" + player1_keyList.toString());
         else
-            player2Label = new Label( "GameObject.GameObject.TankObjects.Player 1 keys\n" + player2_keyList.toString());
+            player2Label = new Text( "Player 1 keys\n" + player2_keyList.toString());
     }
 
     private ArrayList<String> getTheKeyList( int player_id) {
@@ -387,7 +425,7 @@ public class Settings implements EventHandler<ActionEvent> {
     }
 
     private void update() {
-        player1Label = new Label( "GameObject.GameObject.TankObjects.Player 1 keys\n" + player1_keyList.toString());
-        player2Label = new Label( "GameObject.GameObject.TankObjects.Player 1 keys\n" + player2_keyList.toString());
+        player1Label = new Text( "Player 1 keys\n" + player1_keyList.toString());
+        player2Label = new Text( "Player 1 keys\n" + player2_keyList.toString());
     }
 }

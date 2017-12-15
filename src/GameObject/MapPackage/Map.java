@@ -22,7 +22,7 @@ public class Map {
     private final int TILES = 20;
     private final int MAP_DIMENSION = 32;
     private final double SHIFT = 0.33;
-    private final int FRAME_UPPER_BOUND = 640;
+    private final int FRAME_UPPER_BOUND = 680;
     private final int FRAME_LOWER_BOUND = 0;
     private Scene mapScene;
     private Stage mapStage;
@@ -67,8 +67,8 @@ public class Map {
         mapPane = new Pane();
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
-        mapPane.setPrefWidth(FRAME_UPPER_BOUND);
-        mapPane.setPrefHeight(FRAME_UPPER_BOUND);
+        mapPane.setPrefWidth(640);
+        mapPane.setPrefHeight(680);
         botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
@@ -106,38 +106,40 @@ public class Map {
         objectHolder.add( bot);
         remainingBots--;
     }
+    public int getLevel() {
+        return level;
+    }
 
 
 
-    public void newBonus( int type) {
-        double x_loc = 0.0;
-        double y_loc = 0.0;
-        boolean found_empty = true;
-        do{
-            found_empty = true;
-            x_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - MAP_DIMENSION);
-            y_loc = rand.nextDouble()* ( FRAME_UPPER_BOUND - MAP_DIMENSION);
-            for( GameObject object : objectHolder){
-                if( object.getView().getBoundsInParent().intersects( x_loc, y_loc,MAP_DIMENSION, MAP_DIMENSION)){
-                    found_empty = false;
+    public void createBonus( int type) {
+            double x_loc = 0.0;
+            double y_loc = 0.0;
+            boolean found_empty = true;
+            do {
+                found_empty = true;
+                x_loc = rand.nextDouble() * (FRAME_UPPER_BOUND - MAP_DIMENSION);
+                y_loc = rand.nextDouble() * (FRAME_UPPER_BOUND - MAP_DIMENSION);
+                for (GameObject object : objectHolder) {
+                    if (object.getView().getBoundsInParent().intersects(x_loc, y_loc, MAP_DIMENSION, MAP_DIMENSION)) {
+                        found_empty = false;
+                    }
                 }
+            } while (!found_empty);
+            if (type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
+                Bonus lifeBonus = new LifeBonus(x_loc, y_loc);
+                lifeBonus.setReleased(true);
+                mapPane.getChildren().addAll(lifeBonus.getView());
+                lifeBonusCount++;
+                bonuses.add(lifeBonus);
+                objectHolder.add(lifeBonus);
+            } else if (type == 1 && speedBonusCount < 2) {
+                Bonus speedBonus = new SpeedBonus(x_loc, y_loc);
+                speedBonus.setReleased(true);
+                mapPane.getChildren().addAll(speedBonus.getView());
+                speedBonusCount++;
+                bonuses.add(speedBonus);
             }
-        }while(!found_empty);
-        if( type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
-            Bonus lifeBonus = new LifeBonus(x_loc, y_loc);
-            lifeBonus.setReleased(true);
-            mapPane.getChildren().addAll(lifeBonus.getView());
-            lifeBonusCount++;
-            bonuses.add(lifeBonus);
-            objectHolder.add(lifeBonus);
-        }
-        else if( type == 1 && speedBonusCount < 2) {
-            Bonus speedBonus = new SpeedBonus( x_loc, y_loc);
-            speedBonus.setReleased(true);
-            mapPane.getChildren().addAll(speedBonus.getView());
-            speedBonusCount++;
-            bonuses.add(speedBonus);
-        }
     }
 
 
@@ -210,9 +212,19 @@ public class Map {
                     bonus.setTaken(true);
                 }
             }
-            if( bonus.isTaken()) {
+            if( bonus.isTaken() && bonus instanceof LifeBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
+                for( Player player: players) {
+                    player.incrementHealth();
+                }
+            }
+            else if( bonus.isTaken() && bonus instanceof SpeedBonus) {
+                mapPane.getChildren().remove(bonus.getView());
+                objectHolder.remove(bonus);
+                for( Player player: players) {
+                    player.incrementSpeed();
+                }
             }
             else
                 bonus.draw();
