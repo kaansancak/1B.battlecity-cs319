@@ -71,8 +71,8 @@ public class Map {
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
-        mapPane.setPrefHeight(FRAME_UPPER_BOUND);
-        botCount = 1 + 2 * level; // WOW lol
+        mapPane.setPrefHeight(FRAME_UPPER_BOUND+40);
+        botCount = 10 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -197,10 +197,11 @@ public class Map {
     //Update of Bullets
     public void updateBullets(){
         for( Bullet bullet : bullets) {
-            if (bullet.isCrushed()) {
+            if (bullet.isCrushed() || bullet.getyLoc() > FRAME_UPPER_BOUND) {
                 bullet.setDestructed(true);
                 mapPane.getChildren().remove(bullet.getView());
-            } else {
+            }
+            else {
                 bullet.move();
             }
         }
