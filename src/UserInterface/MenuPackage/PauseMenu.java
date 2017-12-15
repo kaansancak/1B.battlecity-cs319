@@ -58,7 +58,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         pauseLayout.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         pauseLayout.getChildren().add(vBox);
         pauseMenuScene = new Scene( pauseLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         pauseMenuScene.getStylesheets().add(style);
         pauseMenuWindow.setScene( pauseMenuScene);
     }

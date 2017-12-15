@@ -110,7 +110,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
 
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         menuScene.getStylesheets().add(style);
         menuWindow.setScene(menuScene);
         menuWindow.show();

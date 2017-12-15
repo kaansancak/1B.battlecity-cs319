@@ -1,5 +1,6 @@
 package Management;
 
+import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Player;
 import UserInterface.MenuPackage.PauseMenu;
 import javafx.event.EventHandler;

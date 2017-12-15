@@ -105,7 +105,7 @@ public class Settings implements EventHandler<ActionEvent> {
         settingsLayout.setPadding( new Insets(50, 150, 50, 150));
         settingsLayout.getChildren().add(border);
         settingsScene = new Scene( settingsLayout, SETTINGS_WINDOW_WIDTH, SETTINGS_WINDOWS_HEIGHT);
-        String  style = getClass().getResource("style.css").toExternalForm();
+        String  style = getClass().getResource("../../style.css").toExternalForm();
         settingsScene.getStylesheets().add(style);
         settingsWindow.setScene( settingsScene);
     }

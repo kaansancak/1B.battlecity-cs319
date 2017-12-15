@@ -1,6 +1,6 @@
 package Management;
 
-
+import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Bot;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -44,8 +44,8 @@ public class MapManager {
         map = new Map(playerCount, level, obstaclesMap);
         text = new Text("Remaining Bots: " + map.getRemainingBots()
                 + "\tLevel: " + level + "\nRemaining Health: "
-                + map.getPlayer(0).health + "\tScore: (dir?)"
-                + map.getPlayer(0).dir);
+                + map.getPlayer(0).getHealth() + "\tScore: (dir?)"
+                + map.getPlayer(0).getHealth());
         gameStatus = true;
         mapFinished = false;
         startsLevel();
@@ -95,8 +95,8 @@ public class MapManager {
         collisionManager.updateRemovals();
         handleBots();
         text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).health
-                + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).dir);
+                this.mapLevel + "\nRemaining Health: " + map.getPlayer(0).getHealth()
+                + "\t\t\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
     }
 
     public void updateAllObjects(){
