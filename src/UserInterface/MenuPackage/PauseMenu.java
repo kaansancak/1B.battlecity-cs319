@@ -149,5 +149,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         Stage newStage = new Stage();
         newGame.start(newStage);
         mapManager.getStage().close();
+        mapManager.setGameStatus(GameStatus.RETURN_MENU_PAUSE);
     }
 }

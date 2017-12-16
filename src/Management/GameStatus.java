@@ -9,5 +9,6 @@ public enum GameStatus{
     LEVEL_FINISHED,
     GAME_PAUSED,
     GAME_PAUSE_RETURN,
-    GAME_NEXT_LEVEL
+    GAME_NEXT_LEVEL,
+    RETURN_MENU_PAUSE
 }

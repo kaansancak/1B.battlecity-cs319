@@ -304,11 +304,9 @@ public class Settings implements EventHandler<ActionEvent> {
         player1l.setId("texts");
 
         // player 2 items
-        player2_keyList.add( "LEFT");
-        player2_keyList.add( "UP");
-        player2_keyList.add( "RIGHT");
-        player2_keyList.add( "DOWN");
-        player2_keyList.add( "ENTER");
+        player2_keyList.add( "Scroll");
+        player2_keyList.add( "Left Click");
+        player2_keyList.add( "Move Mouse");
         player2Label = new Text("Default Player 2 keys\n");
         player2Label.setId("texts");
         player2l = new Text(player2_keyList.toString());
@@ -336,51 +334,10 @@ public class Settings implements EventHandler<ActionEvent> {
         return volume;
     }
     private void changeKeyList( String newKeyList, int type){
-
-        /*if( type == 0) {
-            if( newKeyList.charAt(0) == '4') {
-                controller.setLeft(KeyCode.NUMPAD4);
-                controller.setUp(KeyCode.NUMPAD8);
-                controller.setRight(KeyCode.NUMPAD6);
-                controller.setDown(KeyCode.NUMPAD5);
-                controller.setFire(KeyCode.ENTER);
-            }
-            else if( newKeyList.charAt(0) == '1') {
-                controller.setLeft(KeyCode.NUMPAD1);
-                controller.setUp(KeyCode.NUMPAD5);
-                controller.setRight(KeyCode.NUMPAD3);
-                controller.setDown(KeyCode.NUMPAD2);
-                controller.setFire(KeyCode.SHIFT);
-            }
-        }
-        else if( type == 1) {
-            if( newKeyList.charAt(0) == 'S') {
-                controller.setLeft(KeyCode.S);
-                controller.setUp(KeyCode.E);
-                controller.setRight(KeyCode.F);
-                controller.setDown(KeyCode.D);
-                controller.setFire(KeyCode.SPACE);
-            }
-            else if( newKeyList.charAt(0) == 'D') {
-                controller.setLeft(KeyCode.D);
-                controller.setUp(KeyCode.R);
-                controller.setRight(KeyCode.G);
-                controller.setDown(KeyCode.F);
-                controller.setFire(KeyCode.CONTROL);
-            }
-        }*/
-
         int player_id;
         if( newKeyList.charAt(0) == '4' || newKeyList.charAt(0) == '1')
         {
-            player_id = 1;
             player1l.setText(newKeyList.toString());
-           /* player1_keyList.set(0, Character.toString(newKeyList.charAt(0)));
-            player1_keyList.set(1, Character.toString(newKeyList.charAt(0)));
-            player1_keyList.set(2, Character.toString(newKeyList.charAt(3)));
-            player1_keyList.set(3, Character.toString(newKeyList.charAt(6)));
-            player1_keyList.set(4, Character.toString(newKeyList.charAt(9)));
-            player1_keyList.set(5, newKeyList.substring( 12, 16));*/
         }
         else
         {

@@ -188,7 +188,6 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         menuWindow.close();
         GameManager gameManager = GameManager.getGameManagerInstance( playerCount);
         player.stop();
-        GameManager gameManager = new GameManager(playerCount);
     }
 
     private void exitBattleCity() {

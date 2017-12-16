@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BattleCity:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BattleCity_jar</output-path>
+    <root id="archive" name="BattleCity.jar">
+      <element id="module-output" name="BattleCity" />
+    </root>
+  </artifact>
+</component>

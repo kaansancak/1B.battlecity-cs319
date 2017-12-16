@@ -85,6 +85,10 @@ public class GameManager  {
             timer.stop();
             gameViewFrame = new GameViewFrame(this, 2);
             gameViewFrame.showGameView();
+        }else if( mapManager.getGameStatus() == GameStatus.RETURN_MENU_PAUSE){
+            timer.stop();
+            MapManager.setEndMapManager();
+            gameManagerInstance = null;
         }
     }
 
@@ -147,13 +151,5 @@ public class GameManager  {
     public void stopLoop(){
         timer.stop();
     }
-
-    private void quitGame(){}
-    private void saveHighestScore(int scoregame){ if(scoregame>highestScore)
-                                                    { highestScore = scoregame; }}
-    private int getHighestScore(){ return highestScore; }
-    private boolean isGameFinished(){ return !gameRunning; }
-    private void startLevel(MapManager mapManager ,int nextLevel){}
-    private void finishLevel(MapManager mapmManager){}
 
 }
