@@ -33,7 +33,7 @@ public class Player extends Tank {
             this.xLoc = 5*28;
             this.yLoc = 5*28;
         }
-        health = 200;
+        health = 400;
         score = 0;
         initImages();
         view = new ImageView( rightImage);
@@ -70,7 +70,7 @@ public class Player extends Tank {
     }
 
     public void incrementHealth() {
-        remainingLife += 200;
+        health += 200;
     }
     public void incrementLife() {
         remainingLife++;
