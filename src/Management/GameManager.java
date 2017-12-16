@@ -12,7 +12,7 @@ public class GameManager  {
 
     public static GameManager gameManagerInstance = null;
     private final int GAME_START_LEVEL = 1;
-    private final int GAME_FINAL_LEVEL = 2;
+    private final int GAME_FINAL_LEVEL = 3;
     private MapManager mapManager;
     private GameViewFrame gameViewFrame;
     private int currentGameLevel;
@@ -50,6 +50,7 @@ public class GameManager  {
     private void onUpdate() {
         if( currentGameLevel > GAME_FINAL_LEVEL){
             gameViewFrame = new GameViewFrame(this, 1);
+            mapManager.getStage().close();
             gameViewFrame.showGameView();
             //Show game finished view
         }
