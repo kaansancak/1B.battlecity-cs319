@@ -2,8 +2,6 @@ package UserInterface.MenuPackage;
 
 import Management.GameStatus;
 import Management.MapManager;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -35,9 +32,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
 
     private Button returnButton;
     private Button backToMenu;
-
-    private Slider volumeBar;
-    private int volume;
     private MapManager mapManager;
 
 
@@ -50,9 +44,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         pauseMenuLabel = new Label("Pause Menu");
         pauseMenuLabel.setId("pausemenu-text");
         StackPane pauseLayout = new StackPane();
-
-        volume = 100;
-        initSlider();
         initButtons();
 
         addSettingsComponents();
@@ -128,11 +119,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         pauseMenuWindow.show();
     }
 
-    private void changeVolume( int volume) {
-        this.volume = volume;
-        volumeBar.setValue( volume);
-    }
-
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == returnButton) {
@@ -141,25 +127,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
             mapManager.startLoop();
         }
     }
-//
-    private void initSlider() {
-        volumeBar = new Slider();
-        volumeBar.setMin(0);
-        volumeBar.setMax(100);
-        volumeBar.setValue(100);
-        volumeBar.setMaxWidth(350);
-        volumeBar.setMajorTickUnit( 50);
-        volumeBar.setBlockIncrement( 10);
-
-        // slider
-        volumeBar.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                int new_value = new_val.intValue();
-                changeVolume( new_value);
-            }
-        });
-    }
 
     public void addSettingsComponents(){
         vBox = new VBox();
@@ -167,7 +134,7 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         vBox.setPadding(new Insets(50, 10, 40, 10));
         vBox.setSpacing(15.0);
         vBox.setFillWidth(true);
-        vBox.getChildren().addAll( pauseMenuLabel, volumeBar, returnButton, backToMenu);
+        vBox.getChildren().addAll( pauseMenuLabel, returnButton, backToMenu);
     }
 
     public void showPauseMenu() {
