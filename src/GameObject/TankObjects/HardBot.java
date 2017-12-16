@@ -2,13 +2,20 @@ package GameObject.TankObjects;
 
 import javafx.scene.image.Image;
 
+import java.awt.geom.Point2D;
 import java.nio.file.Paths;
 
 public class HardBot extends Bot{
+    private final double HARD_BOT_SPEED = 2.75;
+    private final int HARD_BOT_DIMENSION = 32;
+    private final int HARD_BOT_HEALTH = 600;
     public HardBot(double xLoc, double yLoc) {
         super(xLoc, yLoc);
-        setHealth(500);
-        super.initImages();
+        view.setFitHeight(HARD_BOT_DIMENSION);
+        view.setFitWidth(HARD_BOT_DIMENSION);
+        health = HARD_BOT_HEALTH;
+        velocity = new Point2D.Double( HARD_BOT_SPEED, HARD_BOT_SPEED);
+        initImages();
     }
 
     @Override

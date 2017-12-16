@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 public class EasyBot extends Bot {
     public EasyBot(double xLoc, double yLoc) {
         super(xLoc, yLoc);
+        initImages();
     }
 
     @Override
