@@ -79,6 +79,9 @@ public class GameManager  {
             }
             timer.start();
     }
+    public int getScores(int id) {
+        return mapManager.getPlayerScore(id);
+    }
 
 
     private void startMapManager() {

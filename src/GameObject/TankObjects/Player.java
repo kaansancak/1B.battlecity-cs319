@@ -97,6 +97,9 @@ public class Player extends Tank {
         timer.start();
 
     }
+    public int getRemainingLife() {
+        return remainingLife;
+    }
     private void normalizeTheSpeed(long now) {
         if( now % 500 == 0) {
             super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
