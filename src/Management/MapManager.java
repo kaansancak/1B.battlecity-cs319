@@ -118,6 +118,7 @@ public class MapManager {
         handleBots();
         updateStatText();
         if( map.isPaused()){
+            System.out.println( map.isPaused());
             timer.stop();
             if( !pauseCheck) {
                 pauseMenu.showPauseMenu();

@@ -19,6 +19,7 @@ public class InputController implements EventHandler<KeyEvent> {
 
 
     public InputController(MapManager mapManager, Player[] player){
+        //player1 = new MediaPlayer(new Media(Paths.get("MediaFiles/bulletSound.mp3").toUri().toString()));
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;

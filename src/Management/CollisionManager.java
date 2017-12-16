@@ -6,7 +6,10 @@ import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
 import GameObject.TankObjects.Player;
 import GameObject.TankObjects.Tank;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class CollisionManager {
@@ -17,6 +20,7 @@ public class CollisionManager {
 
     public CollisionManager(ArrayList<GameObject> gameObjects,
                             ArrayList<Bullet> bullets, ArrayList<Tank> tanks) {
+
         this.gameObjects = gameObjects;
         this.bullets = bullets;
         this.tanks = tanks;
@@ -42,6 +46,8 @@ public class CollisionManager {
                             continue;
                         }
                         if( gameObject instanceof Bot) {
+                            MediaPlayer player = new MediaPlayer(new Media(Paths.get("MediaFiles/tankDestroyed.mp3").toUri().toString()));
+                            player.play();
                             incrementScore( bullet.getId());
                         }
                         if( gameObject instanceof Player) {
