@@ -43,7 +43,6 @@ public class Settings implements EventHandler<ActionEvent> {
     ArrayList<String> player2_keyList;
     ComboBox player2_settings;
     // Buttons
-    Button submit;
     Button backToMenu;
     MediaPlayer player;
     private Stage settingsWindow;
@@ -125,9 +124,9 @@ public class Settings implements EventHandler<ActionEvent> {
         player2Box.setSpacing(10);
         player2Box.getChildren().addAll( player2Label, player2l, player2_settings);
 
-        buttonBox.setPadding(new Insets(30, 200, 50, 200));
+        buttonBox.setPadding(new Insets(30, 200, 50, 250));
         buttonBox.setSpacing(30);
-        buttonBox.getChildren().addAll( submit, backToMenu);
+        buttonBox.getChildren().addAll( backToMenu);
     }
 
     public void showSettings(){
@@ -189,28 +188,6 @@ public class Settings implements EventHandler<ActionEvent> {
 
     private void initButtons() {
         // buttons
-        submit = new Button("Submit");
-        submit.setOnAction(this);
-        submit.setId("glass-grey");
-        submit.setPrefSize(100, 10);
-        submit.setOnMouseEntered(new EventHandler<MouseEvent>
-                () {
-            @Override
-            public void handle(MouseEvent t) {
-                submit.setStyle("-fx-background-color:#c3c4c4;");
-            }
-        });
-        submit.setOnMouseExited(new EventHandler<MouseEvent>
-                () {
-
-            @Override
-            public void handle(MouseEvent t) {
-                submit.setStyle("-fx-background-color:\n" +
-                        "        #dae7f3,\n" +
-                        "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
-                        "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
-            }
-        });
         backToMenu = new Button("Back");
         backToMenu.setOnAction( event -> {
             settingsWindow.close();
@@ -238,7 +215,7 @@ public class Settings implements EventHandler<ActionEvent> {
     }
 
     private void initComboboxes() {
-        // player 1 combobox//
+        // player 1 combobox
         player1_settings = new ComboBox();
         player1_settings.setPromptText("Player 1");
         player1_settings.setEditable(false);
@@ -366,13 +343,6 @@ public class Settings implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        if( event.getSource() == submit) {
-            update();
-        }
     }
 
-    private void update() {
-        player1Label = new Text( "Player 1 keys\n" + player1_keyList.toString());
-        player2Label = new Text( "Player 1 keys\n" + player2_keyList.toString());
-    }
 }

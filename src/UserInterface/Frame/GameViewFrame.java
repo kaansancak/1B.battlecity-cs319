@@ -35,8 +35,8 @@ public class GameViewFrame {
     public GameViewFrame(GameManager gameManager, int frame){
         this.map = map;
         this.gameManager = gameManager;
-        gameFinished = new Label("Game Finished!\n" + "Congratulations!");//add score here
-        gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel() + "\nPlayer1 Score: " + gameManager.getScores(0) + "\nPlayer2 Score: " + gameManager.getScores(1) ); //add score here
+        gameFinished = new Label("Game Finished!\n" + "\nPlayer 1 Score: " + gameManager.getScores(0) + "\nPlayer 2 Score: " + gameManager.getScores(1) + "\nCongratulations!");//add score here
+        gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel() + "\nPlayer 1 Score: " + gameManager.getScores(0) + "\nPlayer 2 Score: " + gameManager.getScores(1) ); //add score here
         levelFinished = new Label("Level" + gameManager.getLevel() + " Finished\n");
         gameFinished.setId("labels1");
         gameOver.setId("labels1");
