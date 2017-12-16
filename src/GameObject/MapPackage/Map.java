@@ -7,10 +7,7 @@ import GameObject.MapPackage.BonusPackage.SpeedBonus;
 import GameObject.MapPackage.ObstaclesObjects.*;
 import GameObject.MapPackage.TilePackage.Portal;
 import GameObject.MapPackage.TilePackage.Tile;
-import GameObject.TankObjects.Bot;
-import GameObject.TankObjects.Bullet;
-import GameObject.TankObjects.Player;
-import GameObject.TankObjects.Tank;
+import GameObject.TankObjects.*;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -74,7 +71,7 @@ public class Map {
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
         mapPane.setPrefHeight(FRAME_UPPER_BOUND+60);
-        botCount =  2 * level; // WOW lol
+        botCount =  6 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -104,8 +101,16 @@ public class Map {
                 }
             }
         }while(!found_empty);
-
-        Bot bot = new Bot( x_loc, y_loc);
+        Bot bot;
+        if(remainingBots > botCount / 2) {
+            bot = new EasyBot(x_loc, y_loc);
+        }
+        else if(remainingBots > level) {
+            bot = new MediumBot(x_loc, y_loc);
+        }
+        else{
+            bot = new HardBot(x_loc, y_loc);
+        }
         mapPane.getChildren().add( bot.getView());
         bots.add( bot);
         tanks.add( bot);

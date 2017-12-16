@@ -1,10 +1,8 @@
 package GameObject.TankObjects;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.geom.Point2D;
-import java.nio.file.Paths;
 import java.util.Random;
 
 /**
@@ -23,8 +21,7 @@ public class Bot extends Tank {
         view.setFitWidth( 28);
         view.setFitHeight( 28);
         super.setVelocity( new Point2D.Double(2, 2));
-        health = 1;
-
+        health = 100;
     }
 
     public void setRandomDir(){
@@ -59,10 +56,6 @@ public class Bot extends Tank {
 
     @Override
     protected void initImages() {
-        super.setRightImage( new Image(Paths.get("./MediaFiles/enemy_right.png").toUri().toString()));
-        super.setLeftImage( new Image(Paths.get("./MediaFiles/enemy_left.png").toUri().toString()));
-        super.setUpImage( new Image(Paths.get("./MediaFiles/enemy_up.png").toUri().toString()));
-        super.setDownImage( new Image(Paths.get("./MediaFiles/enemy_down.png").toUri().toString()));
     }
 
     @Override

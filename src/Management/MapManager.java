@@ -2,6 +2,8 @@ package Management;
 
 import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Bot;
+import GameObject.TankObjects.EasyBot;
+import GameObject.TankObjects.HardBot;
 import UserInterface.MenuPackage.PauseMenu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -157,8 +159,13 @@ public class MapManager {
             if( changeDirStatus){
                 if( Math.random() < 0.008)
                     bot.setRandomDir();
-                if( Math.random() < 0.005)
+                if( bot instanceof EasyBot && Math.random() < 0.005)
                     map.fire(bot);
+                else if( bot instanceof EasyBot && Math.random() < 0.007)
+                    map.fire(bot);
+                else if( bot instanceof HardBot && Math.random() < 0.009)
+                    map.fire(bot);
+
                 bot.move( bot.getDir());
             }else{
                 bot.setRandomDir();
