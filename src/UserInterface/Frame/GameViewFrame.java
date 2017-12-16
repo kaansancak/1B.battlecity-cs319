@@ -32,11 +32,11 @@ public class GameViewFrame {
         this.map = map;
         this.gameManager = gameManager;
         gameFinished = new Label("Game Finished!\n" + "Congratulations!");//add score here
-        gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel()); //add score here
+        gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel() + "\nPlayer1 Score: " + gameManager.getScores(0) + "\nPlayer2 Score: " + gameManager.getScores(1) ); //add score here
         levelFinished = new Label("Level" + gameManager.getLevel() + " Finished\n");
-        gameFinished.setId("labels");
-        gameOver.setId("labels");
-        levelFinished.setId("labels");
+        gameFinished.setId("labels1");
+        gameOver.setId("labels1");
+        levelFinished.setId("labels1");
         backToMenu = new Button("Menu");
         nextLevel = new Button( "Continue Next Level");
         gameView = new Stage();

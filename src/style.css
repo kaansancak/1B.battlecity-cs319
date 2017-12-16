@@ -62,6 +62,13 @@
    -fx-font-weight: bold;
    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
  }
+ #labels1 {
+    -fx-font-size: 30px;
+    -fx-fill: FIREBRICK;
+    -fx-text-fill: #fffaf0;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+  }
 #texts {
     -fx-font: 14px Tahoma;
     -fx-fill: FIREBRICK;
