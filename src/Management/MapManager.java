@@ -94,18 +94,16 @@ public class MapManager {
         handleBots();
         updateStatText();
         if( map.isPaused()){
-            System.out.println( map.isPaused());
             timer.stop();
             if( !pauseCheck) {
                 pauseMenu.showPauseMenu();
                 pauseCheck = true;
                 gameStatus = GameStatus.GAME_PAUSED;
             }
-            if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
-                gameStatus = GameStatus.GAME_RUNNING;
-                pauseCheck = false;
-            }
-
+        }
+        if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
+            gameStatus = GameStatus.GAME_RUNNING;
+            pauseCheck = false;
         }
         if( map.isGameOver()){
             System.out.print("Game over");
