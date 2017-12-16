@@ -83,7 +83,7 @@ public class MapManager {
         if( id == 0)
             return map.getPlayer(0).getScore();
         else
-            return map.getPlayer(0).getScore();
+            return map.getPlayer(1).getScore();
     }
 
     public boolean isPaused() {

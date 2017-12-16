@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" description="&#10;    public void updatePlayer(){&#10;        for ( Pla..." line="121" />
+    <bookmark url="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" description="&#10;    public void updatePlayer(){&#10;        for ( Pla..." line="124" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a1db929-0676-48cb-8b57-cf1e1f3247eb" name="Default" comment="Merged Changes&#10;Fix Conflicts">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/portal.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/portal1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/GameObject/TankObjects/Bot.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/GameObject/TankObjects/Bot.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/GameObject/TankObjects/Player$1.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/GameObject/TankObjects/Player$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/GameObject/TankObjects/Player.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/GameObject/TankObjects/Player.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/Management/MapManager.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/Management/MapManager.class" />
+    <list default="true" id="0a1db929-0676-48cb-8b57-cf1e1f3247eb" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/bonusTaken.mp3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/botBulletSound.mp3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/bulletSound.mp3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/newLevel.mp3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/statueDestroyed.mp3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MediaFiles/tankDestroyed.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/GameObject/MapPackage/Map.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/GameObject/MapPackage/Map.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/Management/CollisionManager.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/Management/CollisionManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/Management/GameManager.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/Management/GameManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/UserInterface/MenuPackage/Menu.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/UserInterface/MenuPackage/Menu.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MediaFiles/level2.txt" afterPath="$PROJECT_DIR$/MediaFiles/level2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/Bot.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/Bot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/EasyBot.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/EasyBot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/HardBot.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/HardBot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/MediumBot.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/MediumBot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/Player.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" afterPath="$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Management/CollisionManager.java" afterPath="$PROJECT_DIR$/src/Management/CollisionManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Management/GameManager.java" afterPath="$PROJECT_DIR$/src/Management/GameManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Management/InputController.java" afterPath="$PROJECT_DIR$/src/Management/InputController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Management/MapManager.java" afterPath="$PROJECT_DIR$/src/Management/MapManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java" afterPath="$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/style.css" afterPath="$PROJECT_DIR$/src/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java" afterPath="$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,10 +40,9 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameObject/TankObjects/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="579">
-              <caret line="95" column="29" lean-forward="false" selection-start-line="95" selection-start-column="29" selection-end-line="95" selection-end-column="29" />
+            <state relative-caret-position="-582">
+              <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#2324#2325#0" expanded="true" />
                 <element signature="e#2365#2366#0" expanded="true" />
                 <element signature="e#2399#2400#0" expanded="true" />
@@ -75,31 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CollisionManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Management/CollisionManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="96" column="24" lean-forward="false" selection-start-line="96" selection-start-column="24" selection-end-line="96" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="65" column="21" lean-forward="false" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Map.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="307" column="41" lean-forward="false" selection-start-line="307" selection-start-column="41" selection-end-line="307" selection-end-column="41" />
+            <state relative-caret-position="423">
+              <caret line="304" column="38" lean-forward="false" selection-start-line="304" selection-start-column="38" selection-end-line="304" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -108,35 +87,51 @@
       <file leaf-file-name="MapManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Management/MapManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="85" column="47" lean-forward="false" selection-start-line="85" selection-start-column="47" selection-end-line="85" selection-end-column="47" />
+            <state relative-caret-position="867">
+              <caret line="85" column="34" lean-forward="false" selection-start-line="85" selection-start-column="34" selection-end-line="85" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tank.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="372">
+              <caret line="114" column="28" lean-forward="true" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
               <folding>
-                <marker date="1513432190065" expanded="false" signature="6787:6798" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="6811:6817" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="6847:6858" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="6882:6888" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="7724:7734" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="7757:7763" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="8091:8101" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="8117:8123" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="8162:8173" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="8191:8197" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="8252:8262" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="8291:8297" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="8348:8359" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="8370:8376" ph=" }" />
-                <marker date="1513432190065" expanded="false" signature="8411:8422" ph=" { " />
-                <marker date="1513432190065" expanded="false" signature="8441:8447" ph=" }" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2980#2981#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameViewFrame.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CollisionManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Management/CollisionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="54" column="41" lean-forward="false" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InputController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Management/InputController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="35" column="59" lean-forward="false" selection-start-line="35" selection-start-column="59" selection-end-line="35" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameViewFrame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+            <state relative-caret-position="379">
+              <caret line="46" column="32" lean-forward="false" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -145,22 +140,10 @@
       <file leaf-file-name="PauseMenu.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UserInterface/MenuPackage/PauseMenu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2346">
+            <state relative-caret-position="373">
               <caret line="163" column="40" lean-forward="false" selection-start-line="163" selection-start-column="40" selection-end-line="163" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2266#2267#0" expanded="true" />
-                <element signature="e#2299#2300#0" expanded="true" />
-                <element signature="e#2679#2680#0" expanded="true" />
-                <element signature="e#2765#2766#0" expanded="true" />
-                <element signature="e#3808#3809#0" expanded="true" />
-                <element signature="e#3892#3893#0" expanded="true" />
-                <element signature="e#4434#4435#0" expanded="true" />
-                <element signature="e#4472#4473#0" expanded="true" />
-                <element signature="e#5851#5852#0" expanded="true" />
-                <element signature="e#5889#5890#0" expanded="true" />
-                <element signature="e#5922#5923#0" expanded="true" />
-                <element signature="e#5961#5962#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -169,34 +152,24 @@
       <file leaf-file-name="GameManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Management/GameManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="82" column="15" lean-forward="false" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="15" />
+            <state relative-caret-position="229">
+              <caret line="91" column="20" lean-forward="false" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
               <folding>
-                <element signature="e#2514#2515#0" expanded="true" />
-                <element signature="e#2566#2567#0" expanded="true" />
+                <element signature="e#2926#2927#0" expanded="true" />
+                <element signature="e#2978#2979#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewFrame.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UserInterface/Frame/ViewFrame.java">
+      <file leaf-file-name="Menu.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="56" column="5" lean-forward="false" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
+            <state relative-caret-position="270">
+              <caret line="74" column="11" lean-forward="true" selection-start-line="70" selection-start-column="8" selection-end-line="74" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConfirmBox.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UserInterface/Frame/ConfirmBox.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
-              <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -212,15 +185,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>button</find>
-      <find>timer.start</find>
-      <find>start</find>
-      <find>readObstaclesMapwwwwww</find>
-      <find>game</find>
-      <find>updatePla</find>
-      <find>map</find>
-      <find>stage.show</find>
-      <find>showGA</find>
       <find>updateMap</find>
       <find>returnCal</find>
       <find>23</find>
@@ -242,11 +206,21 @@
       <find>bonus</find>
       <find>initPlayers</find>
       <find>labels</find>
+      <find>star</find>
+      <find>openin</find>
+      <find>isgameov</find>
+      <find>fire</find>
+      <find>updateBonus</find>
+      <find>getSci</find>
+      <find>startGame</find>
+      <find>getplayersc</find>
+      <find>isDe</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="mahinkhankishizade &lt;mahinkhankishizade@gmail.com&gt;" />
         <option value="kaansancak &lt;kaansnck@gmail.com&gt;" />
       </list>
     </option>
@@ -283,7 +257,6 @@
         <option value="$PROJECT_DIR$/src/UserInterface/MapManager.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/Tile.java" />
         <option value="$PROJECT_DIR$/src/UserInterface/Frame/ViewFrame.java" />
-        <option value="$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java" />
         <option value="$PROJECT_DIR$/src/GameObject/GameStatus.java" />
         <option value="$PROJECT_DIR$/src/UserInterface/MenuPackage/PauseMenu.java" />
         <option value="$PROJECT_DIR$/src/UserInterface/Frame/ConfirmBox.java" />
@@ -292,28 +265,29 @@
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/ObstaclesObjects/Brick.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/ObstaclesObjects/Statue.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/ObstaclesObjects/Destructible.java" />
-        <option value="$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/Tile/Tile.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/TilePackage/Tile.java" />
         <option value="$PROJECT_DIR$/MediaFiles/level1.txt" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/TilePackage/Portal.java" />
-        <option value="$PROJECT_DIR$/src/Management/CollisionManager.java" />
         <option value="$PROJECT_DIR$/src/GameObject/GameObject.java" />
         <option value="$PROJECT_DIR$/src/GameObject/TankObjects/Bullet.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/BonusPackage/ArmorBonus.java" />
         <option value="$PROJECT_DIR$/src/GameObject/MapPackage/BonusPackage/Bonus.java" />
-        <option value="$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" />
         <option value="$PROJECT_DIR$/src/GameObject/TankObjects/Bot.java" />
         <option value="$PROJECT_DIR$/MediaFiles/level2.txt" />
         <option value="$PROJECT_DIR$/src/GameObject/TankObjects/EasyBot.java" />
-        <option value="$PROJECT_DIR$/src/Management/InputController.java" />
         <option value="$PROJECT_DIR$/src/GameObject/TankObjects/MediumBot.java" />
         <option value="$PROJECT_DIR$/src/GameObject/TankObjects/HardBot.java" />
         <option value="$PROJECT_DIR$/src/GameObject/TankObjects/Player.java" />
-        <option value="$PROJECT_DIR$/src/Management/MapManager.java" />
-        <option value="$PROJECT_DIR$/src/Management/GameManager.java" />
         <option value="$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java" />
         <option value="$PROJECT_DIR$/src/style.css" />
+        <option value="$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java" />
+        <option value="$PROJECT_DIR$/src/Management/GameManager.java" />
+        <option value="$PROJECT_DIR$/src/Management/InputController.java" />
+        <option value="$PROJECT_DIR$/src/Management/CollisionManager.java" />
+        <option value="$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java" />
+        <option value="$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" />
+        <option value="$PROJECT_DIR$/src/Management/MapManager.java" />
       </list>
     </option>
   </component>
@@ -381,7 +355,47 @@
               <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
               <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="GameObject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="GameObject" type="462c0819:PsiDirectoryNode" />
+              <item name="MapPackage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="GameObject" type="462c0819:PsiDirectoryNode" />
+              <item name="TankObjects" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Management" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="UserInterface" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="UserInterface" type="462c0819:PsiDirectoryNode" />
+              <item name="Frame" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1B.battlecity-cs319" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1B.battlecity-cs319" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="UserInterface" type="462c0819:PsiDirectoryNode" />
+              <item name="MenuPackage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -855,7 +869,21 @@
       <option name="project" value="LOCAL" />
       <updated>1513422779163</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="GameViewFrame fixed">
+      <created>1513432482512</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1513432482512</updated>
+    </task>
+    <task id="LOCAL-00032" summary="GameViewFrame update">
+      <created>1513432770454</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1513432770454</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -863,90 +891,57 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14360313" sideWeight="0.49573106" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14360313" sideWeight="0.49573106" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.03916449" sideWeight="0.51125" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03916449" sideWeight="0.51625" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03916449" sideWeight="0.48875" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03916449" sideWeight="0.48375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15013056" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3075" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2690678" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14823009" sideWeight="0.3882353" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14823009" sideWeight="0.3882353" order="14" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3792373" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3792373" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30614406" sideWeight="0.49786097" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1440678" sideWeight="0.49573106" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1440678" sideWeight="0.49573106" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14823009" sideWeight="0.6117647" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21238938" sideWeight="0.49572194" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Sequence" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21238938" sideWeight="0.49572194" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Sequence" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15668449" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06858407" sideWeight="0.49358287" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14823009" sideWeight="0.3882353" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3792373" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30614406" sideWeight="0.49786097" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1440678" sideWeight="0.49573106" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14823009" sideWeight="0.6117647" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21238938" sideWeight="0.49572194" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Sequence" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15668449" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06858407" sideWeight="0.49358287" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -991,7 +986,9 @@
     <MESSAGE value="Merged Changes&#10;Fix Conflicts&#10;Fix Statue&#10;Fix Statue" />
     <MESSAGE value="3 types of bots added" />
     <MESSAGE value="Tank pictures" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tank pictures" />
+    <MESSAGE value="GameViewFrame fixed" />
+    <MESSAGE value="GameViewFrame update" />
+    <option name="LAST_COMMIT_MESSAGE" value="GameViewFrame update" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1000,7 +997,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java</url>
-          <line>320</line>
+          <line>325</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -1057,17 +1054,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ScreenManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/Management/FileManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MediaFiles/enemy_down.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1151,6 +1142,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="9" column="62" lean-forward="false" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
+          <folding>
+            <element signature="e#576#577#0" expanded="false" />
+            <element signature="e#610#611#0" expanded="false" />
+            <element signature="e#641#642#0" expanded="false" />
+            <element signature="e#678#679#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1158,62 +1155,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2754">
-          <caret line="194" column="24" lean-forward="false" selection-start-line="194" selection-start-column="24" selection-end-line="194" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4347#4348#0" expanded="true" />
-            <element signature="e#4387#4388#0" expanded="true" />
-            <element signature="e#5654#5655#0" expanded="true" />
-            <element signature="e#5712#5713#0" expanded="true" />
-            <element signature="e#6195#6196#0" expanded="true" />
-            <element signature="e#6231#6232#0" expanded="true" />
-            <element signature="e#6259#6260#0" expanded="true" />
-            <element signature="e#6296#6297#0" expanded="true" />
-            <element signature="e#6769#6770#0" expanded="true" />
-            <element signature="e#6857#6858#0" expanded="true" />
-            <element signature="e#7533#7534#0" expanded="true" />
-            <element signature="e#7621#7622#0" expanded="true" />
-            <element signature="e#8297#8298#0" expanded="true" />
-            <element signature="e#8385#8386#0" expanded="true" />
-            <element signature="e#9061#9062#0" expanded="true" />
-            <element signature="e#9149#9150#0" expanded="true" />
-            <element signature="e#9825#9826#0" expanded="true" />
-            <element signature="e#9913#9914#0" expanded="true" />
-            <element signature="e#10589#10590#0" expanded="true" />
-            <element signature="e#10677#10678#0" expanded="true" />
-            <marker date="1513428146879" expanded="true" signature="11567:11578" ph=" { " />
-            <marker date="1513428146879" expanded="true" signature="11597:11603" ph=" }" />
-            <marker date="1513428146879" expanded="true" signature="11652:11663" ph=" { " />
-            <marker date="1513428146879" expanded="true" signature="11694:11700" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UserInterface/MenuPackage/PauseMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2346">
-          <caret line="163" column="40" lean-forward="false" selection-start-line="163" selection-start-column="40" selection-end-line="163" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2266#2267#0" expanded="true" />
-            <element signature="e#2299#2300#0" expanded="true" />
-            <element signature="e#2679#2680#0" expanded="true" />
-            <element signature="e#2765#2766#0" expanded="true" />
-            <element signature="e#3808#3809#0" expanded="true" />
-            <element signature="e#3892#3893#0" expanded="true" />
-            <element signature="e#4434#4435#0" expanded="true" />
-            <element signature="e#4472#4473#0" expanded="true" />
-            <element signature="e#5851#5852#0" expanded="true" />
-            <element signature="e#5889#5890#0" expanded="true" />
-            <element signature="e#5922#5923#0" expanded="true" />
-            <element signature="e#5961#5962#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1269,6 +1211,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1279,32 +1222,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="8" column="22" lean-forward="false" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="307" column="41" lean-forward="false" selection-start-line="307" selection-start-column="41" selection-end-line="307" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MediaFiles/level2.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="8" column="39" lean-forward="true" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Management/InputController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="29" column="96" lean-forward="false" selection-start-line="29" selection-start-column="96" selection-end-line="29" selection-end-column="96" />
           <folding />
         </state>
       </provider>
@@ -1328,6 +1249,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1335,6 +1257,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1029">
           <caret line="54" column="28" lean-forward="true" selection-start-line="54" selection-start-column="28" selection-end-line="54" selection-end-column="28" />
+          <folding>
+            <element signature="e#1327#1328#0" expanded="false" />
+            <element signature="e#1365#1366#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1342,6 +1268,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="10" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1349,6 +1276,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1359,12 +1287,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="65" column="21" lean-forward="false" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Management/FileManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="126" column="94" lean-forward="false" selection-start-line="126" selection-start-column="28" selection-end-line="126" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GameObject/TankObjects/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="95" column="29" lean-forward="false" selection-start-line="95" selection-start-column="29" selection-end-line="95" selection-end-column="29" />
+        <state relative-caret-position="-582">
+          <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#2324#2325#0" expanded="true" />
             <element signature="e#2365#2366#0" expanded="true" />
             <element signature="e#2399#2400#0" expanded="true" />
@@ -1395,62 +1338,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Management/MapManager.java">
+    <entry file="file://$PROJECT_DIR$/src/UserInterface/MenuPackage/PauseMenu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="85" column="47" lean-forward="false" selection-start-line="85" selection-start-column="47" selection-end-line="85" selection-end-column="47" />
+        <state relative-caret-position="373">
+          <caret line="163" column="40" lean-forward="false" selection-start-line="163" selection-start-column="40" selection-end-line="163" selection-end-column="40" />
           <folding>
-            <marker date="1513432190065" expanded="false" signature="6787:6798" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="6811:6817" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="6847:6858" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="6882:6888" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="7724:7734" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="7757:7763" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="8091:8101" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="8117:8123" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="8162:8173" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="8191:8197" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="8252:8262" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="8291:8297" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="8348:8359" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="8370:8376" ph=" }" />
-            <marker date="1513432190065" expanded="false" signature="8411:8422" ph=" { " />
-            <marker date="1513432190065" expanded="false" signature="8441:8447" ph=" }" />
+            <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Management/InputController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="35" column="59" lean-forward="false" selection-start-line="35" selection-start-column="59" selection-end-line="35" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="304" column="38" lean-forward="false" selection-start-line="304" selection-start-column="38" selection-end-line="304" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Management/GameManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="82" column="15" lean-forward="false" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="15" />
+        <state relative-caret-position="229">
+          <caret line="91" column="20" lean-forward="false" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
           <folding>
-            <element signature="e#2514#2515#0" expanded="true" />
-            <element signature="e#2566#2567#0" expanded="true" />
+            <element signature="e#2926#2927#0" expanded="true" />
+            <element signature="e#2978#2979#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Management/CollisionManager.java">
+    <entry file="file://$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="96" column="24" lean-forward="false" selection-start-line="96" selection-start-column="24" selection-end-line="96" selection-end-column="24" />
+        <state relative-caret-position="270">
+          <caret line="74" column="11" lean-forward="true" selection-start-line="70" selection-start-column="8" selection-end-line="74" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Management/MapManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="85" column="34" lean-forward="false" selection-start-line="85" selection-start-column="34" selection-end-line="85" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/style.css">
+    <entry file="file://$PROJECT_DIR$/src/GameObject/TankObjects/Tank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="65" column="21" lean-forward="false" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
-          <folding />
+        <state relative-caret-position="372">
+          <caret line="114" column="28" lean-forward="true" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2980#2981#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+        <state relative-caret-position="379">
+          <caret line="46" column="32" lean-forward="false" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Management/CollisionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="54" column="41" lean-forward="false" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
           <folding />
         </state>
       </provider>

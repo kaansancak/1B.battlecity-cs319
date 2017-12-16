@@ -5,7 +5,11 @@ import UserInterface.Frame.GameViewFrame;
 import UserInterface.SettingsPackage.Settings;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import java.nio.file.Paths;
 
 
 public class GameManager  {
@@ -28,10 +32,13 @@ public class GameManager  {
     private Stage gameManager;
     private int player_count;
     private AnimationTimer timer;
+    private MediaPlayer player;
 
     GameManager(){}
 
     public GameManager(int player_count){
+        player = new MediaPlayer( new Media(Paths.get("MediaFiles/newLevel.mp3").toUri().toString()));
+        player.play();
         this.player_count = player_count;
         players = new Player[player_count];
         currentScores = new int[player_count];
@@ -61,7 +68,10 @@ public class GameManager  {
         }
         else if( mapManager.getGameStatus() == GameStatus.GAME_OVER){
             gameViewFrame = new GameViewFrame(this, 0);
+            MediaPlayer player = new MediaPlayer(new Media(Paths.get("MediaFiles/statueDestroyed.mp3").toUri().toString()));
+            player.play();
             gameViewFrame.showGameView();
+
             //Show game over view
         }else if( mapManager.getGameStatus() == GameStatus.LEVEL_FINISHED){
             timer.stop();
