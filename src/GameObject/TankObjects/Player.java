@@ -16,50 +16,55 @@ import java.util.ArrayList;
 public class Player extends Tank {
 
     // variables
+    private final double PLAYER_1_START_X = 224.0;
+    private final double PLAYER_2_START_X = 352.0;
+    private final double PLAYER_1_START_Y = 544.0;
+    private final double PLAYER_2_START_Y = 544.0;
     private final double PLAYER_NORMAL_VELOCITY = 3.0;
     private final double PLAYER_BONUS_VELOCITY = 6.0;
-    public double oldSpeed;
+    private final int PLAYER_HEALTH = 200;
+    private final int PLAYER_START_DIR = 3;
     AnimationTimer timer;
     private int score;
     private int remainingLife = 4;
-    private int controllerId;
     private ArrayList<String> controller;
 
     public Player(int id, int controllerId) {
-        if( id == 1){
-            this.xLoc = 4*30;
-            this.yLoc = 4*30;
+        this.id = id;
+        if( id == 0){
+            this.xLoc = PLAYER_1_START_X;
+            this.yLoc = PLAYER_1_START_Y;
         }else{
-            this.xLoc = 5*28;
-            this.yLoc = 5*28;
+            this.xLoc = PLAYER_2_START_X;
+            this.yLoc = PLAYER_1_START_Y;
         }
-        health = 400;
+        this.dir = PLAYER_START_DIR;
+        health = PLAYER_HEALTH;
         score = 0;
         initImages();
-        view = new ImageView( rightImage);
+        view = new ImageView( upImage);
         view.setFitWidth( 28);
         view.setFitHeight( 28);
         super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
-        super.setId(id);
-        this.controllerId = controllerId;
     }
 
     protected void initImages() {
-        rightImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_right.png").toUri().toString()));
-        leftImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_left.png").toUri().toString()));
-        upImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_up.png").toUri().toString()));
-        downImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_down.png").toUri().toString()));
+        rightImage = ( new Image(Paths.get("./MediaFiles/resources/tank_player1_right.png").toUri().toString()));
+        leftImage = ( new Image(Paths.get("./MediaFiles/resources/tank_player1_left.png").toUri().toString()));
+        upImage = ( new Image(Paths.get("./MediaFiles/resources/tank_player1_up.png").toUri().toString()));
+        downImage = ( new Image(Paths.get("./MediaFiles/resources/tank_player1_down.png").toUri().toString()));
     }
 
     public void setStartCondition(){
-        health = 200;
-        if( id == 1){
-            this.xLoc = 4*30;
-            this.yLoc = 4*30;
+        health = PLAYER_HEALTH;
+        if( id == 0){
+            this.xLoc = PLAYER_1_START_X;
+            this.yLoc = PLAYER_1_START_Y;
         }else{
-            this.xLoc = 5*28;
-            this.yLoc = 5*28;
+            this.xLoc = PLAYER_2_START_X;
+            this.yLoc = PLAYER_2_START_Y;
         }
+        view.setImage( upImage);
     }
     public boolean isLifeOver(){
         return remainingLife <= 0;
@@ -69,12 +74,8 @@ public class Player extends Tank {
         remainingLife--;
     }
 
-    public int getRemainingLife() {
-        return remainingLife;
-    }
-
     public void incrementHealth() {
-        health += 200;
+        remainingLife += 200;
     }
     public void incrementLife() {
         remainingLife++;
@@ -90,6 +91,9 @@ public class Player extends Tank {
         };
         timer.start();
 
+    }
+    public int getRemainingLife() {
+        return remainingLife;
     }
     private void normalizeTheSpeed(long now) {
         if( now % 500 == 0) {

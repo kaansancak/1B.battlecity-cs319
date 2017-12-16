@@ -78,6 +78,14 @@ public class MapManager {
 
     }
 
+
+    public int getPlayerScore(int id) {
+        if( id == 0)
+            return map.getPlayer(0).getScore();
+        else
+            return map.getPlayer(0).getScore();
+    }
+
     public boolean isPaused() {
         return paused;
     }
@@ -162,9 +170,9 @@ public class MapManager {
                     bot.setRandomDir();
                 if( bot instanceof EasyBot && Math.random() < 0.005)
                     map.fire(bot);
-                else if( bot instanceof EasyBot && Math.random() < 0.007)
+                else if( bot instanceof EasyBot && Math.random() < 0.008)
                     map.fire(bot);
-                else if( bot instanceof HardBot && Math.random() < 0.009)
+                else if( bot instanceof HardBot && Math.random() < 0.01)
                     map.fire(bot);
 
                 bot.move( bot.getDir());

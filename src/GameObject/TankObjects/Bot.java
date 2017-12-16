@@ -9,14 +9,15 @@ import java.util.Random;
  * Created by kaan on 10/28/2017.
  */
 public class Bot extends Tank {
-    Random rand = new Random();
+    private final int BOT_ID = 99;
+    private Random rand = new Random();
 
     public Bot( double xLoc, double yLoc){
         this.xLoc = xLoc;
         this.yLoc = yLoc;
         initImages();
         this.dir = 1;
-        id = 99;
+        id = BOT_ID;
         view = new ImageView( rightImage);
         view.setFitWidth( 28);
         view.setFitHeight( 28);

@@ -24,10 +24,10 @@ public class InputController implements EventHandler<KeyEvent> {
         this.player = player;
         mapScene.setOnKeyPressed( this);
         mapScene.setOnKeyReleased( event -> {
-            if(event.getCode() == KeyCode.SPACE){
+            if(event.getCode() == KeyCode.SPACE && !(player[0].isDead())){
                 map.fire(player[0]); //player 0 direction 0
             }
-            if(player.length == 2 && (event.getCode() == KeyCode.SHIFT)){
+            if(player.length == 2 && (event.getCode() == KeyCode.SHIFT && !(player[1].isDead()))){
                 map.fire(player[1]); //player 0 direction 0
             }
         });
