@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" description="&#10;    public void updatePlayer(){&#10;        for ( Pla..." line="124" />
+    <bookmark url="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" description="&#10;    public void updatePlayer(){&#10;        for ( Pla..." line="123" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a1db929-0676-48cb-8b57-cf1e1f3247eb" name="Default" comment="Update&#10;">
+    <list default="true" id="0a1db929-0676-48cb-8b57-cf1e1f3247eb" name="Default" comment="Applied Design Patterns&#10;Singleton for GameManager and MapManager&#10;Player-Role for Tile-Portal and Bot Types">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/BattleCity/Management/MapManager.class" afterPath="$PROJECT_DIR$/out/production/BattleCity/Management/MapManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" afterPath="$PROJECT_DIR$/src/GameObject/MapPackage/Map.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameObject/TankObjects/Player.java" afterPath="$PROJECT_DIR$/src/GameObject/TankObjects/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Management/GameManager.java" afterPath="$PROJECT_DIR$/src/Management/GameManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Management/MapManager.java" afterPath="$PROJECT_DIR$/src/Management/MapManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java" afterPath="$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java" afterPath="$PROJECT_DIR$/src/UserInterface/MenuPackage/Menu.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +36,10 @@
         <entry file="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="132">
-              <caret line="314" column="39" lean-forward="false" selection-start-line="314" selection-start-column="39" selection-end-line="314" selection-end-column="39" />
-              <folding />
+              <caret line="313" column="39" lean-forward="false" selection-start-line="313" selection-start-column="39" selection-end-line="313" selection-end-column="39" />
+              <folding>
+                <marker date="1513440236344" expanded="false" signature="39:656" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,11 +48,11 @@
         <entry file="file://$PROJECT_DIR$/src/Management/MapManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1428">
-              <caret line="105" column="21" lean-forward="true" selection-start-line="105" selection-start-column="21" selection-end-line="105" selection-end-column="21" />
+              <caret line="104" column="21" lean-forward="false" selection-start-line="104" selection-start-column="21" selection-end-line="104" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2497#2498#0" expanded="true" />
-                <element signature="e#2538#2539#0" expanded="true" />
+                <element signature="e#2496#2497#0" expanded="true" />
+                <element signature="e#2537#2538#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -66,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="156">
-              <caret line="57" column="29" lean-forward="true" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
+              <caret line="57" column="29" lean-forward="false" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -76,16 +72,16 @@
         <entry file="file://$PROJECT_DIR$/src/Management/GameManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="86">
-              <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+              <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
               <folding>
-                <element signature="e#1418#1557#0" expanded="true" />
-                <element signature="e#1556#1557#0" expanded="true" />
-                <element signature="e#1920#1921#0" expanded="true" />
-                <element signature="e#1962#1963#0" expanded="true" />
-                <element signature="e#2641#2642#0" expanded="true" />
-                <element signature="e#2686#2687#0" expanded="true" />
-                <element signature="e#3025#3026#0" expanded="true" />
-                <element signature="e#3077#3078#0" expanded="true" />
+                <element signature="e#1417#1556#0" expanded="true" />
+                <element signature="e#1555#1556#0" expanded="true" />
+                <element signature="e#1919#1920#0" expanded="true" />
+                <element signature="e#1961#1962#0" expanded="true" />
+                <element signature="e#2640#2641#0" expanded="true" />
+                <element signature="e#2685#2686#0" expanded="true" />
+                <element signature="e#3024#3025#0" expanded="true" />
+                <element signature="e#3076#3077#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1053,12 +1049,19 @@
       <option name="project" value="LOCAL" />
       <updated>1513433105520</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Applied Design Patterns&#10;Singleton for GameManager and MapManager&#10;Player-Role for Tile-Portal and Bot Types">
+      <created>1513440240281</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1513440240281</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1932" height="1047" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1174,7 +1177,8 @@
     <MESSAGE value="Fix After Merge&#10;" />
     <MESSAGE value="Update" />
     <MESSAGE value="Update&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update&#10;" />
+    <MESSAGE value="Applied Design Patterns&#10;Singleton for GameManager and MapManager&#10;Player-Role for Tile-Portal and Bot Types" />
+    <option name="LAST_COMMIT_MESSAGE" value="Applied Design Patterns&#10;Singleton for GameManager and MapManager&#10;Player-Role for Tile-Portal and Bot Types" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1183,7 +1187,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java</url>
-          <line>324</line>
+          <line>323</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -1552,19 +1556,21 @@
     <entry file="file://$PROJECT_DIR$/src/GameObject/MapPackage/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
-          <caret line="314" column="39" lean-forward="false" selection-start-line="314" selection-start-column="39" selection-end-line="314" selection-end-column="39" />
-          <folding />
+          <caret line="313" column="39" lean-forward="false" selection-start-line="313" selection-start-column="39" selection-end-line="313" selection-end-column="39" />
+          <folding>
+            <marker date="1513440236344" expanded="false" signature="39:656" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Management/MapManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1428">
-          <caret line="105" column="21" lean-forward="true" selection-start-line="105" selection-start-column="21" selection-end-line="105" selection-end-column="21" />
+          <caret line="104" column="21" lean-forward="false" selection-start-line="104" selection-start-column="21" selection-end-line="104" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2497#2498#0" expanded="true" />
-            <element signature="e#2538#2539#0" expanded="true" />
+            <element signature="e#2496#2497#0" expanded="true" />
+            <element signature="e#2537#2538#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1572,7 +1578,7 @@
     <entry file="file://$PROJECT_DIR$/src/UserInterface/Frame/GameViewFrame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
-          <caret line="57" column="29" lean-forward="true" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
+          <caret line="57" column="29" lean-forward="false" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1580,16 +1586,16 @@
     <entry file="file://$PROJECT_DIR$/src/Management/GameManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="86">
-          <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+          <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
           <folding>
-            <element signature="e#1418#1557#0" expanded="true" />
-            <element signature="e#1556#1557#0" expanded="true" />
-            <element signature="e#1920#1921#0" expanded="true" />
-            <element signature="e#1962#1963#0" expanded="true" />
-            <element signature="e#2641#2642#0" expanded="true" />
-            <element signature="e#2686#2687#0" expanded="true" />
-            <element signature="e#3025#3026#0" expanded="true" />
-            <element signature="e#3077#3078#0" expanded="true" />
+            <element signature="e#1417#1556#0" expanded="true" />
+            <element signature="e#1555#1556#0" expanded="true" />
+            <element signature="e#1919#1920#0" expanded="true" />
+            <element signature="e#1961#1962#0" expanded="true" />
+            <element signature="e#2640#2641#0" expanded="true" />
+            <element signature="e#2685#2686#0" expanded="true" />
+            <element signature="e#3024#3025#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
           </folding>
         </state>
       </provider>
