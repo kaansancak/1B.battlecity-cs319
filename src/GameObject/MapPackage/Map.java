@@ -1,6 +1,7 @@
 package GameObject.MapPackage;
 
 import GameObject.GameObject;
+import GameObject.MapPackage.BonusPackage.ArmorBonus;
 import GameObject.MapPackage.BonusPackage.Bonus;
 import GameObject.MapPackage.BonusPackage.LifeBonus;
 import GameObject.MapPackage.BonusPackage.SpeedBonus;
@@ -44,6 +45,7 @@ public class Map {
     private ArrayList<Portal> portals;
     private int lifeBonusCount;
     private int speedBonusCount;
+    private int armorBonusCount;
     private Random rand;
 
     /* GameObject.GameObject File Decode
@@ -61,6 +63,7 @@ public class Map {
         initPlayers();
         lifeBonusCount = 0;
         speedBonusCount = 0;
+        armorBonusCount = 0;
         rand = new Random();
     }
 
@@ -145,6 +148,13 @@ public class Map {
             mapPane.getChildren().addAll(speedBonus.getView());
             speedBonusCount++;
             bonuses.add(speedBonus);
+        }
+        else if (type == 2 && armorBonusCount < 2) {
+            Bonus armorBonus = new ArmorBonus(x_loc, y_loc);
+            armorBonus.setReleased(true);
+            mapPane.getChildren().addAll(armorBonus.getView());
+            armorBonusCount++;
+            bonuses.add(armorBonus);
         }
     }
 
@@ -278,11 +288,15 @@ public class Map {
             if (bonus.isTaken() && bonus instanceof LifeBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
-                temp.incrementHealth();
+                temp.incrementLife();
             } else if (bonus.isTaken() && bonus instanceof SpeedBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
                 temp.incrementSpeed();
+            } else if (bonus.isTaken() && bonus instanceof ArmorBonus ){
+                mapPane.getChildren().remove(bonus.getView());
+                objectHolder.remove(bonus);
+                temp.incrementHealth();
             } else
                 bonus.draw();
         }

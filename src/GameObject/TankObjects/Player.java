@@ -72,6 +72,9 @@ public class Player extends Tank {
     public void incrementHealth() {
         remainingLife += 200;
     }
+    public void incrementLife() {
+        remainingLife++;
+    }
     public void incrementSpeed() {
         super.setVelocity( new Point2D.Double(PLAYER_BONUS_VELOCITY, PLAYER_BONUS_VELOCITY));
 
