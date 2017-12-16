@@ -20,11 +20,12 @@ public class Player extends Tank {
     private final double PLAYER_2_START_X = 352.0;
     private final double PLAYER_1_START_Y = 544.0;
     private final double PLAYER_2_START_Y = 544.0;
-    private final double PLAYER_NORMAL_VELOCITY = 3.0;
+    private final double PLAYER_NORMAL_VELOCITY = 4.0;
     private final double PLAYER_BONUS_VELOCITY = 6.0;
+    private final int PLAYER_DIMENSION = 28;
     private final int PLAYER_HEALTH = 200;
     private final int PLAYER_START_DIR = 3;
-    AnimationTimer timer;
+    private AnimationTimer timer;
     private int score;
     private int remainingLife = 4;
     private ArrayList<String> controller;
@@ -43,8 +44,8 @@ public class Player extends Tank {
         score = 0;
         initImages();
         view = new ImageView( upImage);
-        view.setFitWidth( 28);
-        view.setFitHeight( 28);
+        view.setFitWidth( PLAYER_DIMENSION);
+        view.setFitHeight( PLAYER_DIMENSION);
         super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
     }
 
@@ -70,12 +71,16 @@ public class Player extends Tank {
         return remainingLife <= 0;
     }
 
+    public int getRemainingLife(){
+        return remainingLife;
+    }
+
     public void decrementLife(){
         remainingLife--;
     }
 
     public void incrementHealth() {
-        remainingLife += 200;
+        health += PLAYER_HEALTH;
     }
     public void incrementLife() {
         remainingLife++;

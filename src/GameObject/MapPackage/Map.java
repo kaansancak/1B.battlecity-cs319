@@ -12,8 +12,12 @@ import GameObject.TankObjects.*;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -43,6 +47,7 @@ public class Map {
     private ArrayList<GameObject> objectHolder;
     private ArrayList<Destructible> destructibles;
     private ArrayList<Portal> portals;
+    private Duration endTimer;
     private int lifeBonusCount;
     private int speedBonusCount;
     private int armorBonusCount;
@@ -255,6 +260,7 @@ public class Map {
     public void updateBullets(){
         for( Bullet bullet : bullets) {
             if (bullet.isCrushed() || bullet.getyLoc() > FRAME_UPPER_BOUND) {
+
                 bullet.setDestructed(true);
                 mapPane.getChildren().remove(bullet.getView());
             }
@@ -285,6 +291,8 @@ public class Map {
                 if (player.getView().getBoundsInParent().intersects(
                         bonus.getView().getBoundsInParent()
                 )) {
+                    MediaPlayer player1 = new MediaPlayer(new Media(Paths.get("MediaFiles/bonusTaken.mp3").toUri().toString()));
+                    player1.play();
                     temp = player;
                     bonus.setTaken(true);
                 }

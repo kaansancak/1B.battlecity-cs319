@@ -67,13 +67,13 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         });
 
         player = new MediaPlayer( f.getOpeningSong());
-        //player.play();
+        player.play();
         player.setOnEndOfMedia( new Runnable() {
             public void run() {
                 player.seek(Duration.ZERO);
             }
         });
-        //  player.play();
+        player.play();
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");
@@ -186,7 +186,8 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     }
     private void startGame() {
         menuWindow.close();
-        GameManager gameManager = new GameManager(playerCount);
+        GameManager gameManager = GameManager.getGameManagerInstance( playerCount);
+        player.stop();
     }
 
     private void exitBattleCity() {

@@ -6,8 +6,8 @@ import java.awt.geom.Point2D;
 import java.nio.file.Paths;
 
 public class HardBot extends Bot{
-    private final double HARD_BOT_SPEED = 2.75;
-    private final int HARD_BOT_DIMENSION = 32;
+    private final double HARD_BOT_SPEED = 2.5;
+    private final int HARD_BOT_DIMENSION = 30;
     private final int HARD_BOT_HEALTH = 600;
     public HardBot(double xLoc, double yLoc) {
         super(xLoc, yLoc);

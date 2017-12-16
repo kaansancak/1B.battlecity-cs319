@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 import java.nio.file.Paths;
 
 public class MediumBot extends Bot {
-    private final double MEDIUM_BOT_SPEED = 2.5;
+    private final double MEDIUM_BOT_SPEED = 2.3 ;
     private final int MEDIUM_BOT_DIMENSION = 30;
     private final int MEDIUM_BOT_HEALTH = 400;
     public MediumBot(double xLoc, double yLoc) {
