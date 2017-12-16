@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class GameManager  {
 
+    public static GameManager gameManagerInstance = null;
     private final int GAME_START_LEVEL = 1;
     private final int GAME_FINAL_LEVEL = 2;
     private MapManager mapManager;
@@ -29,9 +30,7 @@ public class GameManager  {
     private int player_count;
     private AnimationTimer timer;
 
-    GameManager(){}
-
-    public GameManager(int player_count){
+    private GameManager(int player_count){
         this.player_count = player_count;
         players = new Player[player_count];
         currentScores = new int[player_count];
@@ -53,6 +52,18 @@ public class GameManager  {
         timer.start();
     }
 
+    public static GameManager getGameManagerInstance( int player_count){
+        if ( gameManagerInstance == null){
+            gameManagerInstance = new GameManager( player_count);
+            return gameManagerInstance;
+        }else
+            return gameManagerInstance;
+    }
+
+    public static void endGameManagerInstance(){
+        gameManagerInstance = null;
+    }
+
     private void onUpdate() {
         if( currentGameLevel > GAME_FINAL_LEVEL){
             gameViewFrame = new GameViewFrame(this, 1);
@@ -70,10 +81,14 @@ public class GameManager  {
         }
     }
 
+    public void endMapManager(){
+        MapManager.setEndMapManager();
+    }
+
     public void initiateNextLevel() {
             currentGameLevel++;
             try {
-                mapManager = new MapManager( player_count, currentGameLevel);
+                mapManager = MapManager.getMapManagerInstance( player_count, currentGameLevel);
             }catch ( Exception e){
                 e.printStackTrace();
             }
@@ -85,7 +100,7 @@ public class GameManager  {
 
 
     private void startMapManager() {
-        try{mapManager = new MapManager(player_count, currentGameLevel);} catch (Exception e) {
+        try{mapManager = MapManager.getMapManagerInstance( player_count, currentGameLevel);} catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -133,5 +148,6 @@ public class GameManager  {
     private boolean isGameFinished(){ return !gameRunning; }
     private void startLevel(MapManager mapManager ,int nextLevel){}
     private void finishLevel(MapManager mapmManager){}
+
 
 }

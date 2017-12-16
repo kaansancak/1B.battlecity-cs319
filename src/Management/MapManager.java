@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapManager {
+    private static MapManager mapManagerInstance = null;
     private final int TILES = 20;
     Stage stage = new Stage();
     AnimationTimer timer;
@@ -36,9 +37,7 @@ public class MapManager {
     private boolean pauseCheck = false;
     private Text text;
 
-
-
-    MapManager(int playerCount, int level) throws Exception {
+    private MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
         bots = new ArrayList<>();
@@ -57,6 +56,22 @@ public class MapManager {
         gameLoop();
         pauseMenu = new PauseMenu(this);
         inputController = new InputController( this, map.getPlayers());
+    }
+
+    public static MapManager getMapManagerInstance( int playerCount, int level){
+        if ( mapManagerInstance == null){
+            try {
+                mapManagerInstance = new MapManager( playerCount, level);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return mapManagerInstance;
+        }else
+            return mapManagerInstance;
+    }
+
+    public static void setEndMapManager(){
+        mapManagerInstance = null;
     }
 
     public void start(Stage stage) throws Exception{
@@ -82,8 +97,9 @@ public class MapManager {
     public int getPlayerScore(int id) {
         if( id == 0)
             return map.getPlayer(0).getScore();
-        else
-            return map.getPlayer(0).getScore();
+        else if( playerCount == 2)
+            return map.getPlayer(1).getScore();
+        return 0;
     }
 
     public boolean isPaused() {

@@ -50,19 +50,22 @@ public class GameViewFrame {
             returnCall = true;
             gameView.close();
             gameManager.stopLoop();
+            gameManager.endMapManager();
             gameManager.initiateNextLevel();
         });
         backToMenu.setOnAction( event -> {
             returnCall = true;
             gameView.close();
-                Menu newGame = new Menu();
-                Stage newStage = new Stage();
-                try {
-                    newGame.start(newStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                gameManager.closeActiveMapManager();
+            gameManager.endMapManager();
+            GameManager.endGameManagerInstance();
+            Menu newGame = new Menu();
+            Stage newStage = new Stage();
+            try {
+                newGame.start(newStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            gameManager.closeActiveMapManager();
 
         });
 
