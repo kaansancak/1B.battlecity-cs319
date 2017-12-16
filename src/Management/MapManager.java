@@ -18,6 +18,7 @@ import java.util.Random;
 public class MapManager {
     private static MapManager mapManagerInstance = null;
     private final int TILES = 20;
+    private static final int TRANSLATE_Y = 660;
     Stage stage = new Stage();
     AnimationTimer timer;
     private int tileX, tileY;
@@ -76,7 +77,7 @@ public class MapManager {
 
     public void start(Stage stage) throws Exception{
         this.stage = stage;
-        text.setTranslateY(660);
+        text.setTranslateY(TRANSLATE_Y);
         map.getMapPane().getChildren().addAll(text);
         stage.setScene(new Scene(map.getMapPane()));
             timer = new AnimationTimer() {
@@ -100,10 +101,6 @@ public class MapManager {
         else if( playerCount == 2)
             return map.getPlayer(1).getScore();
         return 0;
-    }
-
-    public boolean isPaused() {
-        return paused;
     }
 
     /*
@@ -142,10 +139,6 @@ public class MapManager {
             gameStatus = GameStatus.LEVEL_FINISHED;
             stage.close();
         }
-    }
-
-    private void onGameOver(){
-
     }
 
     public void startLoop(){
@@ -257,13 +250,6 @@ public class MapManager {
             stage.getScene();
             stage.show();
         }
-        else{
-            finishLevel();
-        }
-
-    }
-    private void finishLevel(){
-        map.finishMap();
     }
 
     public GameStatus getGameStatus() {

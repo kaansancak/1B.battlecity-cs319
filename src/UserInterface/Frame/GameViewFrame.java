@@ -18,6 +18,10 @@ import java.nio.file.Paths;
 
 public class GameViewFrame {
 
+    private static final int PANE_WIDTH = 640;
+    private static final int PANE_HEIGHT = 640;
+    private static final int BUTTON_WIDTH = 250;
+    private static final int BUTTON_HEIGTH = 5;
     private boolean returnCall = false;
     private Label gameFinished;
     private Label gameOver;
@@ -80,7 +84,7 @@ public class GameViewFrame {
             answerBoxes.getChildren().addAll(levelFinished, nextLevel);
         answerBoxes.setAlignment(Pos.CENTER);
         pane.getChildren().add( answerBoxes);
-        Scene frameScene = new Scene(pane, 640, 640);
+        Scene frameScene = new Scene(pane, PANE_WIDTH, PANE_HEIGHT);
         String  style = getClass().getResource("../../style.css").toExternalForm();
         frameScene.getStylesheets().add(style);
         gameView.setScene(frameScene);
@@ -93,7 +97,7 @@ public class GameViewFrame {
 
     private void styleButton( Button returnButton) {
         returnButton.setId("glass-grey");
-        returnButton.setPrefSize(250, 5);
+        returnButton.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGTH);
 
 
         returnButton.setOnMouseEntered(new EventHandler<MouseEvent>() {

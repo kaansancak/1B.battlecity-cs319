@@ -3,6 +3,8 @@ package GameObject.TankObjects;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.awt.geom.Point2D;
 import java.nio.file.Paths;
@@ -27,7 +29,7 @@ public class Player extends Tank {
     private final int PLAYER_START_DIR = 3;
     private AnimationTimer timer;
     private int score;
-    private int remainingLife = 4;
+    private int remainingLife = 2;
     private ArrayList<String> controller;
 
     public Player(int id, int controllerId) {
@@ -57,6 +59,8 @@ public class Player extends Tank {
     }
 
     public void setStartCondition(){
+        MediaPlayer player1 = new MediaPlayer(new Media(Paths.get("MediaFiles/statueDestroyed.mp3").toUri().toString()));
+        player1.play();
         health = PLAYER_HEALTH;
         if( id == 0){
             this.xLoc = PLAYER_1_START_X;
@@ -108,18 +112,6 @@ public class Player extends Tank {
 
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    private ArrayList<String> getController() {
-        return controller;
-    }
-
-    private void setController(ArrayList<String> controller) {
-        this.controller = controller;
     }
 
     @Override

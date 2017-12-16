@@ -1,7 +1,9 @@
 package Management;
 
 import GameObject.GameObject;
-import GameObject.MapPackage.ObstaclesObjects.*;
+import GameObject.MapPackage.ObstaclesObjects.Destructible;
+import GameObject.MapPackage.ObstaclesObjects.Statue;
+import GameObject.MapPackage.ObstaclesObjects.Undestructible;
 import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
 import GameObject.TankObjects.Player;
@@ -79,39 +81,6 @@ public class CollisionManager {
                 }
             }
         }
-    }
-
-
-    public void checkTankCollision() {
-        for (Bullet bullet : bullets) {
-            for (Tank tank : tanks) {
-                if (bullet.getView().getBoundsInParent().
-                        intersects(tank.getView().getBoundsInParent())) {
-                    System.out.print("col");
-                    damageTank(tank);
-                    bullet.setCrushed(true);
-                }
-            }
-        }
-
-    }
-
-    public boolean isCollided(Bullet bulletObject) {
-        /*if( !isPassable((map[bulletObject.getxLoc()][bulletObject.getyLoc()]))
-            && map[bulletObject.getxLoc()][bulletObject.getyLoc()] != null){
-                bulletObject.setCrushed(true);
-            return true;
-        }*/
-        return false;
-    }
-
-    // do we need another method such as TankPassable which return also false for water ?
-    public boolean isPassable(GameObject gameObject) {
-        return !(gameObject instanceof Brick || gameObject instanceof IronWall);
-    }
-
-    public boolean isDestructible(GameObject gameObject2) {
-        return gameObject2 instanceof Tank || gameObject2 instanceof Destructible;
     }
 
     //Damage the object if there is a collision

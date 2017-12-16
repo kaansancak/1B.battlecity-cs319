@@ -32,13 +32,13 @@ public class Settings implements EventHandler<ActionEvent> {
     FileManager file;
     BorderPane border;
     UserInterface.MenuPackage.Menu menu;
-    // GameObject.GameObject.TankObjects.Player 1 Items
+    // Player 1 Items
     Text player1Label;
     ArrayList<String> player1_keyList;
     ComboBox player1_settings;
     Text player1l;
     Text player2l;
-    // GameObject.GameObject.TankObjects.Player 2 Items
+    // Player 2 Items
     Text player2Label;
     ArrayList<String> player2_keyList;
     ComboBox player2_settings;
@@ -288,7 +288,6 @@ public class Settings implements EventHandler<ActionEvent> {
                 selectBackGroundMusic( newValue);
             }
         });
-        // add style
     }
 
     private void initPlayerLabels() {
@@ -316,7 +315,7 @@ public class Settings implements EventHandler<ActionEvent> {
     private void mute() {
         latestVolume = volume;
         volume = 0;
-        changeVolume( volume); // will change the slider too
+        changeVolume( volume);
         menu.stopSong();
     }
 
@@ -341,14 +340,7 @@ public class Settings implements EventHandler<ActionEvent> {
         }
         else
         {
-            player_id = 2;
             player2l.setText(newKeyList.toString());
-            player2_keyList.set(0, Character.toString(newKeyList.charAt(0)));
-            player2_keyList.set(1, Character.toString(newKeyList.charAt(0)));
-            player2_keyList.set(2, Character.toString(newKeyList.charAt(3)));
-            player2_keyList.set(3, Character.toString(newKeyList.charAt(6)));
-            player2_keyList.set(4, Character.toString(newKeyList.charAt(9)));
-            player2_keyList.set(5, newKeyList.substring( 12, 16));
         }
     }
 

@@ -144,7 +144,6 @@ public abstract class Tank extends GameObject {
         super.setViewImage(super.getImage());
     }
 
-
     public void getDamaged(){
         health -= BULLET_DAMAGE;
     }
@@ -157,10 +156,6 @@ public abstract class Tank extends GameObject {
         this.health = health;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
     public void setSpeed(int speed) {
         this.speed = speed;
     }
@@ -169,27 +164,10 @@ public abstract class Tank extends GameObject {
         return oldSpeed;
     }
 
-    public void setOldSpeed(int speed) {
-        oldSpeed = speed;
-    }
-
-    //Setters and Getters
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
     protected abstract void initImages();
 
@@ -197,7 +175,4 @@ public abstract class Tank extends GameObject {
         return dir;
     }
 
-    public void setDir(int dir) {
-        this.dir = dir;
-    }
 }

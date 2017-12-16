@@ -9,6 +9,9 @@ import java.util.Random;
  * Created by kaan on 10/28/2017.
  */
 public class Bot extends Tank {
+    private static final int WIDTH = 28;
+    private static final int HEIGHT = 28;
+    private final int VELOCITY = 2;
     private final int BOT_ID = 99;
     private Random rand = new Random();
 
@@ -19,9 +22,9 @@ public class Bot extends Tank {
         this.dir = 1;
         id = BOT_ID;
         view = new ImageView( rightImage);
-        view.setFitWidth( 28);
-        view.setFitHeight( 28);
-        super.setVelocity( new Point2D.Double(2, 2));
+        view.setFitWidth( WIDTH);
+        view.setFitHeight( HEIGHT);
+        super.setVelocity( new Point2D.Double(VELOCITY, VELOCITY));
         health = 100;
     }
 
@@ -39,21 +42,6 @@ public class Bot extends Tank {
     This method must be modified according to description
     in the design report.
      */
-    public void runBot( boolean changeDirStatus){
-        if( changeDirStatus) {
-            super.move( dir );
-        }
-        else if( !changeDirStatus) {
-            int random_dir = dir;
-            do{
-                random_dir = rand.nextInt(4);
-            }while( random_dir != dir);
-            dir = random_dir;
-        }
-    }
-    private void getRandomDir(){
-        dir = rand.nextInt( 4);
-    }
 
     @Override
     protected void initImages() {

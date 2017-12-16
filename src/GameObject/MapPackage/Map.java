@@ -9,12 +9,10 @@ import GameObject.MapPackage.ObstaclesObjects.*;
 import GameObject.MapPackage.TilePackage.Portal;
 import GameObject.MapPackage.TilePackage.Tile;
 import GameObject.TankObjects.*;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.nio.file.Paths;
@@ -30,8 +28,6 @@ public class Map {
     private final int FRAME_LOWER_BOUND = 0;
     private boolean isGameOver = false;
     private boolean isPaused = false;
-    private Scene mapScene;
-    private Stage mapStage;
     private int playerCount;
     private int level;
     private int remainingBots;
@@ -54,8 +50,8 @@ public class Map {
     private Random rand;
 
     /* GameObject.GameObject File Decode
-    * 0 = GameObject.GameObject.MapPackage.ObstaclesObjects.Brick, 1 = Wall, 2 = GameObject.GameObject.MapPackage.ObstaclesObjects.Bush, 3 = GameObject.MapPackage.ObstaclesObjects.Water
-    * 4 = GameObject.GameObject.TankObjects.Player, 5 = GameObject.GameObject.TankObjects.Bot
+    * 0 = Brick, 1 = Wall, 2 = Bush, 3 = Water
+    * 4 = Player, 5 = Bot
     * */
     public Map(int playerCount, int level, int[][] obstaclesMap){
         createObjectArrays();
@@ -84,7 +80,7 @@ public class Map {
             mapPane.setPrefHeight(FRAME_UPPER_BOUND + 60);
 
 
-        botCount =  6 + 2 * level; // WOW lol
+        botCount =  6 + 2 * level;
         remainingBots = botCount;
     }
 
@@ -145,7 +141,7 @@ public class Map {
                 }
             }
         } while (!found_empty);
-        if (type == 0 && lifeBonusCount < 2) { // there should be a time between the creation of bonuses and the bonuses should not be released on the obstacles
+        if (type == 0 && lifeBonusCount < 2) {
             Bonus lifeBonus = new LifeBonus(x_loc, y_loc);
             lifeBonus.setReleased(true);
             mapPane.getChildren().addAll(lifeBonus.getView());
@@ -403,9 +399,6 @@ public class Map {
         mapPane.getChildren().addAll(fired.getView());
         bullets.add(fired);
     }
-    public int getLevel() {
-        return level;
-    }
 
     public void addObjects(GameObject[][] gameObjects){
         this.gameObjects = gameObjects;
@@ -414,11 +407,6 @@ public class Map {
         for(int i = 0; i < bullets.size(); i++){
             bullets.get(i).move();
         }
-    }
-
-
-    public void finishMap(){
-
     }
 
     public boolean tryNextMove( Tank tank, int dir){
@@ -487,19 +475,15 @@ public class Map {
         return remainingBots;
     }
 
-
     public int getAliveBots(){ return bots.size(); }
-
 
     public ArrayList<GameObject> getGameObjects() {
         return objectHolder;
     }
 
-
     public ArrayList<Tank> getTanks() {
         return tanks;
     }
-
 
     public GameObject[][] getGameObjectsArray(){
         return gameObjects;
@@ -512,9 +496,6 @@ public class Map {
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
-    public Stage getMapStage() {
-        return mapStage;
-    }
 
     public boolean isPaused() {
         return isPaused;
@@ -524,10 +505,4 @@ public class Map {
         isPaused = paused;
     }
 
-    public int[] getScores() {
-        int[] scores = new int[2];
-        scores[0] = getPlayer(0).getScore();
-        scores[1] = getPlayer(1).getScore();
-        return scores;
-    }
 }

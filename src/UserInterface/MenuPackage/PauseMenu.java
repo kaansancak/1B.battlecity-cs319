@@ -21,14 +21,14 @@ public class PauseMenu implements EventHandler<ActionEvent> {
     // variables
     private static final int SETTINGS_WINDOW_WIDTH = 400;
     private static final int SETTINGS_WINDOWS_HEIGHT = 400;
+    private static final int BUTTON_WIDTH = 100;
+    private static final int BUTTON_HEIGHT = 10;
 
     private VBox vBox;
-    private boolean answer;
     private Label pauseMenuLabel;
 
     private Stage pauseMenuWindow;
     private Scene pauseMenuScene;
-    private boolean returnCall  = false;
 
     private Button returnButton;
     private Button backToMenu;
@@ -55,16 +55,12 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         pauseMenuWindow.setScene( pauseMenuScene);
     }
 
-    public boolean isReturnCall() {
-        return returnCall;
-    }
-
     public void initButtons() {
         // buttons
         returnButton = new Button("Return");
         returnButton.setOnAction(this);
         returnButton.setId("glass-grey");
-        returnButton.setPrefSize(100, 10);
+        returnButton.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         returnButton.setOnMouseEntered(new EventHandler<MouseEvent>
                 () {
             @Override
@@ -86,7 +82,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         backToMenu = new Button("Menu");
         backToMenu.setOnAction( event -> {
             pauseMenuWindow.close();
-            returnCall = true;
             try {
                 restart();
             } catch (Exception e) {
@@ -114,11 +109,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
         });
     }
 
-
-    public void showMenu() {
-        pauseMenuWindow.show();
-    }
-
     @Override
     public void handle(ActionEvent event) {
         if( event.getSource() == returnButton) {
@@ -139,9 +129,6 @@ public class PauseMenu implements EventHandler<ActionEvent> {
 
     public void showPauseMenu() {
         pauseMenuWindow.show();
-    }
-    public void closeSettings(){
-        pauseMenuWindow.close();
     }
 
     public void restart() throws Exception {

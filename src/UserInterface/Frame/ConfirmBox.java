@@ -20,6 +20,10 @@ import java.nio.file.Paths;
 public class ConfirmBox{
 
     private boolean answer;
+    private static final int FRAME_WIDTH = 600;
+    private static final int FRAME_HEIGHT = 200;
+    private static final int BUTTON_WIDTH = 100;
+    private static final int BUTTON_HEIGHT = 10;
 
     public boolean display( String title, String message, int width, int height){
 
@@ -52,7 +56,7 @@ public class ConfirmBox{
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
         pane.setBackground(new Background(new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         pane.getChildren().add( answerBoxes);
-        Scene answerScene = new Scene( pane, 600, 200);
+        Scene answerScene = new Scene( pane, FRAME_WIDTH, FRAME_HEIGHT);
         String  style = getClass().getResource("../../style.css").toExternalForm();
         answerScene.getStylesheets().add(style);
 
@@ -63,9 +67,9 @@ public class ConfirmBox{
 
     public void styleButtons(Button yes, Button no) {
         yes.setId("glass-grey");
-        yes.setPrefSize(100, 10);
+        yes.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         no.setId("glass-grey");
-        no.setPrefSize(100, 10);
+        no.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
 
         yes.setOnMouseEntered(new EventHandler<MouseEvent>

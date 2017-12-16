@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
 
 /**
  * Created by kaan on 11/12/2017.
@@ -21,7 +20,6 @@ public class InputController implements EventHandler<KeyEvent> {
 
     public InputController(MapManager mapManager, Player[] player) {
 
-        //player1 = new MediaPlayer(new Media(Paths.get("MediaFiles/bulletSound.mp3").toUri().toString()));
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
@@ -83,10 +81,6 @@ public class InputController implements EventHandler<KeyEvent> {
             }
 
         }
-    }
-
-    public Stage getMapStage() {
-        return map.getMapStage();
     }
 
     private void movePlayer(Player player, int dir){

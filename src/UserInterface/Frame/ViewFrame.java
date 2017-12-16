@@ -20,6 +20,11 @@ import java.util.ArrayList;
  */
 public class ViewFrame {
     private boolean returnCall = false;
+    private static final int padding = 5;
+    private static final int BUTTON_WIDTH = 100;
+    private static final int BUTTON_HEIGTH = 5;
+    private static final int PANE_WIDTH = 600;
+    private static final int PANE_HEIGHT = 600;
 
     public ViewFrame( String title, ArrayList<String> message){
         Stage viewFrame = new Stage();
@@ -32,7 +37,7 @@ public class ViewFrame {
         for( int i = 0; i < message.size(); i++) {
             labels[i] = new Label(message.get(i));
             labels[i].setId("actiontarget1");
-            labels[i].setPadding(new Insets(5, 5, 5, 5));
+            labels[i].setPadding(new Insets(padding, padding, padding, padding));
         }
 
         Button returnButton = new Button();
@@ -49,7 +54,7 @@ public class ViewFrame {
         answerBoxes.getChildren().addAll(labels[0],labels[1],labels[2],labels[3],labels[4],labels[5],labels[6], returnButton);
         answerBoxes.setAlignment(Pos.CENTER);
         pane.getChildren().add( answerBoxes);
-        Scene frameScene = new Scene(pane, 600, 600);
+        Scene frameScene = new Scene(pane, PANE_WIDTH, PANE_HEIGHT);
         String  style = getClass().getResource("../../style.css").toExternalForm();
         frameScene.getStylesheets().add(style);
         viewFrame.setScene(frameScene);
@@ -58,7 +63,7 @@ public class ViewFrame {
 
     private void styleButton( Button returnButton) {
         returnButton.setId("glass-grey");
-        returnButton.setPrefSize(100, 5);
+        returnButton.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGTH);
 
 
         returnButton.setOnMouseEntered(new EventHandler<MouseEvent>

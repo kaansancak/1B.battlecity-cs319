@@ -33,6 +33,10 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private static final int MENU_BUTTON_COUNT = 6;
     private static final int MENU_WINDOW_WIDTH = 600;
     private static final int MENU_WINDOWS_HEIGHT = 600;
+    private static final int CONFIRM_BOX_WIDTH = 250;
+    private static final int CONFIRM_BOX_HEIGHT = 250;
+    private static final int BUTTON_WIDTH = 150;
+    private static final int BUTTON_HEIGHT = 20;
     public static MediaPlayer player;
     Label battleCity;
     private Stage menuWindow;
@@ -77,11 +81,9 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
 
         battleCity = new Label("Battle City");
         battleCity.setId("welcome-text");
-        //viewframePlayer;
 
-        //Inıtialize menu Buttons
+        //Initialize menu Buttons
         menuButtons = new Button[MENU_BUTTON_COUNT];
-
 
         //Give name and set listener to the menu buttons
         initMenuButtons( menuButtons);
@@ -104,18 +106,14 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             mBBox.getChildren().add( menuButton);
         }
 
-
-        //Add VBox to the UserInterface.MenuPackage.Menu Layout
+        //Add VBox to the Menu Layout
         menuLayout.getChildren().add( mBBox);
-
         menuScene = new Scene( menuLayout, MENU_WINDOW_WIDTH, MENU_WINDOWS_HEIGHT);
-
         String  style = getClass().getResource("../../style.css").toExternalForm();
         menuScene.getStylesheets().add(style);
         menuWindow.setScene(menuScene);
         menuWindow.show();
     }
-
 
     @Override
     public void handle(ActionEvent event) {
@@ -134,10 +132,6 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
         }else if( event.getSource() == menuButtons[5]){
             exitBattleCity();
         }
-    }
-
-    public void showMenu() {
-        menuWindow.showAndWait();
     }
 
     private void startSettings() {
@@ -193,7 +187,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
     private void exitBattleCity() {
         ConfirmBox confirmBox = new ConfirmBox();
         boolean answer = confirmBox.display( "Close Request", "Are you sure that you want to exit Battle City?",
-                250, 250);
+                CONFIRM_BOX_WIDTH, CONFIRM_BOX_HEIGHT);
         if(answer)
             menuWindow.close();
     }
@@ -210,7 +204,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             menuButtons[i] = new Button();
             menuButtons[i].setOnAction(this);
             menuButtons[i].setId("glass-grey");
-            menuButtons[i].setPrefSize(150, 20);
+            menuButtons[i].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         }
 
         menuButtons[0].setOnMouseEntered(new EventHandler<MouseEvent>
