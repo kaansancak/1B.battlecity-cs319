@@ -1,20 +1,19 @@
 package GameObject.MapPackage;
 
 import GameObject.GameObject;
+import GameObject.MapPackage.BonusPackage.ArmorBonus;
 import GameObject.MapPackage.BonusPackage.Bonus;
 import GameObject.MapPackage.BonusPackage.LifeBonus;
 import GameObject.MapPackage.BonusPackage.SpeedBonus;
 import GameObject.MapPackage.ObstaclesObjects.*;
-import GameObject.TankObjects.Bot;
-import GameObject.TankObjects.Bullet;
-import GameObject.TankObjects.Player;
-import GameObject.TankObjects.Tank;
+import GameObject.MapPackage.TilePackage.Portal;
+import GameObject.MapPackage.TilePackage.Tile;
+import GameObject.TankObjects.*;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -43,8 +42,10 @@ public class Map {
     private ArrayList<Bonus> bonuses;
     private ArrayList<GameObject> objectHolder;
     private ArrayList<Destructible> destructibles;
+    private ArrayList<Portal> portals;
     private int lifeBonusCount;
     private int speedBonusCount;
+    private int armorBonusCount;
     private Random rand;
 
     /* GameObject.GameObject File Decode
@@ -62,6 +63,7 @@ public class Map {
         initPlayers();
         lifeBonusCount = 0;
         speedBonusCount = 0;
+        armorBonusCount = 0;
         rand = new Random();
     }
 
@@ -71,8 +73,13 @@ public class Map {
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
-        mapPane.setPrefHeight(FRAME_UPPER_BOUND+60);
-        botCount = 10 + 2 * level; // WOW lol
+        if(playerCount == 1)
+            mapPane.setPrefHeight(FRAME_UPPER_BOUND + 40);
+        else
+            mapPane.setPrefHeight(FRAME_UPPER_BOUND + 60);
+
+
+        botCount =  6 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -81,6 +88,7 @@ public class Map {
         bullets = new ArrayList<>();
         bots = new ArrayList<>();
         bonuses = new ArrayList();
+        portals = new ArrayList<>();
         objectHolder = new ArrayList<GameObject>();
         tanks = new ArrayList<Tank>();
         destructibles = new ArrayList<Destructible>();
@@ -101,8 +109,16 @@ public class Map {
                 }
             }
         }while(!found_empty);
-
-        Bot bot = new Bot( x_loc, y_loc);
+        Bot bot;
+        if(remainingBots > botCount / 2) {
+            bot = new EasyBot(x_loc, y_loc);
+        }
+        else if(remainingBots > level) {
+            bot = new MediumBot(x_loc, y_loc);
+        }
+        else{
+            bot = new HardBot(x_loc, y_loc);
+        }
         mapPane.getChildren().add( bot.getView());
         bots.add( bot);
         tanks.add( bot);
@@ -138,6 +154,13 @@ public class Map {
             speedBonusCount++;
             bonuses.add(speedBonus);
         }
+        else if (type == 2 && armorBonusCount < 2) {
+            Bonus armorBonus = new ArmorBonus(x_loc, y_loc);
+            armorBonus.setReleased(true);
+            mapPane.getChildren().addAll(armorBonus.getView());
+            armorBonusCount++;
+            bonuses.add(armorBonus);
+        }
     }
 
 
@@ -167,10 +190,16 @@ public class Map {
 
     private void updatePlayer(){
         boolean isAllPlayersDead = true;
+        checkTeleport();
         for ( Player player : players){
             if ( !player.isDead()){
                 player.draw();
                 isAllPlayersDead = false;
+            }
+            else if( !player.isLifeOver()){
+                player.setStartCondition();
+                isAllPlayersDead = false;
+                player.decrementLife();
             }
             else{
                 mapPane.getChildren().remove(player.getView());
@@ -179,6 +208,28 @@ public class Map {
         }
         if( isAllPlayersDead){
             isGameOver = true;
+        }
+    }
+
+    private void checkTeleport() {
+        for ( Player player: players){
+            for ( Portal portal: portals){
+                if( portal.getView().getBoundsInParent().intersects(
+                        player.getView().getBoundsInParent()
+                )){
+                    if( portal.getActivation()) {
+
+                        Portal randomPortal = portal;
+                        do{
+                            randomPortal = portals.get(rand.nextInt(portals.size()));
+                        }while( randomPortal == portal);
+                        randomPortal.setPassed(true);
+                        portal.setPassed(true);
+                        player.setxLoc(randomPortal.getxLoc());
+                        player.setyLoc(randomPortal.getyLoc());
+                    }
+                }
+            }
         }
     }
 
@@ -192,6 +243,12 @@ public class Map {
             }
         }
         bots.removeIf(Tank::isDead);
+    }
+
+    public void updatePortals(){
+        for( Portal portal : portals){
+            portal.draw();
+        }
     }
 
     //Update of Bullets
@@ -222,30 +279,30 @@ public class Map {
     }
 
     public void updateBonuses() {
-        for( Bonus bonus : bonuses) {
-            for( Player player: players){
-                if( player.getView().getBoundsInParent().intersects(
+        Player temp = new Player(3, 3);
+        for (Bonus bonus : bonuses) {
+            for (Player player : players) {
+                if (player.getView().getBoundsInParent().intersects(
                         bonus.getView().getBoundsInParent()
-                )){
-                    //Write bonus taken codes
+                )) {
+                    temp = player;
                     bonus.setTaken(true);
                 }
             }
-            if( bonus.isTaken() && bonus instanceof LifeBonus) {
+
+            if (bonus.isTaken() && bonus instanceof LifeBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
-                for( Player player: players) {
-                    player.incrementHealth();
-                }
-            }
-            else if( bonus.isTaken() && bonus instanceof SpeedBonus) {
+                temp.incrementLife();
+            } else if (bonus.isTaken() && bonus instanceof SpeedBonus) {
                 mapPane.getChildren().remove(bonus.getView());
                 objectHolder.remove(bonus);
-                for( Player player: players) {
-                    player.incrementSpeed();
-                }
-            }
-            else
+                temp.incrementSpeed();
+            } else if (bonus.isTaken() && bonus instanceof ArmorBonus ){
+                mapPane.getChildren().remove(bonus.getView());
+                objectHolder.remove(bonus);
+                temp.incrementHealth();
+            } else
                 bonus.draw();
         }
         bonuses.removeIf(Bonus::isTaken);
@@ -315,6 +372,11 @@ public class Map {
                         objectHolder.add( statue);
                         destructibles.add( statue);
                         statue.draw();
+                    }else if( obstaclesMap[i][j] == 8){ //Portal
+                        Portal portal = new Portal( cordinate_x, cordinate_y);
+                        portals.add(portal);
+                        mapPane.getChildren().add(portal.getView());
+                        portal.draw();
                     }
                 }
             }
@@ -411,20 +473,6 @@ public class Map {
     }
 
 
-
-    public boolean bonusTaken(Bonus bonus, Tank tank, int dir) {
-        ImageView tankView = tank.getView();
-        ImageView bonusView = bonus.getView();
-
-        for( GameObject gameObject : objectHolder) {
-            if( tankView.getBoundsInParent().intersects( bonusView.getBoundsInParent())) {
-                bonusView.setVisible(false);
-                bonus.setTaken(true);
-            }
-        }
-        return true;
-    }
-
     // getters and setters
 
     public int getRemainingBots() {
@@ -466,5 +514,12 @@ public class Map {
 
     public void setPaused(boolean paused) {
         isPaused = paused;
+    }
+
+    public int[] getScores() {
+        int[] scores = new int[2];
+        scores[0] = getPlayer(0).getScore();
+        scores[1] = getPlayer(1).getScore();
+        return scores;
     }
 }

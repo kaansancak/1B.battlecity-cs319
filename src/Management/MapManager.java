@@ -2,6 +2,8 @@ package Management;
 
 import GameObject.MapPackage.Map;
 import GameObject.TankObjects.Bot;
+import GameObject.TankObjects.EasyBot;
+import GameObject.TankObjects.HardBot;
 import UserInterface.MenuPackage.PauseMenu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -69,6 +71,7 @@ public class MapManager {
                     addBot();
                     addLifeBonus(now);
                     addSpeedBonus(now);
+                    addArmorBonus(now);
                 }
             };
             timer.start();
@@ -127,19 +130,18 @@ public class MapManager {
         timer.start();
     }
 
-    private void updateStatText() {
-        if (map.getPlayers().length == 1) {
-            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                    this.mapLevel + "\nPlayer 1 Remaining Health: " + map.getPlayer(0).getHealth()
-                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir());
-        } else {
-            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tLevel: " +
-                    this.mapLevel + "\nPlayer 1 Remaining Health: " + map.getPlayer(0).getHealth()
-                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(0).getDir()
-                    + "\nPlayer 2 Remaining Health: " + map.getPlayer(1).getHealth()
-                    + "\t\t\t\t\tScore: (dir?)" + map.getPlayer(1).getDir());
+    private void updateStatText(){
+        if( playerCount == 2)
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\tPlayer1 Health: " +
+                    map.getPlayer(0).getHealth() + "\t\t\t\tPlayer1 Score: " +
+                    map.getPlayer(0).getScore() +  "\t\t\t\tPlayer1 Life: " + map.getPlayer(0).getRemainingLife() + "\nLevel: " + this.mapLevel
+                    + "\t\t\t\t\t\tPlayer2 Health: " + map.getPlayer(1).getHealth() + "\t\t\t\tPlayer2 Score: " +
+                    map.getPlayer(1).getScore() + "\t\t\t\tPlayer2 Life: " + map.getPlayer(1).getRemainingLife());
+        else if( playerCount == 1)
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tPlayer1 Health: " +
+                    map.getPlayer(0).getHealth() + "\nLevel: " + this.mapLevel
+                    + "\t\t\t\t\t\t\t\t\t\tPlayer1 Score: " + map.getPlayer(0).getScore() + "\t\t\t\t\t\tPlayer1 Life: " + map.getPlayer(0).getRemainingLife());
 
-        }
     }
 
     public void updateAllObjects(){
@@ -147,6 +149,7 @@ public class MapManager {
         map.updateBullets();
         map.updateDestructibles();
         map.updateBonuses();
+        map.updatePortals();
     }
 
     public void handleBots(){
@@ -157,8 +160,13 @@ public class MapManager {
             if( changeDirStatus){
                 if( Math.random() < 0.008)
                     bot.setRandomDir();
-                if( Math.random() < 0.005)
+                if( bot instanceof EasyBot && Math.random() < 0.005)
                     map.fire(bot);
+                else if( bot instanceof EasyBot && Math.random() < 0.008)
+                    map.fire(bot);
+                else if( bot instanceof HardBot && Math.random() < 0.01)
+                    map.fire(bot);
+
                 bot.move( bot.getDir());
             }else{
                 bot.setRandomDir();
@@ -174,12 +182,18 @@ public class MapManager {
 
     private void addLifeBonus(long time) {
         int type = 0;
-        // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
+        // if type = 0 -> lifeBonus, if type = 1 -> speedBonus, if type = 3 -> armorBonus
         if (time % 2000 == 0)
             map.createBonus(type);
     }
     private void addSpeedBonus(long time) {
         int type = 1;
+        if( time % 5000 == 0)
+            map.createBonus(type);
+    }
+
+    private void addArmorBonus(long time) {
+        int type = 2;
         if( time % 5000 == 0)
             map.createBonus(type);
     }
@@ -205,26 +219,6 @@ public class MapManager {
         return obstaclesMap;
     }
 
-    private void manageObjects(){
-        for(int i = 0; i < map.getBullets().size() ; i++){
-                collisionManager.checkCollision();
-            }
-    }
-
-    private void updateMapObjects(){
-
-    }
-
-    private void updateMap(){
-        mapLevel++;
-        map = new Map(playerCount, mapLevel, readObstaclesMap(mapLevel));
-        startsLevel();
-        stage.setScene(new Scene(map.getMapPane()));
-        System.out.println("updated: " + mapLevel);
-        inputController = new InputController( this, map.getPlayers());
-        map.getMapPane().getChildren().addAll(text);
-        gameLoop();
-    }
     private void startsLevel(){
         readObstaclesMap(mapLevel);
         collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
@@ -256,6 +250,7 @@ public class MapManager {
     public void setGameStatus( GameStatus gameStatus){
         this.gameStatus = gameStatus;
     }
+
     // getter and setters
     public Map getMap() {
         return map;

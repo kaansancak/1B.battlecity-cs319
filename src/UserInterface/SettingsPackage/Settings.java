@@ -15,7 +15,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -24,7 +23,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.nio.file.Paths;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class Settings implements EventHandler<ActionEvent> {

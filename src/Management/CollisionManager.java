@@ -1,12 +1,10 @@
 package Management;
 
 import GameObject.GameObject;
-import GameObject.MapPackage.ObstaclesObjects.Brick;
-import GameObject.MapPackage.ObstaclesObjects.Destructible;
-import GameObject.MapPackage.ObstaclesObjects.IronWall;
-import GameObject.MapPackage.ObstaclesObjects.Undestructible;
+import GameObject.MapPackage.ObstaclesObjects.*;
 import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
+import GameObject.TankObjects.Player;
 import GameObject.TankObjects.Tank;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class CollisionManager {
 
     public void updateRemovals() {
         tanks.removeIf(Tank::isDead);
-        bullets.removeIf(Bullet::isCrushed);
+        bullets.removeIf(Bullet::isDestructed);
         gameObjects.removeIf(GameObject::isDestructed);
     }
 
@@ -42,6 +40,13 @@ public class CollisionManager {
                         if ( gameObject instanceof Bot &&
                                 bullet.getId() == 99){
                             continue;
+                        }
+                        if( gameObject instanceof Bot) {
+                            incrementScore( bullet.getId());
+                        }
+                        if( gameObject instanceof Player) {
+                            if( bullet.getId() == 0 || bullet.getId() == 1)
+                                continue;
                         }
                         damageTank( (Tank)gameObject);
                         bullet.setCrushed( true);
@@ -55,6 +60,16 @@ public class CollisionManager {
                         else
                             bullet.setCrushed(true);
                     }
+                }
+            }
+        }
+    }
+
+    private void incrementScore(int id) {
+        for( Tank tank: tanks){
+            if( tank instanceof Player){
+                if(tank.getId() == id){
+                    ((Player) tank).incrementScore();
                 }
             }
         }
@@ -99,7 +114,9 @@ public class CollisionManager {
             ((Tank) gameObject2).getDamaged();
             //If destructible object damage
         } else if (gameObject2 instanceof Destructible) {
-            if (gameObject2.isDamaged() == false) {
+            if( gameObject2 instanceof Statue){
+                ((Statue) gameObject2).getDamaged();
+            }else if (gameObject2.isDamaged() == false) {
                 ((Destructible) gameObject2).getDamaged(dir);
                 (gameObject2).setDamaged(true);
             }else{

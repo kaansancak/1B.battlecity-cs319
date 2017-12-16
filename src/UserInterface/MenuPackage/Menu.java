@@ -332,7 +332,7 @@ public class Menu extends Application implements EventHandler<ActionEvent>{
             }
         });
         //Set the titles of UserInterface.MenuPackage.Menu Buttons
-        menuButtons[0].setText("Player");
+        menuButtons[0].setText("Singleplayer");
         menuButtons[1].setText("Multiplayer");
         menuButtons[2].setText("Settings");
         menuButtons[3].setText("How to Play");

@@ -1,43 +1,45 @@
-package GameObject.MapPackage.ObstaclesObjects;
+package GameObject.MapPackage.TilePackage;
 
+import GameObject.GameObject;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.nio.file.Paths;
 
-public class Statue extends Destructible {
+/**
+ * Created by kaan on 11/12/2017.
+ */
+public class Tile extends GameObject {
 
-    private final String IMG_DIR = "./MediaFiles/image14.png";
-    //Constructor
-    public Statue( double xLoc, double yLoc){
-        health = 1000;
+    private final String IMG_DIR =  "./MediaFiles/small_void.png";
+    public Tile( double xLoc, double yLoc ) {
         this.xLoc = xLoc;
         this.yLoc = yLoc;
         view = new ImageView(new Image(Paths.get(IMG_DIR).toUri().toString()));
-        view.setFitWidth(32);
         view.setFitHeight(32);
+        view.setFitWidth(32);
     }
 
-    public boolean isDestructed(){
-        return health <= 0;
-    }
 
-    public void getDamaged(){
-        health = health - 200;
-    }
 
     @Override
     public boolean isPassableByTanks() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isPassableByBullets() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isHideable() {
         return false;
+    }
+
+    @Override
+    public void draw() {
+        super.getView().setTranslateX( xLoc);
+        super.getView().setTranslateY( yLoc);
     }
 }

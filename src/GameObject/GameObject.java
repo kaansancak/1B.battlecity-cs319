@@ -62,6 +62,12 @@ public abstract class GameObject {
         this.xLoc = xLoc;
     }
 
+    protected void setViewBounds( Image image, int width, int height){
+        view.setImage( image);
+        view.setFitWidth( width);
+        view.setFitWidth( height);
+    }
+
     public Point2D getVelocity() {
         return velocity;
     }
