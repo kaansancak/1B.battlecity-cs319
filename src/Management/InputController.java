@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseButton;
 
 /**
  * Created by kaan on 11/12/2017.
@@ -18,19 +18,35 @@ public class InputController implements EventHandler<KeyEvent> {
     private Map map;
 
 
-    public InputController(MapManager mapManager, Player[] player){
+    public InputController(MapManager mapManager, Player[] player) {
+
         this.mapScene = mapManager.getStage().getScene();
         this.map = mapManager.getMap();
         this.player = player;
-        mapScene.setOnKeyPressed( this);
-        mapScene.setOnKeyReleased( event -> {
-            if(event.getCode() == KeyCode.SPACE && !(player[0].isDead())){
+        mapScene.setOnKeyPressed(this);
+        mapScene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.SPACE && !(player[0].isDead())) {
                 map.fire(player[0]); //player 0 direction 0
             }
-            if(player.length == 2 && (event.getCode() == KeyCode.SHIFT && !(player[1].isDead()))){
+            if (player.length == 2 && (event.getCode() == KeyCode.SHIFT && !(player[1].isDead()))) {
                 map.fire(player[1]); //player 0 direction 0
             }
         });
+        if (player.length == 2) {
+            mapScene.setOnScroll(event -> {
+                    movePlayer(player[1], player[1].getDir());
+            });
+
+            mapScene.setOnMousePressed( event -> {
+                if( event.getButton() == MouseButton.MIDDLE){
+                    map.fire( player[1]);
+                }else if( event.getButton() == MouseButton.SECONDARY){
+                    movePlayer(player[1], (player[1].getDir() + 1)%4);
+                }else if( event.getButton() == MouseButton.PRIMARY){
+                    movePlayer(player[1], (player[1].getDir() -1)%4);
+                }
+            });
+        }
     }
 
     @Override
@@ -65,10 +81,6 @@ public class InputController implements EventHandler<KeyEvent> {
             }
 
         }
-    }
-
-    public Stage getMapStage() {
-        return map.getMapStage();
     }
 
     private void movePlayer(Player player, int dir){

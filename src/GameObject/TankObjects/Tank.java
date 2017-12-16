@@ -2,6 +2,10 @@ package GameObject.TankObjects;
 
 import GameObject.GameObject;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.nio.file.Paths;
 
 /**
  * Created by kaan on 10/28/2017.
@@ -65,6 +69,12 @@ public abstract class Tank extends GameObject {
     public Bullet fire(){
         double bullet_x = getBullet_xLoc();
         double bullet_y = getBullet_yLoc();
+        if( id == 0 || id == 1) {
+            MediaPlayer player1 = new MediaPlayer(new Media(Paths.get("MediaFiles/bulletSound.mp3").toUri().toString()));
+            player1.play();
+        }
+        MediaPlayer player2 = new MediaPlayer(new Media(Paths.get("MediaFiles/botBulletSound.mp3").toUri().toString()));
+        player2.play();
         Bullet tankBullet = new Bullet( id, bullet_x, bullet_y, dir);
         return tankBullet;
     }
@@ -134,7 +144,6 @@ public abstract class Tank extends GameObject {
         super.setViewImage(super.getImage());
     }
 
-
     public void getDamaged(){
         health -= BULLET_DAMAGE;
     }
@@ -147,10 +156,6 @@ public abstract class Tank extends GameObject {
         this.health = health;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
     public void setSpeed(int speed) {
         this.speed = speed;
     }
@@ -159,27 +164,10 @@ public abstract class Tank extends GameObject {
         return oldSpeed;
     }
 
-    public void setOldSpeed(int speed) {
-        oldSpeed = speed;
-    }
-
-    //Setters and Getters
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
     protected abstract void initImages();
 
@@ -187,7 +175,4 @@ public abstract class Tank extends GameObject {
         return dir;
     }
 
-    public void setDir(int dir) {
-        this.dir = dir;
-    }
 }

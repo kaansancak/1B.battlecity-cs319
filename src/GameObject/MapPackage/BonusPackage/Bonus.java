@@ -1,7 +1,6 @@
 package GameObject.MapPackage.BonusPackage;
 
 import GameObject.GameObject;
-import GameObject.TankObjects.Tank;
 
 public abstract  class Bonus extends GameObject {
 
@@ -28,14 +27,6 @@ public abstract  class Bonus extends GameObject {
 
     public void setTaken( boolean taken) {
         this.taken = taken;
-    }
-
-    private boolean isTimeOut() {
-        return timeOut = true;
-    }
-
-    private void applyBonus(Tank tank) {
-        tank.setHealth(tank.getHealth() + 100);
     }
 
     @Override

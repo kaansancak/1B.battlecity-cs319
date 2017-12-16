@@ -5,7 +5,6 @@ package GameObject.MapPackage.ObstaclesObjects;
  */
 public abstract class Destructible extends Obstacles {
 
-    private static final int INITIAL_HEALTH = 600; //600 wil be changed
     //Variables
     private final int BULLET_DAMAGE = 200;
     protected int health;
@@ -13,14 +12,6 @@ public abstract class Destructible extends Obstacles {
     //Methods
 
     //Setters and Getters
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public void getDamaged( int dir){
         health = health - BULLET_DAMAGE;
     }

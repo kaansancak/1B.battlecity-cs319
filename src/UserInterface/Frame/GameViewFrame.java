@@ -18,6 +18,10 @@ import java.nio.file.Paths;
 
 public class GameViewFrame {
 
+    private static final int PANE_WIDTH = 640;
+    private static final int PANE_HEIGHT = 640;
+    private static final int BUTTON_WIDTH = 250;
+    private static final int BUTTON_HEIGTH = 5;
     private boolean returnCall = false;
     private Label gameFinished;
     private Label gameOver;
@@ -32,11 +36,11 @@ public class GameViewFrame {
         this.map = map;
         this.gameManager = gameManager;
         gameFinished = new Label("Game Finished!\n" + "Congratulations!");//add score here
-        gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel()); //add score here
+        gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel() + "\nPlayer1 Score: " + gameManager.getScores(0) + "\nPlayer2 Score: " + gameManager.getScores(1) ); //add score here
         levelFinished = new Label("Level" + gameManager.getLevel() + " Finished\n");
-        gameFinished.setId("labels");
-        gameOver.setId("labels");
-        levelFinished.setId("labels");
+        gameFinished.setId("labels1");
+        gameOver.setId("labels1");
+        levelFinished.setId("labels1");
         backToMenu = new Button("Menu");
         nextLevel = new Button( "Continue Next Level");
         gameView = new Stage();
@@ -50,19 +54,22 @@ public class GameViewFrame {
             returnCall = true;
             gameView.close();
             gameManager.stopLoop();
+            gameManager.endMapManager();
             gameManager.initiateNextLevel();
         });
         backToMenu.setOnAction( event -> {
             returnCall = true;
             gameView.close();
-                Menu newGame = new Menu();
-                Stage newStage = new Stage();
-                try {
-                    newGame.start(newStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                gameManager.closeActiveMapManager();
+            gameManager.endMapManager();
+            GameManager.endGameManagerInstance();
+            Menu newGame = new Menu();
+            Stage newStage = new Stage();
+            try {
+                newGame.start(newStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            gameManager.closeActiveMapManager();
 
         });
 
@@ -77,7 +84,7 @@ public class GameViewFrame {
             answerBoxes.getChildren().addAll(levelFinished, nextLevel);
         answerBoxes.setAlignment(Pos.CENTER);
         pane.getChildren().add( answerBoxes);
-        Scene frameScene = new Scene(pane, 640, 640);
+        Scene frameScene = new Scene(pane, PANE_WIDTH, PANE_HEIGHT);
         String  style = getClass().getResource("../../style.css").toExternalForm();
         frameScene.getStylesheets().add(style);
         gameView.setScene(frameScene);
@@ -90,7 +97,7 @@ public class GameViewFrame {
 
     private void styleButton( Button returnButton) {
         returnButton.setId("glass-grey");
-        returnButton.setPrefSize(250, 5);
+        returnButton.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGTH);
 
 
         returnButton.setOnMouseEntered(new EventHandler<MouseEvent>() {

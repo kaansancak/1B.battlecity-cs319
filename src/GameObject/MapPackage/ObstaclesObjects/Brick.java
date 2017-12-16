@@ -37,8 +37,6 @@ public class Brick extends Destructible {
         setDamagedImage( dir);
     }
 
-
-
     public void setDamagedImage(int dir) {
         super.setDamaged( true);
         switch ( dir){
@@ -67,10 +65,6 @@ public class Brick extends Destructible {
             default: break;
         }
         super.draw();
-    }
-
-    public void getDestructed(){
-        isDestructed = true;
     }
 
     @Override

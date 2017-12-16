@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapManager {
+    private static MapManager mapManagerInstance = null;
     private final int TILES = 20;
+    private static final int TRANSLATE_Y = 660;
     Stage stage = new Stage();
     AnimationTimer timer;
     private int tileX, tileY;
@@ -36,9 +38,7 @@ public class MapManager {
     private boolean pauseCheck = false;
     private Text text;
 
-
-
-    MapManager(int playerCount, int level) throws Exception {
+    private MapManager(int playerCount, int level) throws Exception {
         mapManagerFileManager = new FileManager();
         mapLevel = level;
         bots = new ArrayList<>();
@@ -59,9 +59,25 @@ public class MapManager {
         inputController = new InputController( this, map.getPlayers());
     }
 
+    public static MapManager getMapManagerInstance( int playerCount, int level){
+        if ( mapManagerInstance == null){
+            try {
+                mapManagerInstance = new MapManager( playerCount, level);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return mapManagerInstance;
+        }else
+            return mapManagerInstance;
+    }
+
+    public static void setEndMapManager(){
+        mapManagerInstance = null;
+    }
+
     public void start(Stage stage) throws Exception{
         this.stage = stage;
-        text.setTranslateY(660);
+        text.setTranslateY(TRANSLATE_Y);
         map.getMapPane().getChildren().addAll(text);
         stage.setScene(new Scene(map.getMapPane()));
             timer = new AnimationTimer() {
@@ -78,8 +94,13 @@ public class MapManager {
 
     }
 
-    public boolean isPaused() {
-        return paused;
+
+    public int getPlayerScore(int id) {
+        if( id == 0)
+            return map.getPlayer(0).getScore();
+        else if( playerCount == 2)
+            return map.getPlayer(1).getScore();
+        return 0;
     }
 
     /*
@@ -101,11 +122,10 @@ public class MapManager {
                 pauseCheck = true;
                 gameStatus = GameStatus.GAME_PAUSED;
             }
-            if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
-                gameStatus = GameStatus.GAME_RUNNING;
-                pauseCheck = false;
-            }
-
+        }
+        if( gameStatus == GameStatus.GAME_PAUSE_RETURN){
+            gameStatus = GameStatus.GAME_RUNNING;
+            pauseCheck = false;
         }
         if( map.isGameOver()){
             System.out.print("Game over");
@@ -119,10 +139,6 @@ public class MapManager {
             gameStatus = GameStatus.LEVEL_FINISHED;
             stage.close();
         }
-    }
-
-    private void onGameOver(){
-
     }
 
     public void startLoop(){
@@ -234,13 +250,6 @@ public class MapManager {
             stage.getScene();
             stage.show();
         }
-        else{
-            finishLevel();
-        }
-
-    }
-    private void finishLevel(){
-        map.finishMap();
     }
 
     public GameStatus getGameStatus() {

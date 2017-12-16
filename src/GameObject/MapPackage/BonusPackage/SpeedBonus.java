@@ -1,6 +1,5 @@
 package GameObject.MapPackage.BonusPackage;
 
-import GameObject.TankObjects.Tank;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,9 +15,5 @@ public class SpeedBonus extends Bonus {
         view = new ImageView( new Image(Paths.get(IMG_DIR).toUri().toString()));
         view.setFitHeight( BONUS_VIEW_DIMENSION);
         view.setFitWidth( BONUS_VIEW_DIMENSION);
-    }
-
-    private void normalizeSpeed(Tank tank) {
-        tank.setSpeed(tank.getOldSpeed());
     }
 }

@@ -10,16 +10,16 @@ import java.nio.file.Paths;
  */
 public class Water extends Undestructible {
 
+    private final int DIMENSION = 32;
     private final String IMG_DIR = "./MediaFiles/image0.png";
     //Constructor
     public Water( double xLoc, double yLoc){
         this.xLoc = xLoc;
         this.yLoc = yLoc;
         view = new ImageView(new Image(Paths.get(IMG_DIR).toUri().toString()));
-        view.setFitWidth( 32);
-        view.setFitHeight( 32);
+        view.setFitWidth( DIMENSION);
+        view.setFitHeight( DIMENSION);
 }
-
     @Override
     public boolean isPassableByBullets() {
         return true;

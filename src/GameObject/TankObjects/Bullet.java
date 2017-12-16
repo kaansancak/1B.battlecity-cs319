@@ -73,15 +73,6 @@ public class Bullet extends GameObject {
         }
     }
 
-    //methods
-    /*Destruct method destroys the current bullet
-    if any collision occurs
-    returns whether destruction is successful.
-     */
-    public boolean destruct(int xLoc, int yLoc) {
-        //This method will be filled
-        return true;
-    }
 
     //This method moves the bullet through the map
     //in given direction
