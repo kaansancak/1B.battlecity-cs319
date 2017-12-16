@@ -12,10 +12,15 @@ import java.nio.file.Paths;
  */
 public class Bullet extends GameObject {
 
-    //Variables
-    //direction of the bullet
+    //ImageDirs
+    private final String CRUSHED_IMAGE_0 = "./MediaFiles/bullet_d_0.png";
+    private final String CRUSHED_IMAGE_1 = "./MediaFiles/bullet_d_1.png";
+    private final String CRUSHED_IMAGE_2 = "./MediaFiles/bullet_d_3.png";
     private final int BULLET_VIEW_DIMENSION = 10;
     private final double BULLET_VELOCITY = 4;
+    //Variables
+    //direction of the bullet
+    private Image crushedImages[] = new Image[3];
     private boolean isCrushed = false;
     private int dir;
     private int id;
@@ -27,12 +32,30 @@ public class Bullet extends GameObject {
         this.yLoc = yLoc;
         this.id = id;
         this.dir = dir;
+        initImages();
         setDirImage();
         view = new ImageView( image);
         view.setFitHeight(BULLET_VIEW_DIMENSION);
         view.setFitWidth(BULLET_VIEW_DIMENSION);
         super.draw();
         super.setVelocity( new Point2D.Double(BULLET_VELOCITY,BULLET_VELOCITY));
+    }
+
+    private void initImages() {
+        crushedImages[0] = new Image(Paths.get(CRUSHED_IMAGE_0).toUri().toString());
+        crushedImages[1] = new Image(Paths.get(CRUSHED_IMAGE_1).toUri().toString());
+        crushedImages[2] = new Image(Paths.get(CRUSHED_IMAGE_2).toUri().toString());
+    }
+
+    public void iterateCrushedAnimation(){
+        for( int i = 0 ; i < crushedImages.length ; i++){
+            if( i == 0){
+                setViewBounds( crushedImages[0], 11,11);
+            }else if( i == 1){
+                setViewBounds( crushedImages[1], 14,14);
+            }else
+                setViewBounds( crushedImages[2],16,16);
+        }
     }
 
     private void setDirImage() {

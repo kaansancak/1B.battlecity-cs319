@@ -1,4 +1,4 @@
-package GameObject.MapPackage;
+package GameObject.MapPackage.TilePackage;
 
 import GameObject.GameObject;
 import javafx.scene.image.Image;

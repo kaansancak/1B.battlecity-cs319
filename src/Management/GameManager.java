@@ -64,21 +64,22 @@ public class GameManager  {
             gameViewFrame.showGameView();
             //Show game over view
         }else if( mapManager.getGameStatus() == GameStatus.LEVEL_FINISHED){
-
-            /*
-            if( isContinue) {
-                currentGameLevel++;
-                try {
-                    mapManager = new MapManager(player_count, currentGameLevel);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                timer.start();
-            }else{
-
-            }*/
+            timer.stop();
+            gameViewFrame = new GameViewFrame(this, 2);
+            gameViewFrame.showGameView();
         }
     }
+
+    public void initiateNextLevel() {
+            currentGameLevel++;
+            try {
+                mapManager = new MapManager( player_count, currentGameLevel);
+            }catch ( Exception e){
+                e.printStackTrace();
+            }
+            timer.start();
+    }
+
 
     private void startMapManager() {
         try{mapManager = new MapManager(player_count, currentGameLevel);} catch (Exception e) {

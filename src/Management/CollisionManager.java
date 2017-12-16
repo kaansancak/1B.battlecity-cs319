@@ -1,11 +1,7 @@
 package Management;
 
 import GameObject.GameObject;
-import GameObject.MapPackage.Map;
-import GameObject.MapPackage.ObstaclesObjects.Brick;
-import GameObject.MapPackage.ObstaclesObjects.Destructible;
-import GameObject.MapPackage.ObstaclesObjects.IronWall;
-import GameObject.MapPackage.ObstaclesObjects.Undestructible;
+import GameObject.MapPackage.ObstaclesObjects.*;
 import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
 import GameObject.TankObjects.Player;
@@ -18,12 +14,10 @@ public class CollisionManager {
     private ArrayList<Tank> tanks;
     private ArrayList<Bullet> bullets;
     private ArrayList<GameObject> gameObjects;
-    private Player[] players;
 
     public CollisionManager(ArrayList<GameObject> gameObjects,
-                            ArrayList<Bullet> bullets, ArrayList<Tank> tanks, Map map) {
+                            ArrayList<Bullet> bullets, ArrayList<Tank> tanks) {
         this.gameObjects = gameObjects;
-        players = map.getPlayers();
         this.bullets = bullets;
         this.tanks = tanks;
     }
@@ -34,7 +28,7 @@ public class CollisionManager {
 
     public void updateRemovals() {
         tanks.removeIf(Tank::isDead);
-        bullets.removeIf(Bullet::isCrushed);
+        bullets.removeIf(Bullet::isDestructed);
         gameObjects.removeIf(GameObject::isDestructed);
     }
 
@@ -47,11 +41,8 @@ public class CollisionManager {
                                 bullet.getId() == 99){
                             continue;
                         }
-                        if( gameObject instanceof Bot && bullet.getId() == 0) {
-                            players[0].incrementScore();
-                        }
-                        else if( gameObject instanceof Bot && bullet.getId() == 1) {
-                            players[1].incrementScore();
+                        if( gameObject instanceof Bot) {
+                            incrementScore( bullet.getId());
                         }
                         damageTank( (Tank)gameObject);
                         bullet.setCrushed( true);
@@ -65,6 +56,16 @@ public class CollisionManager {
                         else
                             bullet.setCrushed(true);
                     }
+                }
+            }
+        }
+    }
+
+    private void incrementScore(int id) {
+        for( Tank tank: tanks){
+            if( tank instanceof Player){
+                if(tank.getId() == id){
+                    ((Player) tank).incrementScore();
                 }
             }
         }

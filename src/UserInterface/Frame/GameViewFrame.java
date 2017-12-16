@@ -21,9 +21,11 @@ public class GameViewFrame {
     private boolean returnCall = false;
     private Label gameFinished;
     private Label gameOver;
+    private Label levelFinished;
     private Map map;
     private GameManager gameManager;
     private Button backToMenu;
+    private Button nextLevel;
     private Stage gameView;
 
     public GameViewFrame(GameManager gameManager, int frame){
@@ -31,27 +33,37 @@ public class GameViewFrame {
         this.gameManager = gameManager;
         gameFinished = new Label("Game Finished!\n" + "Congratulations!");//add score here
         gameOver = new Label("Game Over\n" + "Level: " + gameManager.getLevel()); //add score here
+        levelFinished = new Label("Level" + gameManager.getLevel() + " Finished\n");
         gameFinished.setId("labels");
         gameOver.setId("labels");
+        levelFinished.setId("labels");
         backToMenu = new Button("Menu");
+        nextLevel = new Button( "Continue Next Level");
         gameView = new Stage();
         gameView.setResizable(false);
         StackPane pane = new StackPane();
         gameView.initModality(Modality.APPLICATION_MODAL);
 
         styleButton(backToMenu);
-
+        styleButton(nextLevel);
+        nextLevel.setOnAction( event -> {
+            returnCall = true;
+            gameView.close();
+            gameManager.stopLoop();
+            gameManager.initiateNextLevel();
+        });
         backToMenu.setOnAction( event -> {
             returnCall = true;
             gameView.close();
-            Menu newGame = new Menu();
-            Stage newStage = new Stage();
-            try {
-                newGame.start(newStage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            gameManager.closeActiveMapManager();
+                Menu newGame = new Menu();
+                Stage newStage = new Stage();
+                try {
+                    newGame.start(newStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                gameManager.closeActiveMapManager();
+
         });
 
         Image im = new Image(Paths.get("."+"/MediaFiles/metal.png").toUri().toString(), true);
@@ -59,8 +71,10 @@ public class GameViewFrame {
         VBox answerBoxes = new VBox(10);
         if( frame == 0 )
             answerBoxes.getChildren().addAll(gameOver, backToMenu);
-        else
+        else if( frame == 1)
             answerBoxes.getChildren().addAll(gameFinished, backToMenu);
+        else if( frame == 2)
+            answerBoxes.getChildren().addAll(levelFinished, nextLevel);
         answerBoxes.setAlignment(Pos.CENTER);
         pane.getChildren().add( answerBoxes);
         Scene frameScene = new Scene(pane, 640, 640);
@@ -76,7 +90,7 @@ public class GameViewFrame {
 
     private void styleButton( Button returnButton) {
         returnButton.setId("glass-grey");
-        returnButton.setPrefSize(100, 5);
+        returnButton.setPrefSize(250, 5);
 
 
         returnButton.setOnMouseEntered(new EventHandler<MouseEvent>() {

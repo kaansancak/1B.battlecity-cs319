@@ -146,6 +146,7 @@ public class MapManager {
         map.updateBullets();
         map.updateDestructibles();
         map.updateBonuses();
+        map.updatePortals();
     }
 
     public void handleBots(){
@@ -206,7 +207,7 @@ public class MapManager {
 
     private void startsLevel(){
         readObstaclesMap(mapLevel);
-        collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks(), map);
+        collisionManager = new CollisionManager(map.getGameObjects(), map.getBullets(), map.getTanks());
         map.addObjects(map.getGameObjectsArray());
     }
     private boolean stopGameLoop(){

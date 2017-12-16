@@ -5,6 +5,8 @@ import GameObject.MapPackage.BonusPackage.Bonus;
 import GameObject.MapPackage.BonusPackage.LifeBonus;
 import GameObject.MapPackage.BonusPackage.SpeedBonus;
 import GameObject.MapPackage.ObstaclesObjects.*;
+import GameObject.MapPackage.TilePackage.Portal;
+import GameObject.MapPackage.TilePackage.Tile;
 import GameObject.TankObjects.Bot;
 import GameObject.TankObjects.Bullet;
 import GameObject.TankObjects.Player;
@@ -42,6 +44,7 @@ public class Map {
     private ArrayList<Bonus> bonuses;
     private ArrayList<GameObject> objectHolder;
     private ArrayList<Destructible> destructibles;
+    private ArrayList<Portal> portals;
     private int lifeBonusCount;
     private int speedBonusCount;
     private Random rand;
@@ -71,7 +74,7 @@ public class Map {
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
         mapPane.setPrefHeight(FRAME_UPPER_BOUND+60);
-        botCount = 10 + 2 * level; // WOW lol
+        botCount =  2 * level; // WOW lol
         remainingBots = botCount;
     }
 
@@ -80,6 +83,7 @@ public class Map {
         bullets = new ArrayList<>();
         bots = new ArrayList<>();
         bonuses = new ArrayList();
+        portals = new ArrayList<>();
         objectHolder = new ArrayList<GameObject>();
         tanks = new ArrayList<Tank>();
         destructibles = new ArrayList<Destructible>();
@@ -166,10 +170,16 @@ public class Map {
 
     private void updatePlayer(){
         boolean isAllPlayersDead = true;
+        checkTeleport();
         for ( Player player : players){
             if ( !player.isDead()){
                 player.draw();
                 isAllPlayersDead = false;
+            }
+            else if( !player.isLifeOver()){
+                player.setStartCondition();
+                isAllPlayersDead = false;
+                player.decrementLife();
             }
             else{
                 mapPane.getChildren().remove(player.getView());
@@ -178,6 +188,28 @@ public class Map {
         }
         if( isAllPlayersDead){
             isGameOver = true;
+        }
+    }
+
+    private void checkTeleport() {
+        for ( Player player: players){
+            for ( Portal portal: portals){
+                if( portal.getView().getBoundsInParent().intersects(
+                        player.getView().getBoundsInParent()
+                )){
+                    if( portal.getActivation()) {
+
+                        Portal randomPortal = portal;
+                        do{
+                            randomPortal = portals.get(rand.nextInt(portals.size()));
+                        }while( randomPortal == portal);
+                        randomPortal.setPassed(true);
+                        portal.setPassed(true);
+                        player.setxLoc(randomPortal.getxLoc());
+                        player.setyLoc(randomPortal.getyLoc());
+                    }
+                }
+            }
         }
     }
 
@@ -191,6 +223,12 @@ public class Map {
             }
         }
         bots.removeIf(Tank::isDead);
+    }
+
+    public void updatePortals(){
+        for( Portal portal : portals){
+            portal.draw();
+        }
     }
 
     //Update of Bullets
@@ -310,6 +348,11 @@ public class Map {
                         objectHolder.add( statue);
                         destructibles.add( statue);
                         statue.draw();
+                    }else if( obstaclesMap[i][j] == 8){ //Portal
+                        Portal portal = new Portal( cordinate_x, cordinate_y);
+                        portals.add(portal);
+                        mapPane.getChildren().add(portal.getView());
+                        portal.draw();
                     }
                 }
             }

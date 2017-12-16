@@ -15,11 +15,13 @@ import java.util.ArrayList;
  */
 public class Player extends Tank {
 
+    // variables
+    private final double PLAYER_NORMAL_VELOCITY = 3.0;
+    private final double PLAYER_BONUS_VELOCITY = 6.0;
     public double oldSpeed;
     AnimationTimer timer;
-    // variables
-    private double PLAYER_NORMAL_VELOCITY = 3.0;
     private int score;
+    private int remainingLife = 4;
     private int controllerId;
     private ArrayList<String> controller;
 
@@ -31,7 +33,7 @@ public class Player extends Tank {
             this.xLoc = 5*28;
             this.yLoc = 5*28;
         }
-        health = 600;
+        health = 200;
         score = 0;
         initImages();
         view = new ImageView( rightImage);
@@ -49,27 +51,42 @@ public class Player extends Tank {
         downImage = ( new Image(Paths.get("."+"/MediaFiles/resources/tank_player1_down.png").toUri().toString()));
     }
 
+    public void setStartCondition(){
+        health = 200;
+        if( id == 1){
+            this.xLoc = 4*30;
+            this.yLoc = 4*30;
+        }else{
+            this.xLoc = 5*28;
+            this.yLoc = 5*28;
+        }
+    }
+    public boolean isLifeOver(){
+        return remainingLife <= 0;
+    }
+
+    public void decrementLife(){
+        remainingLife--;
+    }
+
     public void incrementHealth() {
-        health += 200;
+        remainingLife += 200;
     }
     public void incrementSpeed() {
-        oldSpeed = PLAYER_NORMAL_VELOCITY;
-        PLAYER_NORMAL_VELOCITY = PLAYER_NORMAL_VELOCITY + 2.0;
-        super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
+        super.setVelocity( new Point2D.Double(PLAYER_BONUS_VELOCITY, PLAYER_BONUS_VELOCITY));
 
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                normalizeTheSpeed( now, oldSpeed);
+                normalizeTheSpeed( now);
             }
         };
         timer.start();
-        PLAYER_NORMAL_VELOCITY = oldSpeed;
+
     }
-    private void normalizeTheSpeed(long now, double oldSpeed) {
+    private void normalizeTheSpeed(long now) {
         if( now % 500 == 0) {
-            super.setVelocity( new Point2D.Double(oldSpeed, oldSpeed));
-            PLAYER_NORMAL_VELOCITY = oldSpeed;
+            super.setVelocity( new Point2D.Double(PLAYER_NORMAL_VELOCITY, PLAYER_NORMAL_VELOCITY));
         }
     }
     public void incrementScore() {
