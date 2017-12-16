@@ -69,6 +69,10 @@ public class Player extends Tank {
         remainingLife--;
     }
 
+    public int getRemainingLife() {
+        return remainingLife;
+    }
+
     public void incrementHealth() {
         health += 200;
     }

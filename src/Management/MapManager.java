@@ -132,15 +132,15 @@ public class MapManager {
 
     private void updateStatText(){
         if( playerCount == 2)
-            text.setText("Remaining Bots: " + (map.getRemainingBots() + map.getAliveBots()) + "\t\t\t\t\t\tPlayer1 Health: " +
-                    map.getPlayer(0).getHealth() + "\t\t\t\t\t\tPlayer1 Score: " +
-                    map.getPlayer(0).getScore() +  "\nLevel: " + this.mapLevel
-                    + "\t\t\t\t\t\t\t\tPlayer2 Health: " + map.getPlayer(1).getHealth() + "\t\t\t\t\t\tPlayer2 Score: " +
-                    map.getPlayer(1).getScore());
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\tPlayer1 Health: " +
+                    map.getPlayer(0).getHealth() + "\t\t\t\tPlayer1 Score: " +
+                    map.getPlayer(0).getScore() +  "\t\t\t\tPlayer1 Life: " + map.getPlayer(0).getRemainingLife() + "\nLevel: " + this.mapLevel
+                    + "\t\t\t\t\t\tPlayer2 Health: " + map.getPlayer(1).getHealth() + "\t\t\t\tPlayer2 Score: " +
+                    map.getPlayer(1).getScore() + "\t\t\t\tPlayer2 Life: " + map.getPlayer(1).getRemainingLife());
         else if( playerCount == 1)
-            text.setText("Remaining Bots: " + (map.getRemainingBots() + map.getAliveBots()) + "\t\t\t\t\t\t\t\tPlayer1 Health: " +
+            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tPlayer1 Health: " +
                     map.getPlayer(0).getHealth() + "\nLevel: " + this.mapLevel
-                    + "\t\t\t\t\t\t\t\t\t\tPlayer1 Score: " + map.getPlayer(0).getScore());
+                    + "\t\t\t\t\t\t\t\t\t\tPlayer1 Score: " + map.getPlayer(0).getScore() + "\t\t\t\t\t\tPlayer1 Life: " + map.getPlayer(0).getRemainingLife());
 
     }
 

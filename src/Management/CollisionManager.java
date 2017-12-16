@@ -44,6 +44,10 @@ public class CollisionManager {
                         if( gameObject instanceof Bot) {
                             incrementScore( bullet.getId());
                         }
+                        if( gameObject instanceof Player) {
+                            if( bullet.getId() == 0 || bullet.getId() == 1)
+                                continue;
+                        }
                         damageTank( (Tank)gameObject);
                         bullet.setCrushed( true);
                     }
