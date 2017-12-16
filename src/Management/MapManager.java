@@ -71,6 +71,7 @@ public class MapManager {
                     addBot();
                     addLifeBonus(now);
                     addSpeedBonus(now);
+                    addArmorBonus(now);
                 }
             };
             timer.start();
@@ -131,13 +132,13 @@ public class MapManager {
 
     private void updateStatText(){
         if( playerCount == 2)
-            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\tPlayer1 Health: " +
+            text.setText("Remaining Bots: " + (map.getRemainingBots() + map.getAliveBots()) + "\t\t\t\t\t\tPlayer1 Health: " +
                     map.getPlayer(0).getHealth() + "\t\t\t\t\t\tPlayer1 Score: " +
                     map.getPlayer(0).getScore() +  "\nLevel: " + this.mapLevel
                     + "\t\t\t\t\t\t\t\tPlayer2 Health: " + map.getPlayer(1).getHealth() + "\t\t\t\t\t\tPlayer2 Score: " +
                     map.getPlayer(1).getScore());
         else if( playerCount == 1)
-            text.setText("Remaining Bots: " + map.getRemainingBots() + "\t\t\t\t\t\t\t\tPlayer1 Health: " +
+            text.setText("Remaining Bots: " + (map.getRemainingBots() + map.getAliveBots()) + "\t\t\t\t\t\t\t\tPlayer1 Health: " +
                     map.getPlayer(0).getHealth() + "\nLevel: " + this.mapLevel
                     + "\t\t\t\t\t\t\t\t\t\tPlayer1 Score: " + map.getPlayer(0).getScore());
 
@@ -181,12 +182,18 @@ public class MapManager {
 
     private void addLifeBonus(long time) {
         int type = 0;
-        // if type = 0 -> lifeBonus, if type = 1 -> speedBonus
+        // if type = 0 -> lifeBonus, if type = 1 -> speedBonus, if type = 3 -> armorBonus
         if (time % 2000 == 0)
             map.createBonus(type);
     }
     private void addSpeedBonus(long time) {
         int type = 1;
+        if( time % 5000 == 0)
+            map.createBonus(type);
+    }
+
+    private void addArmorBonus(long time) {
+        int type = 2;
         if( time % 5000 == 0)
             map.createBonus(type);
     }

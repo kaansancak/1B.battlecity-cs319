@@ -73,7 +73,12 @@ public class Map {
         gameObjects = new GameObject[TILES][TILES];
         players = new Player[playerCount];
         mapPane.setPrefWidth(FRAME_UPPER_BOUND);
-        mapPane.setPrefHeight(FRAME_UPPER_BOUND+60);
+        if(playerCount == 1)
+            mapPane.setPrefHeight(FRAME_UPPER_BOUND + 40);
+        else
+            mapPane.setPrefHeight(FRAME_UPPER_BOUND + 60);
+
+
         botCount =  6 + 2 * level; // WOW lol
         remainingBots = botCount;
     }
