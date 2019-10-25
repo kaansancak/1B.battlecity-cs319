@@ -4,7 +4,6 @@
 ### Group Members
 1. Kaan Sancak
 2. Mahin Khankishizade
-3. Ozan Kerem Devamlı
 
 ### Description of the Project
 
