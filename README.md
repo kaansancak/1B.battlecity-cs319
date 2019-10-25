@@ -1,5 +1,6 @@
 # battlecity-cs319
 ## Battlecity Game for CS 319 Project
+## Give the repo a star for support!
 
 ### Group Members
 1. Kaan Sancak
